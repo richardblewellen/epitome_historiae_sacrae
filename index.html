@@ -11,9 +11,9 @@
 <div id="sticky-header">
     <div class="controls-row">
         <!-- Story Selection -->
-        <select id="story-select" multiple size="3">
-            <!-- Options populated by JS -->
-        </select>
+        <div id="story-select-container" class="story-select-container">
+            <!-- Checkboxes populated by JS -->
+        </div>
 
         <!-- Display Toggles -->
         <div class="toggles">
@@ -25,8 +25,8 @@
 
     <div class="controls-row">
         <!-- Playback Controls -->
-        <button id="btn-play">▶ Play Selected</button>
-        <button id="btn-stop">■ Stop</button>
+        <button id="btn-play">▶</button>
+        <button id="btn-stop">■</button>
         
         <div class="sliders">
             <label>Speed: <span id="speed-val">1.0</span>x 
