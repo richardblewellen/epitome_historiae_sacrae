@@ -90,6 +90,12 @@ body {
     font-size: 0.9em;
 }
 
+.sliders span {
+    display: inline-block;
+    width: 25px; /* Gives the text a fixed width */
+    text-align: right; /* Keeps the numbers aligned neatly */
+}
+
 #content-container {
     padding: 20px;
     max-width: 1200px;
