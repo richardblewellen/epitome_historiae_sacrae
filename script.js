@@ -1,22 +1,31 @@
 // --- 1. Initialization & UI Setup ---
-const selectEl = document.getElementById('story-select');
+const selectContainer = document.getElementById('story-select-container');
 const container = document.getElementById('content-container');
 let isPlaying = false;
 
-// Populate Dropdown directly from the nested storyData
+// Populate Checkboxes directly from the nested storyData
 storyData.forEach(story => {
-    const option = document.createElement('option');
-    option.value = story.story_id;
-    option.textContent = `${story.story_title_Greek} / ${story.story_title_English}`;
-    selectEl.appendChild(option);
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = story.story_id;
+    checkbox.className = 'story-checkbox';
+    
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(` ${story.story_title_Greek} / ${story.story_title_English}`));
+    
+    selectContainer.appendChild(label);
+    
+    // Re-render content when a checkbox is toggled
+    checkbox.addEventListener('change', renderContent);
 });
-
-// Re-render content when selection changes
-selectEl.addEventListener('change', renderContent);
 
 function renderContent() {
     container.innerHTML = '';
-    const selectedIds = Array.from(selectEl.selectedOptions).map(opt => parseInt(opt.value));
+    
+    // Get all checked checkboxes
+    const checkedBoxes = document.querySelectorAll('.story-checkbox:checked');
+    const selectedIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
     
     // Filter the nested data for only the selected stories
     const selectedStories = storyData.filter(story => selectedIds.includes(story.story_id));
@@ -32,7 +41,6 @@ function renderContent() {
             </div>
         `;
 
-        // Loop through the nested sentences array
         story.sentences.forEach(sentence => {
             const row = document.createElement('div');
             row.className = 'sentence-row';
@@ -103,10 +111,6 @@ document.getElementById('btn-play').addEventListener('click', async () => {
     window.speechSynthesis.cancel();
     
     const rows = document.querySelectorAll('.sentence-row');
-    const speed = parseFloat(document.getElementById('slider-speed').value);
-    const pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
-    const repeatSliderVal = document.getElementById('slider-repeat').value;
-    const repeats = repeatValues[repeatSliderVal];
 
     for (let row of rows) {
         if (!isPlaying) break; // Break out if Stop was pressed
@@ -117,19 +121,32 @@ document.getElementById('btn-play').addEventListener('click', async () => {
         row.scrollIntoView({ behavior: 'smooth', block: 'center' });
         row.classList.add('highlight');
 
+        // Check slider values inside the loop so they update live
+        let repeatSliderVal = document.getElementById('slider-repeat').value;
+        let repeats = repeatValues[repeatSliderVal];
+
         for (let r = 0; r < repeats; r++) {
             if (!isPlaying) break;
+            
+            // Check speed inside the repeat loop to apply immediately on next read
+            let speed = parseFloat(document.getElementById('slider-speed').value);
+            
             await speakText(greekText, speed);
+            
+            // Check pause duration
+            let pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
             if (r < repeats - 1 && isPlaying) await sleep(pauseMs); // Pause between repeats
         }
         
         row.classList.remove('highlight');
-        if (isPlaying) await sleep(pauseMs); // Pause between sentences
+        if (isPlaying) {
+            let pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
+            await sleep(pauseMs); // Pause between sentences
+        }
     }
     
     isPlaying = false;
 });
-
 // Stop playback
 document.getElementById('btn-stop').addEventListener('click', () => {
     isPlaying = false;
