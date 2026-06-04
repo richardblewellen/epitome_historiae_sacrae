@@ -25,6 +25,33 @@ body {
     align-items: center;
 }
 
+.story-select-container {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 5px;
+    min-width: 300px;
+    border-radius: 4px;
+}
+
+.story-select-container label {
+    display: block;
+    padding: 8px 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95em;
+}
+
+.story-select-container label:hover {
+    background-color: #f1f1f1;
+}
+
+.story-select-container input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
 #story-select {
     min-width: 250px;
 }
