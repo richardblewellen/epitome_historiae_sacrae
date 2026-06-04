@@ -193,7 +193,7 @@ document.getElementById('btn-play').addEventListener('click', async () => {
 
             const greekText = row.querySelector('.greek-text').textContent.trim();
 
-            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            scrollRowIntoView(row);
             row.classList.add('highlight');
 
             const repeats = repeatValues[parseInt(document.getElementById('slider-repeat').value)];
