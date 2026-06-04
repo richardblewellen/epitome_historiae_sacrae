@@ -103,7 +103,7 @@ body {
 
 #speed-val, #pause-val, #repeat-val {
     display: inline-block;
-    min-width: 2ch;
+    min-width: 20px;
     text-align: right;
 }
 
