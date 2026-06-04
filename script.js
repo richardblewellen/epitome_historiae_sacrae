@@ -5,7 +5,12 @@ const btnDropdownToggle = document.getElementById('btn-dropdown-toggle');
 const btnClearSelection = document.getElementById('btn-clear-selection');
 
 let isPlaying = false;
-let selectedStoryIds = []; // Array to track chosen stories
+let selectedStoryIds = [];
+
+// Guard against data.js failing to load
+if (typeof storyData === 'undefined') {
+    console.error('storyData is not defined — check that data.js loaded correctly.');
+}
 
 // Toggle the dropdown visibility
 btnDropdownToggle.addEventListener('click', () => {
@@ -14,7 +19,6 @@ btnDropdownToggle.addEventListener('click', () => {
 
 // Close the dropdown if the user clicks outside of it
 document.addEventListener('click', (event) => {
-    // Check if the click was outside the dropdown menu AND not on the toggle button itself
     if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
         listContainer.classList.remove('show');
     }
@@ -26,44 +30,41 @@ storyData.forEach(story => {
     item.className = 'story-item';
     item.dataset.id = story.story_id;
     item.innerText = `${story.story_title_Greek} / ${story.story_title_English}`;
-    
-    // Toggle selection on click
+
     item.addEventListener('click', () => {
         const id = story.story_id;
-        
-        // If already selected, remove it
         if (selectedStoryIds.includes(id)) {
             selectedStoryIds = selectedStoryIds.filter(selectedId => selectedId !== id);
             item.classList.remove('selected');
         } else {
-            // Otherwise, add it
             selectedStoryIds.push(id);
             item.classList.add('selected');
         }
-        
+        // Keep dropdown open so multiple stories can be picked in one session
         renderContent();
     });
-    
+
     listContainer.appendChild(item);
 });
 
-// Clear All functionality
+// Clear All
 btnClearSelection.addEventListener('click', () => {
-    selectedStoryIds = []; // Empty the array
+    selectedStoryIds = [];
     document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
+    listContainer.classList.remove('show');
     renderContent();
 });
 
 function renderContent() {
     contentContainer.innerHTML = '';
-    
-    // Filter the nested data for only the selected stories
+    window.scrollTo(0, 0);
+
     const selectedStories = storyData.filter(story => selectedStoryIds.includes(story.story_id));
-    
+
     selectedStories.forEach(story => {
         const block = document.createElement('div');
         block.className = 'story-block';
-        
+
         block.innerHTML = `
             <div class="story-title">
                 <h2>${story.story_title_Greek}</h2>
@@ -85,31 +86,44 @@ function renderContent() {
             `;
             block.appendChild(row);
         });
-        
+
         contentContainer.appendChild(block);
     });
 }
 
-// Optional but recommended: trigger initial empty render
 renderContent();
 
-// --- 2. Toggles Logic ---
-document.getElementById('toggle-greek').addEventListener('change', e => { document.body.classList.toggle('hide-greek', !e.target.checked); });
-document.getElementById('toggle-literal').addEventListener('change', e => { document.body.classList.toggle('hide-literal', !e.target.checked); });
-document.getElementById('toggle-smooth').addEventListener('change', e => { document.body.classList.toggle('hide-smooth', !e.target.checked); });
+// --- 2. Toggles ---
+document.getElementById('toggle-greek').addEventListener('change', e => {
+    document.body.classList.toggle('hide-greek', !e.target.checked);
+});
+document.getElementById('toggle-literal').addEventListener('change', e => {
+    document.body.classList.toggle('hide-literal', !e.target.checked);
+});
+document.getElementById('toggle-smooth').addEventListener('change', e => {
+    document.body.classList.toggle('hide-smooth', !e.target.checked);
+});
 
 // --- 3. Slider Labels ---
-const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 }; // Maps slider pos to 1x, 2x, 3x, 5x
-document.getElementById('slider-speed').addEventListener('input', e => document.getElementById('speed-val').innerText = e.target.value);
-document.getElementById('slider-pause').addEventListener('input', e => document.getElementById('pause-val').innerText = e.target.value);
-document.getElementById('slider-repeat').addEventListener('input', e => document.getElementById('repeat-val').innerText = repeatValues[e.target.value]);
+// Maps slider position to repeat count: 1→1, 2→2, 3→3, 4→5
+const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 };
+
+document.getElementById('slider-speed').addEventListener('input', e => {
+    document.getElementById('speed-val').innerText = e.target.value;
+});
+document.getElementById('slider-pause').addEventListener('input', e => {
+    document.getElementById('pause-val').innerText = e.target.value;
+});
+document.getElementById('slider-repeat').addEventListener('input', e => {
+    document.getElementById('repeat-val').innerText = repeatValues[parseInt(e.target.value)];
+});
 
 // --- 4. Greek Diacritic Normalization for TTS ---
 function cleanGreekForTTS(text) {
-    return text.normalize('NFD') // Break chars into base + diacritics
-               .replace(/[\u0300\u0302\u0342]/g, '\u0301') // Convert grave/circumflex to simple acute (\u0301)
-               .replace(/[\u0313\u0314\u0304\u0306\u0345]/g, '') // Strip breathings, macrons, breves, iota subscripts
-               .normalize('NFC'); // Recombine
+    return text.normalize('NFD')
+               .replace(/[\u0300\u0302\u0342]/g, '\u0301') // grave/circumflex → acute
+               .replace(/[\u0313\u0314\u0304\u0306\u0345]/g, '') // strip breathings, macrons, breves, iota subscripts
+               .normalize('NFC');
 }
 
 // --- 5. Text-To-Speech Playback ---
@@ -117,10 +131,10 @@ function speakText(text, speed) {
     return new Promise((resolve) => {
         if (!text) return resolve();
         const utterance = new SpeechSynthesisUtterance(cleanGreekForTTS(text));
-        utterance.lang = 'el-GR'; // Greek voice
+        utterance.lang = 'el-GR';
         utterance.rate = speed;
         utterance.onend = resolve;
-        utterance.onerror = resolve; // Continue even if error
+        utterance.onerror = resolve;
         window.speechSynthesis.speak(utterance);
     });
 }
@@ -129,57 +143,55 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Click a single sentence
+// Click a single sentence to hear it
 function speakSingleSentence(element) {
-    window.speechSynthesis.cancel(); // Stop current speech
+    window.speechSynthesis.cancel();
     const speed = parseFloat(document.getElementById('slider-speed').value);
-    speakText(element.innerText, speed);
+    speakText(element.textContent.trim(), speed);
 }
 
-// Play all selected
+// Play all selected stories in sequence
 document.getElementById('btn-play').addEventListener('click', async () => {
     if (isPlaying) return;
     isPlaying = true;
-    
     window.speechSynthesis.cancel();
-    
+
     const rows = document.querySelectorAll('.sentence-row');
 
-    for (let row of rows) {
-        if (!isPlaying) break; // Break out if Stop was pressed
-
-        const greekText = row.querySelector('.greek-text').innerText;
-        
-        // Scroll into view & highlight
-        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        row.classList.add('highlight');
-
-        // Check slider values inside the loop so they update live
-        let repeatSliderVal = document.getElementById('slider-repeat').value;
-        let repeats = repeatValues[repeatSliderVal];
-
-        for (let r = 0; r < repeats; r++) {
+    try {
+        for (const row of rows) {
             if (!isPlaying) break;
-            
-            // Check speed inside the repeat loop to apply immediately on next read
-            let speed = parseFloat(document.getElementById('slider-speed').value);
-            
-            await speakText(greekText, speed);
-            
-            // Check pause duration
-            let pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
-            if (r < repeats - 1 && isPlaying) await sleep(pauseMs); // Pause between repeats
+
+            const greekText = row.querySelector('.greek-text').textContent.trim();
+
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            row.classList.add('highlight');
+
+            const repeats = repeatValues[parseInt(document.getElementById('slider-repeat').value)];
+
+            for (let r = 0; r < repeats; r++) {
+                if (!isPlaying) break;
+
+                const speed = parseFloat(document.getElementById('slider-speed').value);
+                await speakText(greekText, speed);
+
+                const pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
+                if (r < repeats - 1 && isPlaying) await sleep(pauseMs);
+            }
+
+            row.classList.remove('highlight');
+
+            if (isPlaying) {
+                const pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
+                await sleep(pauseMs);
+            }
         }
-        
-        row.classList.remove('highlight');
-        if (isPlaying) {
-            let pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
-            await sleep(pauseMs); // Pause between sentences
-        }
+    } finally {
+        // Always reset, whether playback finished naturally or was stopped
+        isPlaying = false;
     }
-    
-    isPlaying = false;
 });
+
 // Stop playback
 document.getElementById('btn-stop').addEventListener('click', () => {
     isPlaying = false;
