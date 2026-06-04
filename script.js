@@ -158,6 +158,20 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Returns the pixel height of the sticky header, used to offset scroll position
+function getHeaderHeight() {
+    const header = document.getElementById('sticky-header');
+    return header ? header.getBoundingClientRect().height : 0;
+}
+ 
+// Scrolls a row into view just below the sticky header, with a small breathing gap
+function scrollRowIntoView(row) {
+    const headerHeight = getHeaderHeight();
+    const rowTop = row.getBoundingClientRect().top + window.scrollY;
+    const targetScrollY = rowTop - headerHeight - 12; // 12px breathing room
+    window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+}
+
 // Click a single sentence to hear it
 function speakSingleSentence(element) {
     window.speechSynthesis.cancel();
