@@ -73,11 +73,47 @@ button:hover { background: #e9ecef; }
     padding: 0 20px;
 }
 
-.worksheet-header {
-    text-align: center;
-    margin-bottom: 40px;
+/* --- NEW QUIZ HEADER STYLES --- */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Aligns the bottom of the title with the name line */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
 }
 
+.quiz-title-group {
+    text-align: left;
+}
+
+.quiz-main-title {
+    font-size: 2.2em;
+    margin: 0;
+    line-height: 1;
+    color: #000;
+}
+
+.quiz-subtitle {
+    font-size: 1.1em;
+    margin: 5px 0 0 0;
+    font-weight: normal;
+    color: #555;
+}
+
+.quiz-name-line {
+    font-size: 1.1em;
+    white-space: nowrap; /* Prevents the underscore line from wrapping */
+    margin-bottom: 5px;
+}
+
+.greek-story-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
 .quiz-item {
     margin-bottom: 40px;
     page-break-inside: avoid; /* Prevents an item from splitting across pages */
