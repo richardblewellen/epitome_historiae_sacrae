@@ -75,16 +75,15 @@ button:hover { background: #e9ecef; }
 
 /* --- NEW QUIZ HEADER STYLES --- */
 .quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end; /* Aligns the bottom of the title with the name line */
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border-bottom: 2px solid #000;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
-.quiz-title-group {
-    text-align: left;
+.quiz-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline; /* Aligns the bottom text baseline of QUIZ and the Name line */
 }
 
 .quiz-main-title {
@@ -94,26 +93,19 @@ button:hover { background: #e9ecef; }
     color: #000;
 }
 
-.quiz-subtitle {
-    font-size: 1.1em;
-    margin: 5px 0 0 0;
-    font-weight: normal;
-    color: #555;
-}
-
 .quiz-name-line {
     font-size: 1.1em;
-    white-space: nowrap; /* Prevents the underscore line from wrapping */
-    margin-bottom: 5px;
+    white-space: nowrap; 
 }
 
-.greek-story-title {
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #2c3e50;
+.quiz-subtitle {
+    font-size: 1.2em;
+    margin: 5px 0 0 0; /* Only 5px of space between QUIZ and the subtitle */
+    font-weight: normal;
+    color: #555;
+    text-align: left;
 }
+
 .quiz-item {
     margin-bottom: 40px;
     page-break-inside: avoid; /* Prevents an item from splitting across pages */
@@ -152,16 +144,18 @@ button:hover { background: #e9ecef; }
 @media print {
     body { background: white; }
     
-    /* Hide the entire control panel */
     #no-print-controls { display: none !important; }
     
-    /* Remove constraints to fit the paper */
     #worksheet-container {
         max-width: 100%;
         margin: 0;
         padding: 0;
     }
     
-    /* Hide the dashed line since it's on a new piece of paper anyway */
-    .page-break { border-top: none; } 
+    /* This removes the dashed line AND fixes the pages shifting down! */
+    .page-break { 
+        border-top: none; 
+        margin-top: 0;
+        padding-top: 0;
+    } 
 }
