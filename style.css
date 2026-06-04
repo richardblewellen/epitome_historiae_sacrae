@@ -83,30 +83,25 @@ body {
     font-weight: bold;
     color: #0f5132;
 }
-/* -------------------------- */
 
+/* -------SLIDERS-------- */
 .sliders {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
 }
 .sliders label {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
     font-size: 0.9em;
-    white-space: nowrap; /* keep "Speed: 1.0x" on one line */
-    min-width: 0;
-}
-.sliders label span {
-    /* value badge sits inline with the label text via the HTML, no extra style needed */
+    white-space: nowrap;
 }
 .sliders input[type="range"] {
     width: 100px;
-    display: block;
 }
 
+/* --- CONTENT --- */
 #content-container {
     padding: 20px;
     max-width: 1200px;
