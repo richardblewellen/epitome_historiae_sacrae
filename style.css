@@ -101,6 +101,12 @@ body {
     width: 100px;
 }
 
+#speed-val, #pause-val, #repeat-val {
+    display: inline-block;
+    min-width: 2ch;
+    text-align: right;
+}
+
 /* --- CONTENT --- */
 #content-container {
     padding: 20px;
