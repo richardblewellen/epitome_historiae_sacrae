@@ -62,26 +62,38 @@ btnPrint.addEventListener('click', () => {
 
 // Generate Worksheet Layout
 function generateWorksheet() {
+    const worksheetContainer = document.getElementById('worksheet-container');
     worksheetContainer.innerHTML = '';
     
     const selectedStories = storyData.filter(story => selectedStoryIds.includes(story.story_id));
     if (selectedStories.length === 0) return;
 
-    // --- 1. BUILD THE STUDENT QUIZ ---
-    let htmlString = `
-        <div class="worksheet-header">
-            <h2>Translation Worksheet</h2>
-            <p style="text-align: right; font-size: 1.1em;">Name: _______________________ &nbsp;&nbsp;&nbsp; Date: ___________</p>
-        </div>
-    `;
+    let htmlString = ``;
 
-    selectedStories.forEach(story => {
-        htmlString += `<h3>${story.story_title_Greek}</h3>`;
+    // --- 1. BUILD THE STUDENT QUIZZES ---
+    selectedStories.forEach((story, index) => {
+        // Add a page break before every story (except the very first one)
+        if (index > 0) {
+            htmlString += `<div class="page-break"></div>`;
+        }
+
+        // New hard-left header with extended name line
+        htmlString += `
+            <div class="quiz-header">
+                <div class="quiz-title-group">
+                    <h2 class="quiz-main-title">QUIZ</h2>
+                    <h3 class="quiz-subtitle">${story.story_title_English}</h3>
+                </div>
+                <div class="quiz-name-line">Name: __________________________________________________________</div>
+            </div>
+            
+            <div class="greek-story-title">${story.story_title_Greek}</div>
+        `;
         
-        story.sentences.forEach((sentence, index) => {
+        story.sentences.forEach((sentence, i) => {
             htmlString += `
                 <div class="quiz-item">
-                    <div class="greek-text">${index + 1}. ${sentence.greek}</div>
+                    <div class="greek-text">${i + 1}. ${sentence.greek}</div>
                     <div class="blank-line"></div>
                     <div class="blank-line"></div>
                 </div>
@@ -89,22 +101,31 @@ function generateWorksheet() {
         });
     });
 
-    // --- 2. BUILD THE ANSWER KEY ---
-    // The .page-break class forces this to print on a brand new sheet of paper
-    htmlString += `
-        <div class="page-break"></div>
-        <div class="worksheet-header">
-            <h2>Teacher Answer Key</h2>
-        </div>
-    `;
+    // --- 2. BUILD THE ANSWER KEYS ---
+    // Force the first answer key to start on a brand new sheet
+    htmlString += `<div class="page-break"></div>`;
 
-    selectedStories.forEach(story => {
-        htmlString += `<h3>${story.story_title_Greek}</h3>`;
+    selectedStories.forEach((story, index) => {
+        // Page break between each answer key
+        if (index > 0) {
+            htmlString += `<div class="page-break"></div>`;
+        }
+
+        htmlString += `
+            <div class="quiz-header">
+                <div class="quiz-title-group">
+                    <h2 class="quiz-main-title">ANSWER KEY</h2>
+                    <h3 class="quiz-subtitle">${story.story_title_English}</h3>
+                </div>
+            </div>
+            
+            <div class="greek-story-title">${story.story_title_Greek}</div>
+        `;
         
-        story.sentences.forEach((sentence, index) => {
+        story.sentences.forEach((sentence, i) => {
             htmlString += `
                 <div class="quiz-item">
-                    <div class="greek-text">${index + 1}. ${sentence.greek}</div>
+                    <div class="greek-text">${i + 1}. ${sentence.greek}</div>
                     <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
                     <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
                 </div>
