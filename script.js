@@ -145,7 +145,7 @@ function cleanForTTS(text) {
 function speakText(text, speed) {
     return new Promise((resolve) => {
         if (!text) return resolve();
-        const utterance = new SpeechSynthesisUtterance(cleanGreekForTTS(text));
+        const utterance = new SpeechSynthesisUtterance(cleanForTTS(text));
         utterance.lang = 'el-GR';
         utterance.rate = speed;
         utterance.onend = resolve;
