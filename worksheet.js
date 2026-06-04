@@ -72,22 +72,18 @@ function generateWorksheet() {
 
     // --- 1. BUILD THE STUDENT QUIZZES ---
     selectedStories.forEach((story, index) => {
-        // Add a page break before every story (except the very first one)
         if (index > 0) {
             htmlString += `<div class="page-break"></div>`;
         }
 
-        // New hard-left header with extended name line
         htmlString += `
             <div class="quiz-header">
-                <div class="quiz-title-group">
+                <div class="quiz-top-row">
                     <h2 class="quiz-main-title">QUIZ</h2>
-                    <h3 class="quiz-subtitle">${story.story_title_English}</h3>
+                    <div class="quiz-name-line">Name: __________________________________________________________</div>
                 </div>
-                <div class="quiz-name-line">Name: __________________________________________________________</div>
+                <h3 class="quiz-subtitle">${story.story_title_English}</h3>
             </div>
-            
-            <div class="greek-story-title">${story.story_title_Greek}</div>
         `;
         
         story.sentences.forEach((sentence, i) => {
@@ -102,24 +98,20 @@ function generateWorksheet() {
     });
 
     // --- 2. BUILD THE ANSWER KEYS ---
-    // Force the first answer key to start on a brand new sheet
     htmlString += `<div class="page-break"></div>`;
 
     selectedStories.forEach((story, index) => {
-        // Page break between each answer key
         if (index > 0) {
             htmlString += `<div class="page-break"></div>`;
         }
 
         htmlString += `
             <div class="quiz-header">
-                <div class="quiz-title-group">
+                <div class="quiz-top-row">
                     <h2 class="quiz-main-title">ANSWER KEY</h2>
-                    <h3 class="quiz-subtitle">${story.story_title_English}</h3>
                 </div>
+                <h3 class="quiz-subtitle">${story.story_title_English}</h3>
             </div>
-            
-            <div class="greek-story-title">${story.story_title_Greek}</div>
         `;
         
         story.sentences.forEach((sentence, i) => {
