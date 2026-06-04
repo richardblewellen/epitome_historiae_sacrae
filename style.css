@@ -25,7 +25,7 @@ body {
     align-items: center;
 }
 
-/* --- NEW DROPDOWN STYLES --- */
+/* --- DROPDOWN STYLES --- */
 .dropdown-wrapper {
     position: relative;
     display: flex;
@@ -85,15 +85,26 @@ body {
 }
 /* -------------------------- */
 
-.sliders label {
-    margin-right: 15px;
-    font-size: 0.9em;
+.sliders {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
 }
-
-.sliders span {
-    display: inline-block;
-    width: 25px; /* Gives the text a fixed width */
-    text-align: right; /* Keeps the numbers aligned neatly */
+.sliders label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9em;
+    white-space: nowrap; /* keep "Speed: 1.0x" on one line */
+    min-width: 0;
+}
+.sliders label span {
+    /* value badge sits inline with the label text via the HTML, no extra style needed */
+}
+.sliders input[type="range"] {
+    width: 100px;
+    display: block;
 }
 
 #content-container {
@@ -159,3 +170,16 @@ body {
 body.hide-greek .greek-text { display: none; }
 body.hide-literal .literal-text { display: none; }
 body.hide-smooth .col-english { display: none; }
+
+/* --- MOBILE --- */
+@media (max-width: 600px) {
+    .sentence-row {
+        grid-template-columns: 1fr; /* stack columns on small screens */
+    }
+    .sliders {
+        gap: 16px;
+    }
+    .sliders input[type="range"] {
+        width: 130px; /* slightly wider on mobile for easier thumb dragging */
+    }
+}
