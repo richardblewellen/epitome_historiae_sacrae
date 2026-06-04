@@ -119,11 +119,26 @@ document.getElementById('slider-repeat').addEventListener('input', e => {
 });
 
 // --- 4. Greek Diacritic Normalization for TTS ---
-function cleanGreekForTTS(text) {
-    return text.normalize('NFD')
-               .replace(/[\u0300\u0302\u0342]/g, '\u0301') // grave/circumflex → acute
-               .replace(/[\u0313\u0314\u0304\u0306\u0345]/g, '') // strip breathings, macrons, breves, iota subscripts
-               .normalize('NFC');
+function cleanForTTS(text) {
+    let cleaned = text.normalize("NFD")
+        // Combined: grave, tilde, circumflex, and Greek perispomeni -> acute
+        .replace(/[\u0300\u0302\u0303\u0342]/g, '\u0301') 
+        // Combined: breathings, iota subscripts, macrons, and breves -> stripped
+        .replace(/[\u0313\u0314\u0304\u0306\u0345]/g, '') 
+        .normalize("NFC")
+        // The Monosyllable Fix
+        .replace(/(^|[\s,;:'"(\[·-])([άέήίόύώΆΈΉΊΌΎΏ])(?=[\s,;:.!?"'\)\]·-]|$)/g, (match, prefix, letter) => {
+            return prefix + letter.normalize("NFD").replace(/\u0301/g, '').normalize("NFC");
+        });
+    
+    // --- CUSTOM PHONETIC DICTIONARY ---
+    // 1. Fix the ὦ issue by swapping a standalone ω for an omicron (ο)
+    cleaned = cleaned.replace(/(^|[\s,;:'"(\[·-])[ωώ](?=[\s,;:.!?"'\)\]·-]|$)/g, '$1ο');
+    
+    // 2. Fixes the stress/diphthong on ἔπαυον
+    cleaned = cleaned.replace(/έπαυον/g, 'έπαβον'); 
+
+    return cleaned;
 }
 
 // --- 5. Text-To-Speech Playback ---
