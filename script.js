@@ -1,34 +1,64 @@
 // --- 1. Initialization & UI Setup ---
-const selectContainer = document.getElementById('story-select-container');
-const container = document.getElementById('content-container');
-let isPlaying = false;
+const listContainer = document.getElementById('story-list-container');
+const contentContainer = document.getElementById('content-container');
+const btnDropdownToggle = document.getElementById('btn-dropdown-toggle');
+const btnClearSelection = document.getElementById('btn-clear-selection');
 
-// Populate Checkboxes directly from the nested storyData
+let isPlaying = false;
+let selectedStoryIds = []; // Array to track chosen stories
+
+// Toggle the dropdown visibility
+btnDropdownToggle.addEventListener('click', () => {
+    listContainer.classList.toggle('show');
+});
+
+// Close the dropdown if the user clicks outside of it
+document.addEventListener('click', (event) => {
+    // Check if the click was outside the dropdown menu AND not on the toggle button itself
+    if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
+        listContainer.classList.remove('show');
+    }
+});
+
+// Populate the dropdown list
 storyData.forEach(story => {
-    const label = document.createElement('label');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = story.story_id;
-    checkbox.className = 'story-checkbox';
+    const item = document.createElement('div');
+    item.className = 'story-item';
+    item.dataset.id = story.story_id;
+    item.innerText = `${story.story_title_Greek} / ${story.story_title_English}`;
     
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(` ${story.story_title_Greek} / ${story.story_title_English}`));
+    // Toggle selection on click
+    item.addEventListener('click', () => {
+        const id = story.story_id;
+        
+        // If already selected, remove it
+        if (selectedStoryIds.includes(id)) {
+            selectedStoryIds = selectedStoryIds.filter(selectedId => selectedId !== id);
+            item.classList.remove('selected');
+        } else {
+            // Otherwise, add it
+            selectedStoryIds.push(id);
+            item.classList.add('selected');
+        }
+        
+        renderContent();
+    });
     
-    selectContainer.appendChild(label);
-    
-    // Re-render content when a checkbox is toggled
-    checkbox.addEventListener('change', renderContent);
+    listContainer.appendChild(item);
+});
+
+// Clear All functionality
+btnClearSelection.addEventListener('click', () => {
+    selectedStoryIds = []; // Empty the array
+    document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
+    renderContent();
 });
 
 function renderContent() {
-    container.innerHTML = '';
-    
-    // Get all checked checkboxes
-    const checkedBoxes = document.querySelectorAll('.story-checkbox:checked');
-    const selectedIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+    contentContainer.innerHTML = '';
     
     // Filter the nested data for only the selected stories
-    const selectedStories = storyData.filter(story => selectedIds.includes(story.story_id));
+    const selectedStories = storyData.filter(story => selectedStoryIds.includes(story.story_id));
     
     selectedStories.forEach(story => {
         const block = document.createElement('div');
@@ -56,9 +86,12 @@ function renderContent() {
             block.appendChild(row);
         });
         
-        container.appendChild(block);
+        contentContainer.appendChild(block);
     });
 }
+
+// Optional but recommended: trigger initial empty render
+renderContent();
 
 // --- 2. Toggles Logic ---
 document.getElementById('toggle-greek').addEventListener('change', e => { document.body.classList.toggle('hide-greek', !e.target.checked); });
