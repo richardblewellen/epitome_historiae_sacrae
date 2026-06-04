@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient Greek Reader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="sticky-header">
+    <div class="controls-row">
+        <!-- Story Selection -->
+        <select id="story-select" multiple size="3">
+            <!-- Options populated by JS -->
+        </select>
+
+        <!-- Display Toggles -->
+        <div class="toggles">
+            <label><input type="checkbox" id="toggle-greek" checked> Greek</label>
+            <label><input type="checkbox" id="toggle-literal" checked> Literal English</label>
+            <label><input type="checkbox" id="toggle-smooth" checked> Smooth English</label>
+        </div>
+    </div>
+
+    <div class="controls-row">
+        <!-- Playback Controls -->
+        <button id="btn-play">▶ Play Selected</button>
+        <button id="btn-stop">■ Stop</button>
+        
+        <div class="sliders">
+            <label>Speed: <span id="speed-val">1.0</span>x 
+                <input type="range" id="slider-speed" min="0.5" max="1" step="0.1" value="1">
+            </label>
+            <label>Pause: <span id="pause-val">0</span>s 
+                <input type="range" id="slider-pause" min="0" max="2" step="0.5" value="0">
+            </label>
+            <label>Repeat: <span id="repeat-val">1</span>x 
+                <input type="range" id="slider-repeat" min="1" max="4" step="1" value="1">
+            </label>
+        </div>
+    </div>
+</div>
+
+<div id="content-container">
+    <!-- Stories populated by JS -->
+</div>
+
+<!-- Load scripts -->
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
