@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+#sticky-header {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    padding: 15px;
+    border-bottom: 2px solid #ccc;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+#story-select {
+    min-width: 250px;
+}
+
+.sliders label {
+    margin-right: 15px;
+    font-size: 0.9em;
+}
+
+#content-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.story-block {
+    margin-bottom: 40px;
+}
+
+.story-title {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+/* Two Column Grid */
+.sentence-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 15px;
+    border-bottom: 1px dashed #eee;
+    transition: background-color 0.3s;
+}
+
+.sentence-row.highlight {
+    background-color: #fff3cd; /* Yellow highlighting */
+}
+
+/* Typography */
+.col-greek {
+    display: flex;
+    flex-direction: column;
+}
+
+.greek-text {
+    font-size: 1.4em;
+    cursor: pointer; /* Indicates it can be clicked */
+    color: #2c3e50;
+}
+
+.greek-text:hover {
+    color: #0056b3;
+}
+
+.literal-text {
+    font-size: 0.85em;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+.col-english {
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+}
+
+/* Toggles Logic using CSS */
+body.hide-greek .greek-text { display: none; }
+body.hide-literal .literal-text { display: none; }
+body.hide-smooth .col-english { display: none; }
