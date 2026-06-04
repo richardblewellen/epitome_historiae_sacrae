@@ -93,18 +93,19 @@ body {
 .sliders label {
     display: flex;
     align-items: center;
-    gap: 8px;
     font-size: 0.9em;
     white-space: nowrap;
 }
+.slider-name {
+    width: 48px;        /* fixed: wide enough for "Repeat:" */
+}
+.slider-val {
+    width: 30px;        /* fixed: wide enough for "1.0x" or "0.5x" */
+    text-align: right;
+}
 .sliders input[type="range"] {
     width: 100px;
-}
-
-#speed-val, #pause-val, #repeat-val {
-    display: inline-block;
-    min-width: 20px;
-    text-align: right;
+    margin-left: 6px;
 }
 
 /* --- CONTENT --- */
