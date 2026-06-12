@@ -76,14 +76,10 @@ function renderContent() {
             const row = document.createElement('div');
             row.className = 'sentence-row';
             row.innerHTML = `
-                <div class="col-greek">
-                    <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
-                    <span class="literal-text">${sentence.literal_english}</span>
-                </div>
-                <div class="col-english">
-                    <span class="smooth-text">${sentence.smooth_english}</span>
-                </div>
-            `;
+            <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
+            <span class="literal-text">${sentence.literal_english}</span>
+            <span class="smooth-text">${sentence.smooth_english}</span>
+        `;
             block.appendChild(row);
         });
 
