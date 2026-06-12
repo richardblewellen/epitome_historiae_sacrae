@@ -126,11 +126,11 @@ body {
     padding-bottom: 10px;
 }
 
-/* Two Column Grid */
+/* Single Column Stack */
 .sentence-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adds a little breathing room between the lines */
     padding: 15px;
     border-bottom: 1px dashed #eee;
     transition: background-color 0.3s;
@@ -141,14 +141,9 @@ body {
 }
 
 /* Typography */
-.col-greek {
-    display: flex;
-    flex-direction: column;
-}
-
 .greek-text {
     font-size: 1.4em;
-    cursor: pointer; /* Indicates it can be clicked */
+    cursor: pointer;
     color: #2c3e50;
 }
 
@@ -156,28 +151,20 @@ body {
     color: #0056b3;
 }
 
-.literal-text {
-    font-size: 0.85em;
-    color: #7f8c8d;
-    margin-top: 5px;
-}
-
-.col-english {
+/* Makes Literal and Smooth English identical */
+.literal-text, .smooth-text {
     font-size: 1.1em;
-    display: flex;
-    align-items: flex-start;
+    color: inherit; 
 }
 
 /* Toggles Logic using CSS */
 body.hide-greek .greek-text { display: none; }
 body.hide-literal .literal-text { display: none; }
-body.hide-smooth .col-english { display: none; }
+body.hide-smooth .smooth-text { display: none; }
 
 /* --- MOBILE --- */
 @media (max-width: 600px) {
-    .sentence-row {
-        grid-template-columns: 1fr; /* stack columns on small screens */
-    }
+    
     .sliders {
         gap: 16px;
     }
