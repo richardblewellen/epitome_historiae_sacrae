@@ -3,6 +3,8 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.5;
+    background-color: #f9f9f9; /* Brought over from your old version */
+    color: #333;
 }
 
 #sticky-header {
@@ -144,23 +146,28 @@ body {
 /* Typography */
 .greek-text {
     font-size: 1.5rem;
-    line-height:1.4;
+    line-height: 1.4;
     cursor: pointer;
     color: #333;
     padding: 4px;
     border-radius: 4px;
     display: inline-block;
     transition: background-color 0.1s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .greek-text:hover {
-    color: #f0f0f0;
+    background-color: #f0f0f0; 
+    text-decoration: underline; 
+    text-decoration-color: #ccc;
 }
 
 /* Makes Literal and Smooth English identical */
 .literal-text, .smooth-text {
-    font-size: 1.1em;
-    color: inherit; 
+    font-size: 1.25em;
+    line-height: 1.4;
+    color: #444;
+    padding: 0 4px;
 }
 
 /* Toggles Logic using CSS */
