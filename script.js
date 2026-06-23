@@ -139,8 +139,13 @@ function renderContent() {
         group.sentences.forEach(sentence => {
             const row = document.createElement('div');
             row.className = 'sentence-row';
+            
+            // We wrap the ID and Greek text in a flex container
             row.innerHTML = `
-            <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
+            <div class="greek-wrapper">
+                <span class="sentence-id">${sentence.sentence_id}.</span>
+                <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
+            </div>
             <span class="literal-text">${sentence.literal_english}</span>
             <span class="smooth-text">${sentence.smooth_english}</span>
         `;
