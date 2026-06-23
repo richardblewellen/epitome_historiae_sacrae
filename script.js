@@ -1,6 +1,5 @@
-// --- 1. Initialization & UI Setup (UPDATED FOR API) ---
-// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-const API_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnRQ_788pJ8H0eK5X0lgFai7_rQri3Vk4ZONxCB2Ew_QF5g9lBP70yaFPpT9TFhIFlIY3IGGoyIfgunXJhymZfflfCKcDZMGSL39C3_FyKSgofKMafKjup_VyIhRNa6Pia096tzCtpR9MxR2kioNK0vv0BVDc8KkhavhyIhZY-MENXccA7r4XkA9674xq5nBBjS3tvMA9A5U2MDjaRgenGdbSzc-1OPKjkh0--Bqi7ZAt_aMWk_iMcBavioramLheima1-90_NWUisau1pju2bmryeFLxQ&lib=MtH8LXB5VE2_WdkHZzSOQTmUewPPs_cYy";
+// --- 1. Initialization & UI Setup ---
+const API_URL = "data.json";
 
 const masterSetSelect = document.getElementById('select-master-set');
 const listContainer = document.getElementById('story-list-container');
