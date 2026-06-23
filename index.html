@@ -5,28 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient Greek Reader</title>
 
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="sticky-header">
-    <div class="controls-row">
-        <!-- Story Selection -->
-        <div id="story-select-wrapper" class="dropdown-wrapper">
-    <button id="btn-dropdown-toggle">Pick your stories. ▼</button>
-    <button id="btn-clear-selection">Clear All</button>
-        
-           <!-- added to make the worksheet button. It has css -->
-            <a href="worksheet.html" id="btn-to-worksheet" class="primary-btn" style="text-decoration: none; padding: 10px 15px; border-radius: 4px; background: #0d6efd; color: white;">🖨️ Go to Worksheet</a>
-    
-    <div id="story-list-container" class="dropdown-content"></div>
-</div>
+    <div id="loading-message" style="text-align: center; padding: 10px; font-weight: bold; color: #0d6efd;">
+        Loading stories from the database...
+    </div>
 
-        <!-- Display Toggles -->
+    <div id="controls-selection-group" class="controls-row" style="display: none;"> <div id="set-select-wrapper" class="dropdown-wrapper">
+            <select id="select-master-set" style="padding: 8px 12px; font-size: 0.95em; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; background: white;">
+                </select>
+        </div>
+
+        <div id="story-select-wrapper" class="dropdown-wrapper">
+            <button id="btn-dropdown-toggle">Pick your stories. ▼</button>
+            <button id="btn-clear-selection">Clear All</button>
+            
+            <a href="worksheet.html" id="btn-to-worksheet" class="primary-btn" style="text-decoration: none; padding: 10px 15px; border-radius: 4px; background: #0d6efd; color: white;">🖨️ Go to Worksheet</a>
+            
+            <div id="story-list-container" class="dropdown-content"></div>
+        </div>
+    </div>
+
+    <div class="controls-row">
         <div class="toggles">
             <label><input type="checkbox" id="toggle-greek" checked> Greek</label>
             <label><input type="checkbox" id="toggle-literal" checked> Literal English</label>
@@ -35,11 +42,10 @@
     </div>
 
     <div class="controls-row">
-        <!-- Playback Controls -->
         <button id="btn-play">▶</button>
         <button id="btn-stop">■</button>
         
-       <div class="sliders">
+        <div class="sliders">
             <label><span class="slider-name">Speed:</span><span class="slider-val"><span id="speed-val">1.0</span>x</span><input type="range" id="slider-speed" min="0.5" max="1" step="0.1" value="1"></label>
             <label><span class="slider-name">Pause:</span><span class="slider-val"><span id="pause-val">0</span>s</span><input type="range" id="slider-pause" min="0" max="2" step="0.5" value="0"></label>
             <label><span class="slider-name">Repeat:</span><span class="slider-val"><span id="repeat-val">1</span>x</span><input type="range" id="slider-repeat" min="1" max="4" step="1" value="1"></label>
@@ -48,10 +54,9 @@
 </div>
 
 <div id="content-container">
-    <!-- Stories populated by JS -->
-</div>
+    </div>
 
-<!-- Load scripts -->
+<script src="script.js"></script>
 
 </body>
 </html>
