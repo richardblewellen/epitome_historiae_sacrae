@@ -28,6 +28,7 @@ body {
 }
 
 /* --- DROPDOWN STYLES --- */
+/* --- DROPDOWN & BUTTON STYLES --- */
 .dropdown-wrapper {
     position: relative;
     display: flex;
@@ -35,17 +36,37 @@ body {
     align-items: center;
 }
 
-#btn-dropdown-toggle, #btn-clear-selection {
+/* Unifies the Master Dropdown with your other buttons */
+#select-master-set, #btn-dropdown-toggle, #btn-clear-selection {
     padding: 8px 12px;
     cursor: pointer;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 0.95em;
+    font-family: inherit;
 }
 
-#btn-dropdown-toggle:hover, #btn-clear-selection:hover {
+#select-master-set:hover, #btn-dropdown-toggle:hover, #btn-clear-selection:hover {
     background-color: #e9ecef;
+}
+
+/* Worksheet Button Styling */
+#btn-to-worksheet {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background: #0d6efd;
+    color: white;
+    font-size: 0.95em;
+    border: 1px solid #0d6efd;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+#btn-to-worksheet:hover {
+    background: #0b5ed7;
 }
 
 .dropdown-content {
@@ -85,7 +106,6 @@ body {
     font-weight: bold;
     color: #0f5132;
 }
-
 /* -------SLIDERS-------- */
 .sliders {
     display: flex;
