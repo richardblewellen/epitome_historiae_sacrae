@@ -8,6 +8,11 @@ body {
 
 /* --- SCREEN UI CONTROLS --- */
 .controls-wrapper {
+    font-family: system-ui, sans-serif; /* Matches the reader's modern UI font */
+    position: sticky; /* Makes it stay at the top when you scroll */
+    top: 0;
+    z-index: 1000; /* Keeps it above the worksheet content */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adds the subtle drop shadow */
     background: #f8f9fa;
     padding: 20px;
     border-bottom: 2px solid #ccc;
