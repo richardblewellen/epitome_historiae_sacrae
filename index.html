@@ -52,8 +52,24 @@
 </div>
 
 <!-- Load scripts -->
-<script src="data.js"></script>
-<script src="script.js"></script>
+<script>
+let storyData = [];
+
+async function loadData() {
+    const res = await fetch('data/reader-data.json');
+    storyData = await res.json();
+
+    initApp(); // we will wrap your existing code
+}
+</script>
+
+ <script>
+function initApp() {
+    // everything currently in script.js goes here
+}
+loadData();
+</script>
+
 
 </body>
 </html>
