@@ -1,129 +1,222 @@
+// --- 1. Initialization & UI Setup ---
+const API_URL = "data.json"; // Ensures it uses the same database as the reader!
+
+const masterSetSelect = document.getElementById('select-master-set');
 const listContainer = document.getElementById('story-list-container');
 const worksheetContainer = document.getElementById('worksheet-container');
 const btnDropdownToggle = document.getElementById('btn-dropdown-toggle');
 const btnClearSelection = document.getElementById('btn-clear-selection');
 const btnPrint = document.getElementById('btn-print');
+const loadingMessage = document.getElementById('loading-message');
+const controlsGroup = document.getElementById('controls-selection-group');
+const typeRadios = document.querySelectorAll('input[name="worksheet-type"]');
 
-let selectedStoryIds = [];
+let masterSetData = [];
+let currentSetId = "";
+let selectedGroupIds = [];
 
-// Guard against data.js failing to load
-if (typeof storyData === 'undefined') {
-    console.error('storyData is not defined — check that data.js loaded correctly.');
+// Fetch the data from the JSON API
+async function fetchReaderData() {
+    try {
+        const response = await fetch(API_URL);
+        const jsonData = await response.json();
+        
+        masterSetData = jsonData.sets;
+        
+        if(loadingMessage) loadingMessage.style.display = 'none';
+        if(controlsGroup) controlsGroup.style.display = 'flex';
+        initMasterSets();
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        if(loadingMessage) {
+            loadingMessage.innerText = "Error loading database. Please check your connection.";
+            loadingMessage.style.color = "red";
+        }
+    }
 }
 
-// Toggle Dropdown
+// Populate the top-level Dropdown (Sets/Books)
+function initMasterSets() {
+    masterSetSelect.innerHTML = '';
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = "";
+    defaultOption.innerText = "Pick your set...";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    masterSetSelect.appendChild(defaultOption);
+    
+    masterSetData.forEach(set => {
+        const option = document.createElement('option');
+        option.value = set.set_id;
+        option.innerText = set.set_title;
+        masterSetSelect.appendChild(option);
+    });
+
+    currentSetId = "";
+    listContainer.innerHTML = '';
+}
+
+// When the user changes the Set/Book, update the secondary Dropdown
+masterSetSelect.addEventListener('change', (e) => {
+    currentSetId = e.target.value;
+    populateGroupDropdown();
+    listContainer.classList.add('show');
+});
+
+// Populate the secondary Dropdown (Stories/Chapters)
+function populateGroupDropdown() {
+    listContainer.innerHTML = '';
+    selectedGroupIds = []; 
+    generateWorksheet();
+
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
+
+    activeSet.groups.forEach(group => {
+        const item = document.createElement('div');
+        item.className = 'story-item';
+        item.dataset.id = group.group_id;
+        item.innerText = `${group.group_title}`;
+
+        item.addEventListener('click', () => {
+            const id = group.group_id;
+            if (selectedGroupIds.includes(id)) {
+                selectedGroupIds = selectedGroupIds.filter(selectedId => selectedId !== id);
+                item.classList.remove('selected');
+            } else {
+                selectedGroupIds.push(id);
+                item.classList.add('selected');
+            }
+            generateWorksheet();
+        });
+
+        listContainer.appendChild(item);
+    });
+}
+
+// UI Listeners
 btnDropdownToggle.addEventListener('click', () => listContainer.classList.toggle('show'));
 
-// Close Dropdown on outside click
 document.addEventListener('click', (event) => {
     if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
         listContainer.classList.remove('show');
     }
 });
 
-// Populate Dropdown
-storyData.forEach(story => {
-    const item = document.createElement('div');
-    item.className = 'story-item';
-    item.dataset.id = story.story_id;
-    item.innerText = `${story.story_title_Greek} / ${story.story_title_English}`;
-
-    item.addEventListener('click', () => {
-        const id = story.story_id;
-        if (selectedStoryIds.includes(id)) {
-            selectedStoryIds = selectedStoryIds.filter(selectedId => selectedId !== id);
-            item.classList.remove('selected');
-        } else {
-            selectedStoryIds.push(id);
-            item.classList.add('selected');
-        }
-        generateWorksheet();
-    });
-
-    listContainer.appendChild(item);
-});
-
-// Clear All
 btnClearSelection.addEventListener('click', () => {
-    selectedStoryIds = [];
+    selectedGroupIds = [];
     document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
     listContainer.classList.remove('show');
     generateWorksheet();
 });
 
-// Print Button
-btnPrint.addEventListener('click', () => {
-    if (selectedStoryIds.length === 0) {
-        alert("Please select at least one story for the quiz first!");
-        return;
-    }
-    window.print(); // Triggers the browser's print dialog
+// Redraw whenever the user clicks Study Sheet or Quiz
+typeRadios.forEach(radio => {
+    radio.addEventListener('change', generateWorksheet);
 });
 
-// Generate Worksheet Layout
+btnPrint.addEventListener('click', () => {
+    if (selectedGroupIds.length === 0) {
+        alert("Please select at least one story first!");
+        return;
+    }
+    window.print(); 
+});
+
+// Start the fetch process
+fetchReaderData();
+
+
+// --- 2. Generate Worksheet Layout ---
 function generateWorksheet() {
-    const worksheetContainer = document.getElementById('worksheet-container');
     worksheetContainer.innerHTML = '';
     
-    const selectedStories = storyData.filter(story => selectedStoryIds.includes(story.story_id));
-    if (selectedStories.length === 0) return;
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
 
+    const selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    if (selectedGroups.length === 0) return;
+
+    // Check which toggle is selected
+    const documentType = document.querySelector('input[name="worksheet-type"]:checked').value;
     let htmlString = ``;
 
-    // --- 1. BUILD THE STUDENT QUIZZES ---
-    selectedStories.forEach((story, index) => {
-        if (index > 0) {
-            htmlString += `<div class="page-break"></div>`;
-        }
+    if (documentType === "study-sheet") {
+        // --- TWO-COLUMN STUDY SHEET ---
+        selectedGroups.forEach((group, index) => {
+            if (index > 0) htmlString += `<div class="page-break"></div>`;
 
-        htmlString += `
-            <div class="quiz-header">
-                <div class="quiz-top-row">
-                    <h2 class="quiz-main-title">QUIZ</h2>
-                    <div class="quiz-name-line">Name: __________________________________________________________</div>
-                </div>
-                <h3 class="quiz-subtitle">${story.story_title_English}</h3>
-            </div>
-        `;
-        
-        story.sentences.forEach((sentence, i) => {
             htmlString += `
-                <div class="quiz-item">
-                    <div class="greek-text">${i + 1}. ${sentence.greek}</div>
-                    <div class="blank-line"></div>
-                    <div class="blank-line"></div>
+                <div class="quiz-header" style="margin-bottom: 15px;">
+                    <h2 class="quiz-main-title" style="font-size: 1.8em;">Study Sheet</h2>
+                    <h3 class="quiz-subtitle">${group.group_title}</h3>
                 </div>
             `;
+            
+            group.sentences.forEach(sentence => {
+                htmlString += `
+                    <div class="study-sheet-grid">
+                        <div class="study-greek">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="study-english">${sentence.smooth_english}</div>
+                    </div>
+                `;
+            });
         });
-    });
 
-    // --- 2. BUILD THE ANSWER KEYS ---
-    htmlString += `<div class="page-break"></div>`;
+    } else if (documentType === "quiz") {
+        // --- QUIZZES ---
+        selectedGroups.forEach((group, index) => {
+            if (index > 0) htmlString += `<div class="page-break"></div>`;
 
-    selectedStories.forEach((story, index) => {
-        if (index > 0) {
-            htmlString += `<div class="page-break"></div>`;
-        }
-
-        htmlString += `
-            <div class="quiz-header">
-                <div class="quiz-top-row">
-                    <h2 class="quiz-main-title">ANSWER KEY</h2>
-                </div>
-                <h3 class="quiz-subtitle">${story.story_title_English}</h3>
-            </div>
-        `;
-        
-        story.sentences.forEach((sentence, i) => {
             htmlString += `
-                <div class="quiz-item">
-                    <div class="greek-text">${i + 1}. ${sentence.greek}</div>
-                    <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
-                    <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
+                <div class="quiz-header">
+                    <div class="quiz-top-row">
+                        <h2 class="quiz-main-title">QUIZ</h2>
+                        <div class="quiz-name-line">Name: __________________________________________________________</div>
+                    </div>
+                    <h3 class="quiz-subtitle">${group.group_title}</h3>
                 </div>
             `;
+            
+            group.sentences.forEach((sentence, i) => {
+                htmlString += `
+                    <div class="quiz-item">
+                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+                    </div>
+                `;
+            });
         });
-    });
+
+        // --- ANSWER KEYS ---
+        htmlString += `<div class="page-break"></div>`;
+
+        selectedGroups.forEach((group, index) => {
+            if (index > 0) htmlString += `<div class="page-break"></div>`;
+
+            htmlString += `
+                <div class="quiz-header">
+                    <div class="quiz-top-row">
+                        <h2 class="quiz-main-title">ANSWER KEY</h2>
+                    </div>
+                    <h3 class="quiz-subtitle">${group.group_title}</h3>
+                </div>
+            `;
+            
+            group.sentences.forEach((sentence, i) => {
+                htmlString += `
+                    <div class="quiz-item">
+                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
+                        <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
+                    </div>
+                `;
+            });
+        });
+    }
 
     worksheetContainer.innerHTML = htmlString;
 }
