@@ -53,35 +53,24 @@
 
 <!-- Load scripts -->
 <script>
-let remoteData = null;
+let storyData = [];
 
 fetch("https://script.google.com/macros/s/AKfycbyFwJdpA86ha952YKvXXQgIh4nF8By7B_dvrAYPjWASW30FuAcoWku0IYBhzvGEkXg8/exec")
   .then(r => r.json())
   .then(data => {
-    remoteData = data.sets;
-    console.log("REMOTE DATA LOADED", remoteData);
+    storyData = data.sets;
+
+    console.log("DATA LOADED", storyData);
+
+    // NOW start your app AFTER data exists
+    startApp();
   })
-  .catch(err => console.error("REMOTE DATA FAILED", err));
-</script>
-    
-<script>
-let storyData = [];
+  .catch(err => console.error("LOAD FAILED", err));
 
-async function loadData() {
-    const res = await fetch('data/reader-data.json');
-    storyData = await res.json();
-
-    initApp(); // we will wrap your existing code
+function startApp() {
+    // we will connect script.js here next step
 }
 </script>
-
- <script>
-function initApp() {
-    // everything currently in script.js goes here
-}
-loadData();
-</script>
-
 
 </body>
 </html>
