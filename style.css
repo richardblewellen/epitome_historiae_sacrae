@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.5;
-    background-color: #f9f9f9; /* Brought over from your old version */
+    background-color: #f9f9f9;
     color: #333;
 }
 
@@ -158,7 +158,6 @@ body {
 
 .greek-text:hover {
     background-color: #f0f0f0; 
-    text-decoration: underline; 
     text-decoration-color: #ccc;
 }
 
