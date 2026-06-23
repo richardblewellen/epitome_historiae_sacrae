@@ -1,15 +1,94 @@
-// --- 1. Initialization & UI Setup ---
+// --- 1. Initialization & UI Setup (UPDATED FOR API) ---
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const API_URL = "YOUR_WEB_APP_URL_HERE";
+
+const masterSetSelect = document.getElementById('select-master-set');
 const listContainer = document.getElementById('story-list-container');
 const contentContainer = document.getElementById('content-container');
 const btnDropdownToggle = document.getElementById('btn-dropdown-toggle');
 const btnClearSelection = document.getElementById('btn-clear-selection');
+const loadingMessage = document.getElementById('loading-message');
+const controlsGroup = document.getElementById('controls-selection-group');
 
+let masterSetData = [];
+let currentSetId = "";
+let selectedGroupIds = [];
 let isPlaying = false;
-let selectedStoryIds = [];
 
-// Guard against data.js failing to load
-if (typeof storyData === 'undefined') {
-    console.error('storyData is not defined — check that data.js loaded correctly.');
+// Fetch the data from the Google Apps Script API
+async function fetchReaderData() {
+    try {
+        const response = await fetch(API_URL);
+        const jsonData = await response.json();
+        
+        masterSetData = jsonData.sets;
+        
+        // Hide loading message, show controls, and build UI
+        if(loadingMessage) loadingMessage.style.display = 'none';
+        if(controlsGroup) controlsGroup.style.display = 'flex';
+        initMasterSets();
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        if(loadingMessage) {
+            loadingMessage.innerText = "Error loading stories. Please check your Web App URL and ensure it is deployed to 'Anyone'.";
+            loadingMessage.style.color = "red";
+        }
+    }
+}
+
+// Populate the top-level Dropdown (Sets/Books)
+function initMasterSets() {
+    masterSetSelect.innerHTML = '';
+    masterSetData.forEach(set => {
+        const option = document.createElement('option');
+        option.value = set.set_id;
+        option.innerText = set.set_title;
+        masterSetSelect.appendChild(option);
+    });
+    
+    // Set default selection
+    if(masterSetData.length > 0) {
+        currentSetId = masterSetData.set_id;
+        populateGroupDropdown();
+    }
+}
+
+// When the user changes the Set/Book, update the secondary Dropdown
+masterSetSelect.addEventListener('change', (e) => {
+    currentSetId = e.target.value;
+    populateGroupDropdown();
+});
+
+// Populate the secondary Dropdown (Stories/Chapters)
+function populateGroupDropdown() {
+    listContainer.innerHTML = '';
+    selectedGroupIds = []; // Clear selections when changing sets
+    renderContent();
+
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
+
+    activeSet.groups.forEach(group => {
+        const item = document.createElement('div');
+        item.className = 'story-item';
+        item.dataset.id = group.group_id;
+        item.innerText = `${group.group_title}`;
+
+        item.addEventListener('click', () => {
+            const id = group.group_id;
+            if (selectedGroupIds.includes(id)) {
+                selectedGroupIds = selectedGroupIds.filter(selectedId => selectedId !== id);
+                item.classList.remove('selected');
+            } else {
+                selectedGroupIds.push(id);
+                item.classList.add('selected');
+            }
+            renderContent();
+        });
+
+        listContainer.appendChild(item);
+    });
 }
 
 // Toggle the dropdown visibility
@@ -24,54 +103,35 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// Populate the dropdown list
-storyData.forEach(story => {
-    const item = document.createElement('div');
-    item.className = 'story-item';
-    item.dataset.id = story.story_id;
-    item.innerText = `${story.story_title_English}`;
-
-    item.addEventListener('click', () => {
-        const id = story.story_id;
-        if (selectedStoryIds.includes(id)) {
-            selectedStoryIds = selectedStoryIds.filter(selectedId => selectedId !== id);
-            item.classList.remove('selected');
-        } else {
-            selectedStoryIds.push(id);
-            item.classList.add('selected');
-        }
-        // Keep dropdown open so multiple stories can be picked in one session
-        renderContent();
-    });
-
-    listContainer.appendChild(item);
-});
-
-// Clear All
+// Clear All selections
 btnClearSelection.addEventListener('click', () => {
-    selectedStoryIds = [];
+    selectedGroupIds = [];
     document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
     listContainer.classList.remove('show');
     renderContent();
 });
 
+// Render the selected content to the screen
 function renderContent() {
     contentContainer.innerHTML = '';
     window.scrollTo(0, 0);
 
-    const selectedStories = storyData.filter(story => selectedStoryIds.includes(story.story_id));
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
 
-    selectedStories.forEach(story => {
+    const selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+
+    selectedGroups.forEach(group => {
         const block = document.createElement('div');
         block.className = 'story-block';
 
         block.innerHTML = `
             <div class="story-title">
-                <h2>${story.story_title_English}</h2>
+                <h2>${group.group_title}</h2>
             </div>
         `;
 
-        story.sentences.forEach(sentence => {
+        group.sentences.forEach(sentence => {
             const row = document.createElement('div');
             row.className = 'sentence-row';
             row.innerHTML = `
@@ -86,7 +146,9 @@ function renderContent() {
     });
 }
 
-renderContent();
+// Boot up the app by initiating the fetch request
+fetchReaderData();
+
 
 // --- 2. Toggles ---
 document.getElementById('toggle-greek').addEventListener('change', e => {
@@ -99,8 +161,8 @@ document.getElementById('toggle-smooth').addEventListener('change', e => {
     document.body.classList.toggle('hide-smooth', !e.target.checked);
 });
 
+
 // --- 3. Slider Labels ---
-// Maps slider position to repeat count: 1→1, 2→2, 3→3, 4→5
 const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 };
 
 document.getElementById('slider-speed').addEventListener('input', e => {
@@ -113,28 +175,23 @@ document.getElementById('slider-repeat').addEventListener('input', e => {
     document.getElementById('repeat-val').innerText = repeatValues[parseInt(e.target.value)];
 });
 
+
 // --- 4. Greek Diacritic Normalization for TTS ---
 function cleanForTTS(text) {
     let cleaned = text.normalize("NFD")
-        // Combined: grave, tilde, circumflex, and Greek perispomeni -> acute
         .replace(/[\u0300\u0302\u0303\u0342]/g, '\u0301') 
-        // Combined: breathings, iota subscripts, macrons, and breves -> stripped
         .replace(/[\u0313\u0314\u0304\u0306\u0345]/g, '') 
         .normalize("NFC")
-        // The Monosyllable Fix
         .replace(/(^|[\s,;:'"(\[·-])([άέήίόύώΆΈΉΊΌΎΏ])(?=[\s,;:.!?"'\)\]·-]|$)/g, (match, prefix, letter) => {
             return prefix + letter.normalize("NFD").replace(/\u0301/g, '').normalize("NFC");
         });
     
-    // --- CUSTOM PHONETIC DICTIONARY ---
-    // 1. Fix the ὦ issue by swapping a standalone ω for an omicron (ο)
     cleaned = cleaned.replace(/(^|[\s,;:'"(\[·-])[ωώ](?=[\s,;:.!?"'\)\]·-]|$)/g, '$1ο');
-    
-    // 2. Fixes the stress/diphthong on ἔπαυον
     cleaned = cleaned.replace(/έπαυον/g, 'έπαβον'); 
 
     return cleaned;
 }
+
 
 // --- 5. Text-To-Speech Playback ---
 function speakText(text, speed) {
@@ -153,28 +210,24 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Returns the pixel height of the sticky header, used to offset scroll position
 function getHeaderHeight() {
     const header = document.getElementById('sticky-header');
     return header ? header.getBoundingClientRect().height : 0;
 }
  
-// Scrolls a row into view just below the sticky header, with a small breathing gap
 function scrollRowIntoView(row) {
     const headerHeight = getHeaderHeight();
     const rowTop = row.getBoundingClientRect().top + window.scrollY;
-    const targetScrollY = rowTop - headerHeight - 12; // 12px breathing room
+    const targetScrollY = rowTop - headerHeight - 12; 
     window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
 }
 
-// Click a single sentence to hear it
 function speakSingleSentence(element) {
     window.speechSynthesis.cancel();
     const speed = parseFloat(document.getElementById('slider-speed').value);
     speakText(element.textContent.trim(), speed);
 }
 
-// Play all selected stories in sequence
 document.getElementById('btn-play').addEventListener('click', async () => {
     if (isPlaying) return;
     isPlaying = true;
@@ -211,12 +264,10 @@ document.getElementById('btn-play').addEventListener('click', async () => {
             }
         }
     } finally {
-        // Always reset, whether playback finished naturally or was stopped
         isPlaying = false;
     }
 });
 
-// Stop playback
 document.getElementById('btn-stop').addEventListener('click', () => {
     isPlaying = false;
     window.speechSynthesis.cancel();
