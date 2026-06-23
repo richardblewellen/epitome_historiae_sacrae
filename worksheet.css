@@ -159,3 +159,37 @@ button:hover { background: #e9ecef; }
         padding-top: 0;
     } 
 }
+
+/* --- TWO-COLUMN STUDY SHEET STYLES --- */
+.study-sheet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 30px; /* Space down the middle */
+    margin-bottom: 20px;
+    align-items: center;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 10px;
+    page-break-inside: avoid;
+}
+
+.study-greek {
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.study-english {
+    font-size: 1.2em;
+    color: #444;
+}
+
+/* Standardize Dropdown Arrows */
+#select-master-set, #btn-dropdown-toggle {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px; 
+}
+
