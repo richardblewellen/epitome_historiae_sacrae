@@ -52,25 +52,6 @@
 </div>
 
 <!-- Load scripts -->
-<script>
-let storyData = [];
-
-fetch("https://script.google.com/macros/s/AKfycbyFwJdpA86ha952YKvXXQgIh4nF8By7B_dvrAYPjWASW30FuAcoWku0IYBhzvGEkXg8/exec")
-  .then(r => r.json())
-  .then(data => {
-    storyData = data.sets;
-
-    console.log("DATA LOADED", storyData);
-
-    // NOW start your app AFTER data exists
-    startApp();
-  })
-  .catch(err => console.error("LOAD FAILED", err));
-
-function startApp() {
-    // we will connect script.js here next step
-}
-</script>
 
 </body>
 </html>
