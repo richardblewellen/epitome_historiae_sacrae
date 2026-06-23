@@ -208,3 +208,24 @@ body.hide-smooth .smooth-text { display: none; }
     background-position: right 12px center;
     padding-right: 32px; /* Makes room for the new arrow */
 }
+
+/* --- SENTENCE ID STYLING --- */
+.greek-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: baseline; /* Aligns the bottom of the numbers with the Greek text */
+}
+
+.sentence-id {
+    color: #888; /* A nice subdued gray */
+    font-size: 1.1em;
+    font-weight: bold;
+    min-width: 45px; /* Keeps the text aligned perfectly even if numbers reach 10 or 100 */
+    text-align: right; /* Pushes the periods to line up neatly */
+    user-select: none; /* Prevents students from accidentally highlighting the numbers */
+}
+
+/* Indent the English translations so they align with the Greek, not the numbers */
+.literal-text, .smooth-text {
+    margin-left: 57px;
+}
