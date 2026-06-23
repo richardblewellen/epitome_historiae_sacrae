@@ -159,7 +159,7 @@ body {
 .literal-text, .smooth-text {
     font-size: 1.4em;
     line-height: 1.4;
-    color: inherit
+    color: #414141;
 }
 
 /* Toggles Logic using CSS */
