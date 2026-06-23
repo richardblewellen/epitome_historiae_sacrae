@@ -39,24 +39,33 @@ async function fetchReaderData() {
 // Populate the top-level Dropdown (Sets/Books)
 function initMasterSets() {
     masterSetSelect.innerHTML = '';
+
+    const defaultOption = document.createElement('option');
+    defaultOption.value = "";
+    defaultOption.innerText = "Pick your set...";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    masterSetSelect.appendChild(defaultOption);
+    
     masterSetData.forEach(set => {
         const option = document.createElement('option');
         option.value = set.set_id;
         option.innerText = set.set_title;
         masterSetSelect.appendChild(option);
     });
-    
-    // Set default selection
-    if(masterSetData.length > 0) {
-        currentSetId = masterSetData.set_id;
-        populateGroupDropdown();
-    }
+
+    // Ensure the second menu starts empty
+    currentSetId = "";
+    listContainer.innerHTML = '';
 }
 
 // When the user changes the Set/Book, update the secondary Dropdown
 masterSetSelect.addEventListener('change', (e) => {
     currentSetId = e.target.value;
     populateGroupDropdown();
+
+    // Automatically open the stories dropdown for them!
+    listContainer.classList.add('show');
 });
 
 // Populate the secondary Dropdown (Stories/Chapters)
