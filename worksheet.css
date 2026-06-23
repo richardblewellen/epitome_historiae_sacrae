@@ -23,25 +23,55 @@ body {
     margin-top: 10px;
 }
 
-button {
-    padding: 10px 15px;
+#select-master-set, #btn-dropdown-toggle, #btn-clear-selection {
+    padding: 8px 12px;
     cursor: pointer;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1em;
-    background: #fff;
+    font-size: 0.95em;
+    font-family: inherit;
 }
 
-button:hover { background: #e9ecef; }
+#select-master-set:hover, #btn-dropdown-toggle:hover, #btn-clear-selection:hover {
+    background-color: #e9ecef;
+}
 
-.primary-btn {
+/* Primary Print Button */
+#btn-print {
+    padding: 8px 15px;
+    border-radius: 4px;
     background: #0d6efd;
     color: white;
-    border: none;
-    font-weight: bold;
+    font-size: 0.95em;
+    border: 1px solid #0d6efd;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.primary-btn:hover { background: #0b5ed7; }
+#btn-print:hover {
+    background: #0b5ed7;
+}
+
+/* Back to Reader Button */
+#btn-to-reader {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background: #6c757d;
+    color: white;
+    font-size: 0.95em;
+    border: 1px solid #6c757d;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+}
+
+#btn-to-reader:hover {
+    background: #5c636a;
+}
 
 .dropdown-content {
     display: none;
