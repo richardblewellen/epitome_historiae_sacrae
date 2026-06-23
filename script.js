@@ -29,7 +29,7 @@ storyData.forEach(story => {
     const item = document.createElement('div');
     item.className = 'story-item';
     item.dataset.id = story.story_id;
-    item.innerText = `${story.story_title_Greek} / ${story.story_title_English}`;
+    item.innerText = `${story.story_title_English}`;
 
     item.addEventListener('click', () => {
         const id = story.story_id;
@@ -67,7 +67,6 @@ function renderContent() {
 
         block.innerHTML = `
             <div class="story-title">
-               // <h2>${story.story_title_Greek}</h2>
                 <h2>${story.story_title_English}</h2>
             </div>
         `;
