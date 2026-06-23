@@ -67,7 +67,7 @@ function renderContent() {
 
         block.innerHTML = `
             <div class="story-title">
-                <h2>${story.story_title_Greek}</h2>
+               // <h2>${story.story_title_Greek}</h2>
                 <h2>${story.story_title_English}</h2>
             </div>
         `;
