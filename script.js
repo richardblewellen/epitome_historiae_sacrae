@@ -63,9 +63,6 @@ function initMasterSets() {
 masterSetSelect.addEventListener('change', (e) => {
     currentSetId = e.target.value;
     populateGroupDropdown();
-
-    // Automatically open the stories dropdown for them!
-    listContainer.classList.add('show');
 });
 
 // Populate the secondary Dropdown (Stories/Chapters)
