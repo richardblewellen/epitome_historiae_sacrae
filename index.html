@@ -53,6 +53,18 @@
 
 <!-- Load scripts -->
 <script>
+let remoteData = null;
+
+fetch("PASTE_YOUR_APPS_SCRIPT_URL_HERE")
+  .then(r => r.json())
+  .then(data => {
+    remoteData = data.sets;
+    console.log("REMOTE DATA LOADED", remoteData);
+  })
+  .catch(err => console.error("REMOTE DATA FAILED", err));
+</script>
+    
+<script>
 let storyData = [];
 
 async function loadData() {
