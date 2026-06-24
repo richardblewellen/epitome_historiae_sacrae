@@ -148,10 +148,9 @@ function generateWorksheet() {
         selectedGroups.forEach((group, index) => {
             if (index > 0) htmlString += `<div class="page-break"></div>`;
 
-            htmlString += `
+           htmlString += `
                 <div class="quiz-header" style="margin-bottom: 15px;">
-                    <h2 class="quiz-main-title" style="font-size: 1.8em;">Study Sheet</h2>
-                    <h3 class="quiz-subtitle">${group.group_title}</h3>
+                    <h2 class="quiz-main-title" style="font-size: 1.8em;">${group.group_title}</h2>
                 </div>
             `;
             
