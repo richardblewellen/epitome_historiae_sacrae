@@ -234,3 +234,9 @@ body {
     padding-right: 32px; 
 }
 
+/* --- PRINT FORMATTING --- */
+.group-wrapper {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
