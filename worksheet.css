@@ -26,6 +26,7 @@ body {
     align-items: center;
     justify-content: center;
     margin-top: 10px;
+    flex-wrap: wrap;
 }
 
 #select-master-set, #btn-dropdown-toggle, #btn-clear-selection {
@@ -174,6 +175,31 @@ body {
     border-top: 2px dashed #ccc; /* Visible on screen to show separation */
 }
 
+/* --- MOBILE SCREEN MAGIC --- */
+@media screen and (max-width: 768px) {
+    /* Collapse the 3-column grid into 2 columns */
+    .study-sheet-grid {
+        grid-template-columns: 35px 1fr; /* Number | Greek */
+        row-gap: 5px; /* Adds a little space before the English drops down */
+    }
+    
+    /* Force the English text to drop to the next row, but stay aligned with the Greek */
+    .study-english {
+        grid-column: 2; 
+        font-size: 1.1em;
+    }
+
+    /* Stack the Quiz Header so the Name line doesn't crash into the word QUIZ */
+    .quiz-top-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .quiz-name-line {
+        margin-top: 15px;
+        white-space: normal;
+    }
+}
 
 /* --- THE PRINT MAGIC --- */
 @media print {
