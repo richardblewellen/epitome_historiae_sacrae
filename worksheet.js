@@ -136,13 +136,12 @@ function generateWorksheet() {
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
     if (!activeSet) return;
 
-    // Determine if we are showing the continuous "whole book" or a specific selection
     let selectedGroups = [];
     let isDefaultContinuous = false;
 
     if (selectedGroupIds.length === 0) {
-        selectedGroups = activeSet.groups; // Grab everything
-        isDefaultContinuous = true; // Turn off page breaks
+        selectedGroups = activeSet.groups; 
+        isDefaultContinuous = true; 
     } else {
         selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
     }
@@ -155,12 +154,14 @@ function generateWorksheet() {
     if (documentType === "study-sheet") {
         // --- TWO-COLUMN STUDY SHEET ---
         selectedGroups.forEach((group, index) => {
-            // Apply page break ONLY if specific groups are selected
             if (index > 0 && !isDefaultContinuous) {
                 htmlString += `<div class="page-break"></div>`;
             } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; // Clean spacer for continuous flow
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
             }
+
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
             htmlString += `
                 <div class="quiz-header" style="margin-bottom: 15px;">
@@ -177,6 +178,9 @@ function generateWorksheet() {
                     </div>
                 `;
             });
+
+            // Close the group wrapper
+            htmlString += `</div>`;
         });
 
     } else if (documentType === "quiz") {
@@ -187,6 +191,9 @@ function generateWorksheet() {
             } else if (index > 0 && isDefaultContinuous) {
                 htmlString += `<div style="margin-top: 40px;"></div>`; 
             }
+
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
             htmlString += `
                 <div class="quiz-header">
@@ -207,10 +214,13 @@ function generateWorksheet() {
                     </div>
                 `;
             });
+
+            // Close the group wrapper
+            htmlString += `</div>`;
         });
 
         // --- ANSWER KEYS ---
-        htmlString += `<div class="page-break"></div>`; // Always break before the answer keys start
+        htmlString += `<div class="page-break"></div>`; 
 
         selectedGroups.forEach((group, index) => {
             if (index > 0 && !isDefaultContinuous) {
@@ -218,6 +228,9 @@ function generateWorksheet() {
             } else if (index > 0 && isDefaultContinuous) {
                 htmlString += `<div style="margin-top: 40px;"></div>`; 
             }
+
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
             htmlString += `
                 <div class="quiz-header">
@@ -237,6 +250,9 @@ function generateWorksheet() {
                     </div>
                 `;
             });
+
+            // Close the group wrapper
+            htmlString += `</div>`;
         });
     }
 
