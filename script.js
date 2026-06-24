@@ -181,16 +181,31 @@ document.getElementById('toggle-smooth').addEventListener('change', e => {
 });
 
 
-// --- 3. Slider Labels ---
+// --- 3. Slider Labels & Defaults ---
 const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 };
 
-document.getElementById('slider-speed').addEventListener('input', e => {
+const sliderSpeed = document.getElementById('slider-speed');
+const sliderPause = document.getElementById('slider-pause');
+const sliderRepeat = document.getElementById('slider-repeat');
+
+// 1. Force the physical slider thumbs to the correct default positions
+sliderSpeed.value = 0.7;
+sliderPause.value = 0.5;
+sliderRepeat.value = 1;
+
+// 2. Force the printed text labels to match those defaults
+document.getElementById('speed-val').innerText = sliderSpeed.value;
+document.getElementById('pause-val').innerText = sliderPause.value;
+document.getElementById('repeat-val').innerText = repeatValues[parseInt(sliderRepeat.value)];
+
+// 3. Listeners to update the text when you drag the sliders
+sliderSpeed.addEventListener('input', e => {
     document.getElementById('speed-val').innerText = e.target.value;
 });
-document.getElementById('slider-pause').addEventListener('input', e => {
+sliderPause.addEventListener('input', e => {
     document.getElementById('pause-val').innerText = e.target.value;
 });
-document.getElementById('slider-repeat').addEventListener('input', e => {
+sliderRepeat.addEventListener('input', e => {
     document.getElementById('repeat-val').innerText = repeatValues[parseInt(e.target.value)];
 });
 
