@@ -118,8 +118,8 @@ typeRadios.forEach(radio => {
 });
 
 btnPrint.addEventListener('click', () => {
-    if (selectedGroupIds.length === 0) {
-        alert("Please select at least one story first!");
+    if (!currentSetId) {
+        alert("Please select a set from the top menu first!");
         return;
     }
     window.print(); 
@@ -136,19 +136,33 @@ function generateWorksheet() {
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
     if (!activeSet) return;
 
-    const selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    // Determine if we are showing the continuous "whole book" or a specific selection
+    let selectedGroups = [];
+    let isDefaultContinuous = false;
+
+    if (selectedGroupIds.length === 0) {
+        selectedGroups = activeSet.groups; // Grab everything
+        isDefaultContinuous = true; // Turn off page breaks
+    } else {
+        selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    }
+
     if (selectedGroups.length === 0) return;
 
-    // Check which toggle is selected
     const documentType = document.querySelector('input[name="worksheet-type"]:checked').value;
     let htmlString = ``;
 
     if (documentType === "study-sheet") {
         // --- TWO-COLUMN STUDY SHEET ---
         selectedGroups.forEach((group, index) => {
-            if (index > 0) htmlString += `<div class="page-break"></div>`;
+            // Apply page break ONLY if specific groups are selected
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; // Clean spacer for continuous flow
+            }
 
-           htmlString += `
+            htmlString += `
                 <div class="quiz-header" style="margin-bottom: 15px;">
                     <h2 class="quiz-main-title" style="font-size: 1.8em;">${group.group_title}</h2>
                 </div>
@@ -167,7 +181,11 @@ function generateWorksheet() {
     } else if (documentType === "quiz") {
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
-            if (index > 0) htmlString += `<div class="page-break"></div>`;
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
+            }
 
             htmlString += `
                 <div class="quiz-header">
@@ -179,7 +197,7 @@ function generateWorksheet() {
                 </div>
             `;
             
-            group.sentences.forEach((sentence, i) => {
+            group.sentences.forEach(sentence => {
                 htmlString += `
                     <div class="quiz-item">
                         <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
@@ -191,10 +209,14 @@ function generateWorksheet() {
         });
 
         // --- ANSWER KEYS ---
-        htmlString += `<div class="page-break"></div>`;
+        htmlString += `<div class="page-break"></div>`; // Always break before the answer keys start
 
         selectedGroups.forEach((group, index) => {
-            if (index > 0) htmlString += `<div class="page-break"></div>`;
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
+            }
 
             htmlString += `
                 <div class="quiz-header">
@@ -205,7 +227,7 @@ function generateWorksheet() {
                 </div>
             `;
             
-            group.sentences.forEach((sentence, i) => {
+            group.sentences.forEach(sentence => {
                 htmlString += `
                     <div class="quiz-item">
                         <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
