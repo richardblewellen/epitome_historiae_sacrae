@@ -118,15 +118,24 @@ btnClearSelection.addEventListener('click', () => {
 
 // Render the selected content to the screen
 function renderContent() {
+    const contentContainer = document.getElementById('content-container'); // Or whatever your container ID is
     contentContainer.innerHTML = '';
-    window.scrollTo(0, 0);
 
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
     if (!activeSet) return;
 
-    const selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    // NEW LOGIC: Default to showing the entire book if nothing specific is selected
+    let groupsToRender = [];
+    if (selectedGroupIds.length === 0) {
+        groupsToRender = activeSet.groups; 
+    } else {
+        groupsToRender = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    }
 
-    selectedGroups.forEach(group => {
+    if (groupsToRender.length === 0) return;
+
+    // Now loop through groupsToRender instead of a filtered list
+    groupsToRender.forEach(group => {
         const block = document.createElement('div');
         block.className = 'story-block';
 
