@@ -171,7 +171,8 @@ function generateWorksheet() {
             group.sentences.forEach(sentence => {
                 htmlString += `
                     <div class="study-sheet-grid">
-                        <div class="study-greek">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="study-number">${sentence.sentence_id}.</div>
+                        <div class="study-greek">${sentence.greek}</div>
                         <div class="study-english">${sentence.smooth_english}</div>
                     </div>
                 `;
