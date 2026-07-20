@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-06-23T22:55:46.164Z",
+  "generated_at": "2026-07-20T19:13:13.595Z",
   "sets": [
     {
       "set_id": "elementary_greek_exercises",
@@ -32353,6 +32353,570 @@
       "set_title": "OT Stories",
       "groups": [
         {
+          "group_id": "1_creation_vocabulary",
+          "group_title": "1. Creation (vocabulary)",
+          "sentences": [
+            {
+              "sentence_id": "1",
+              "greek": "ὁ θεός",
+              "literal_english": "God",
+              "smooth_english": "God"
+            },
+            {
+              "sentence_id": "2",
+              "greek": "τὸ πνεῦμα",
+              "literal_english": "spirit",
+              "smooth_english": "spirit"
+            },
+            {
+              "sentence_id": "3",
+              "greek": "ὁ ἄνθρωπος",
+              "literal_english": "man",
+              "smooth_english": "man"
+            },
+            {
+              "sentence_id": "4",
+              "greek": "τὸ τέκνον",
+              "literal_english": "child",
+              "smooth_english": "child"
+            },
+            {
+              "sentence_id": "5",
+              "greek": "ἡ εἰκών",
+              "literal_english": "image",
+              "smooth_english": "image"
+            },
+            {
+              "sentence_id": "6",
+              "greek": "ὁ κόσμος",
+              "literal_english": "world",
+              "smooth_english": "world"
+            },
+            {
+              "sentence_id": "7",
+              "greek": "ὁ οὐρανός",
+              "literal_english": "sky",
+              "smooth_english": "sky"
+            },
+            {
+              "sentence_id": "8",
+              "greek": "ἡ γῆ",
+              "literal_english": "land",
+              "smooth_english": "land"
+            },
+            {
+              "sentence_id": "9",
+              "greek": "ἡ θάλασσα",
+              "literal_english": "sea",
+              "smooth_english": "sea"
+            },
+            {
+              "sentence_id": "10",
+              "greek": "τὸ ὕδωρ",
+              "literal_english": "water",
+              "smooth_english": "water"
+            },
+            {
+              "sentence_id": "11",
+              "greek": "τὸ φῶς",
+              "literal_english": "light",
+              "smooth_english": "light"
+            },
+            {
+              "sentence_id": "12",
+              "greek": "τὸ σκότος",
+              "literal_english": "darkness",
+              "smooth_english": "darkness"
+            },
+            {
+              "sentence_id": "13",
+              "greek": "ὁ ἥλιος",
+              "literal_english": "sun",
+              "smooth_english": "mon"
+            },
+            {
+              "sentence_id": "14",
+              "greek": "ἡ σελήνη",
+              "literal_english": "moon",
+              "smooth_english": "moon"
+            },
+            {
+              "sentence_id": "15",
+              "greek": "ὁ ἀστήρ",
+              "literal_english": "star",
+              "smooth_english": "star"
+            },
+            {
+              "sentence_id": "16",
+              "greek": "τὸ στερέωμα",
+              "literal_english": "firmament",
+              "smooth_english": "firmament"
+            },
+            {
+              "sentence_id": "17",
+              "greek": "ὁ ἀήρ",
+              "literal_english": "air",
+              "smooth_english": "air"
+            },
+            {
+              "sentence_id": "18",
+              "greek": "ὁ τόπος",
+              "literal_english": "place",
+              "smooth_english": "place"
+            },
+            {
+              "sentence_id": "19",
+              "greek": "τὸ φυτόν",
+              "literal_english": "plant",
+              "smooth_english": "plant"
+            },
+            {
+              "sentence_id": "20",
+              "greek": "τὸ δένδρον",
+              "literal_english": "tree",
+              "smooth_english": "tree"
+            },
+            {
+              "sentence_id": "21",
+              "greek": "ὁ χόρτος",
+              "literal_english": "grass",
+              "smooth_english": "grass"
+            },
+            {
+              "sentence_id": "22",
+              "greek": "τὸ σπέρμα",
+              "literal_english": "seed",
+              "smooth_english": "seed"
+            },
+            {
+              "sentence_id": "23",
+              "greek": "ὁ καρπός",
+              "literal_english": "fruit",
+              "smooth_english": "fruit"
+            },
+            {
+              "sentence_id": "24",
+              "greek": "ἡ τροφή",
+              "literal_english": "food",
+              "smooth_english": "food"
+            },
+            {
+              "sentence_id": "25",
+              "greek": "ὁ σῖτος",
+              "literal_english": "grain",
+              "smooth_english": "grain"
+            },
+            {
+              "sentence_id": "26",
+              "greek": "τὸ ζῷον",
+              "literal_english": "animal",
+              "smooth_english": "animal"
+            },
+            {
+              "sentence_id": "27",
+              "greek": "τὸ πετεινόν",
+              "literal_english": "bird",
+              "smooth_english": "bird"
+            },
+            {
+              "sentence_id": "28",
+              "greek": "ὁ ἰχθύς",
+              "literal_english": "fish",
+              "smooth_english": "fish"
+            },
+            {
+              "sentence_id": "29",
+              "greek": "τὸ κτῆνος",
+              "literal_english": "livestock",
+              "smooth_english": "livestock"
+            },
+            {
+              "sentence_id": "30",
+              "greek": "τὸ θηρίον",
+              "literal_english": "wild animal",
+              "smooth_english": "wild animal"
+            },
+            {
+              "sentence_id": "31",
+              "greek": "ἡ ἀρχή",
+              "literal_english": "beginning",
+              "smooth_english": "beginning"
+            },
+            {
+              "sentence_id": "32",
+              "greek": "ἡ ἡμέρα",
+              "literal_english": "day",
+              "smooth_english": "day"
+            },
+            {
+              "sentence_id": "33",
+              "greek": "ἡ νύξ",
+              "literal_english": "night",
+              "smooth_english": "night"
+            },
+            {
+              "sentence_id": "34",
+              "greek": "τὸ πρωί",
+              "literal_english": "morning",
+              "smooth_english": "morning"
+            },
+            {
+              "sentence_id": "35",
+              "greek": "ἡ ἑσπέρα",
+              "literal_english": "evening",
+              "smooth_english": "evening"
+            },
+            {
+              "sentence_id": "36",
+              "greek": "ὁ μήν",
+              "literal_english": "month",
+              "smooth_english": "month"
+            },
+            {
+              "sentence_id": "37",
+              "greek": "τὸ ἔτος",
+              "literal_english": "year",
+              "smooth_english": "year"
+            },
+            {
+              "sentence_id": "38",
+              "greek": "ποιέω",
+              "literal_english": "I make",
+              "smooth_english": "I make"
+            },
+            {
+              "sentence_id": "39",
+              "greek": "λέγω",
+              "literal_english": "I say",
+              "smooth_english": "I say"
+            },
+            {
+              "sentence_id": "40",
+              "greek": "ὁράω",
+              "literal_english": "I see",
+              "smooth_english": "I see"
+            },
+            {
+              "sentence_id": "41",
+              "greek": "καλέω",
+              "literal_english": "I call",
+              "smooth_english": "I call"
+            },
+            {
+              "sentence_id": "42",
+              "greek": "διαχωρίζω",
+              "literal_english": "I separate",
+              "smooth_english": "I separate"
+            },
+            {
+              "sentence_id": "43",
+              "greek": "συνάγω",
+              "literal_english": "I gather",
+              "smooth_english": "I gather"
+            },
+            {
+              "sentence_id": "44",
+              "greek": "ἐξάγω",
+              "literal_english": "I bring forth",
+              "smooth_english": "I bring forth"
+            },
+            {
+              "sentence_id": "45",
+              "greek": "καλύπτω",
+              "literal_english": "I cover",
+              "smooth_english": "I cover"
+            },
+            {
+              "sentence_id": "46",
+              "greek": "ἐπιφέρομαι",
+              "literal_english": "I am moving over",
+              "smooth_english": "I am moving over"
+            },
+            {
+              "sentence_id": "47",
+              "greek": "νήχομαι",
+              "literal_english": "I swim",
+              "smooth_english": "I swim"
+            },
+            {
+              "sentence_id": "48",
+              "greek": "πέτομαι",
+              "literal_english": "I fly",
+              "smooth_english": "I fly"
+            },
+            {
+              "sentence_id": "49",
+              "greek": "πληρόω",
+              "literal_english": "I fill",
+              "smooth_english": "I fill"
+            },
+            {
+              "sentence_id": "50",
+              "greek": "εὐλογέω",
+              "literal_english": "I bless",
+              "smooth_english": "I bless"
+            },
+            {
+              "sentence_id": "51",
+              "greek": "γεννάω",
+              "literal_english": "I beget",
+              "smooth_english": "I beget"
+            },
+            {
+              "sentence_id": "52",
+              "greek": "κρατέω",
+              "literal_english": "I control",
+              "smooth_english": "I control"
+            },
+            {
+              "sentence_id": "53",
+              "greek": "ἄρχω",
+              "literal_english": "I rule",
+              "smooth_english": "I rule"
+            },
+            {
+              "sentence_id": "54",
+              "greek": "δείκνυμι",
+              "literal_english": "I show",
+              "smooth_english": "I show"
+            },
+            {
+              "sentence_id": "55",
+              "greek": "δίδωμι",
+              "literal_english": "I give",
+              "smooth_english": "I give"
+            },
+            {
+              "sentence_id": "56",
+              "greek": "ἐσθίω",
+              "literal_english": "I eat",
+              "smooth_english": "I eat"
+            },
+            {
+              "sentence_id": "57",
+              "greek": "ἀναπαύομαι",
+              "literal_english": "I rest",
+              "smooth_english": "I rest"
+            },
+            {
+              "sentence_id": "58",
+              "greek": "τελέω",
+              "literal_english": "I finish",
+              "smooth_english": "I finish"
+            },
+            {
+              "sentence_id": "59",
+              "greek": "φαίνομαι",
+              "literal_english": "I appear",
+              "smooth_english": "I appear"
+            },
+            {
+              "sentence_id": "60",
+              "greek": "εἰμί",
+              "literal_english": "I am",
+              "smooth_english": "I am"
+            },
+            {
+              "sentence_id": "61",
+              "greek": "γίνομαι",
+              "literal_english": "I become",
+              "smooth_english": " I become"
+            },
+            {
+              "sentence_id": "62",
+              "greek": "καλός",
+              "literal_english": "good",
+              "smooth_english": "good"
+            },
+            {
+              "sentence_id": "63",
+              "greek": "ἄμορφος",
+              "literal_english": "shapeless",
+              "smooth_english": "shapeless"
+            },
+            {
+              "sentence_id": "64",
+              "greek": "κενός",
+              "literal_english": "empty",
+              "smooth_english": "empty"
+            },
+            {
+              "sentence_id": "65",
+              "greek": "ξηρός",
+              "literal_english": "dry",
+              "smooth_english": "dry"
+            },
+            {
+              "sentence_id": "66",
+              "greek": "μικρός",
+              "literal_english": "small",
+              "smooth_english": "small"
+            },
+            {
+              "sentence_id": "67",
+              "greek": "μέγας",
+              "literal_english": "large",
+              "smooth_english": "large"
+            },
+            {
+              "sentence_id": "68",
+              "greek": "ἄρσην",
+              "literal_english": "male",
+              "smooth_english": "male"
+            },
+            {
+              "sentence_id": "69",
+              "greek": "θῆλυς",
+              "literal_english": "female",
+              "smooth_english": "female"
+            },
+            {
+              "sentence_id": "70",
+              "greek": "πᾶς",
+              "literal_english": "all",
+              "smooth_english": "all"
+            },
+            {
+              "sentence_id": "71",
+              "greek": "πολύς",
+              "literal_english": "many",
+              "smooth_english": "many"
+            },
+            {
+              "sentence_id": "72",
+              "greek": "πλείων",
+              "literal_english": "more",
+              "smooth_english": "more"
+            },
+            {
+              "sentence_id": "73",
+              "greek": "ἅγιος",
+              "literal_english": "holy",
+              "smooth_english": "holy"
+            },
+            {
+              "sentence_id": "74",
+              "greek": "εἷς",
+              "literal_english": "one",
+              "smooth_english": "one"
+            },
+            {
+              "sentence_id": "75",
+              "greek": "πρῶτος",
+              "literal_english": "first",
+              "smooth_english": "first"
+            },
+            {
+              "sentence_id": "76",
+              "greek": "δεύτερος",
+              "literal_english": "second",
+              "smooth_english": "second"
+            },
+            {
+              "sentence_id": "77",
+              "greek": "τρίτος",
+              "literal_english": "third",
+              "smooth_english": "third"
+            },
+            {
+              "sentence_id": "78",
+              "greek": "τέταρτος",
+              "literal_english": "fourth",
+              "smooth_english": "fourth"
+            },
+            {
+              "sentence_id": "79",
+              "greek": "πέμπτος",
+              "literal_english": "fifth",
+              "smooth_english": "fifth"
+            },
+            {
+              "sentence_id": "80",
+              "greek": "ἕκτος",
+              "literal_english": "sixth",
+              "smooth_english": "sixth"
+            },
+            {
+              "sentence_id": "81",
+              "greek": "ἕβδομος",
+              "literal_english": "seventh",
+              "smooth_english": "seventh"
+            },
+            {
+              "sentence_id": "82",
+              "greek": "ἐν",
+              "literal_english": "in",
+              "smooth_english": "in"
+            },
+            {
+              "sentence_id": "83",
+              "greek": "ἀπό",
+              "literal_english": "from",
+              "smooth_english": "from"
+            },
+            {
+              "sentence_id": "84",
+              "greek": "ἐπάνω",
+              "literal_english": "above",
+              "smooth_english": "above"
+            },
+            {
+              "sentence_id": "85",
+              "greek": "ὑποκάτω",
+              "literal_english": "under",
+              "smooth_english": "under"
+            },
+            {
+              "sentence_id": "86",
+              "greek": "κατά",
+              "literal_english": "according to",
+              "smooth_english": "according to"
+            },
+            {
+              "sentence_id": "87",
+              "greek": "καί",
+              "literal_english": "and",
+              "smooth_english": "and"
+            },
+            {
+              "sentence_id": "88",
+              "greek": "σφόδρα",
+              "literal_english": "very",
+              "smooth_english": "very"
+            },
+            {
+              "sentence_id": "89",
+              "greek": "αὐτός",
+              "literal_english": "it",
+              "smooth_english": "it"
+            },
+            {
+              "sentence_id": "90",
+              "greek": "αὐτοὺς",
+              "literal_english": "them",
+              "smooth_english": "them"
+            },
+            {
+              "sentence_id": "91",
+              "greek": "ἑαυτοῦ",
+              "literal_english": "of himself",
+              "smooth_english": "of himself"
+            },
+            {
+              "sentence_id": "92",
+              "greek": "ἡμεῖς",
+              "literal_english": "us",
+              "smooth_english": "us"
+            },
+            {
+              "sentence_id": "93",
+              "greek": "ὅς",
+              "literal_english": "which",
+              "smooth_english": "which"
+            }
+          ]
+        },
+        {
           "group_id": "1_creation_build",
           "group_title": "1. Creation (build)",
           "sentences": [
@@ -32442,7 +33006,7 @@
             },
             {
               "sentence_id": "15",
-              "greek": "ὁ θεὸς τἐποίησεν ὴν θάλασσαν.",
+              "greek": "ὁ θεὸς ἐποίησεν τὴν θάλασσαν.",
               "literal_english": "God made the sea.",
               "smooth_english": "God made the sea."
             },
@@ -32532,7 +33096,7 @@
             },
             {
               "sentence_id": "30",
-              "greek": "ὁ θεὸς τἐποίησεν ὰ φυτὰ καὶ τὰ δένδρα.",
+              "greek": "ὁ θεὸς ἐποίησεν τὰ φυτὰ καὶ τὰ δένδρα.",
               "literal_english": "God made the plants and trees.",
               "smooth_english": "God made the plants and trees."
             },
@@ -32616,7 +33180,7 @@
             },
             {
               "sentence_id": "44",
-              "greek": "ἀνέπαυσεν.",
+              "greek": "ἀνέπαυσεν",
               "literal_english": "he rested",
               "smooth_english": "he rested"
             },
@@ -32767,14 +33331,14 @@
             {
               "sentence_id": "69",
               "greek": "ἐπεφέρετο",
-              "literal_english": "it was carried along",
-              "smooth_english": "it was carried along"
+              "literal_english": "it was moving over",
+              "smooth_english": "it was moving over"
             },
             {
               "sentence_id": "70",
               "greek": "τὸ πνεῦμα ἐπεφέρετο",
-              "literal_english": "The spirit was carried along",
-              "smooth_english": "The spirit was carried along"
+              "literal_english": "The spirit was moving over",
+              "smooth_english": "The spirit was moving over"
             },
             {
               "sentence_id": "71",
@@ -32785,8 +33349,8 @@
             {
               "sentence_id": "72",
               "greek": "τὸ πνεῦμα τοῦ θεοῦ ἐπεφέρετο ἐπάνω τοῦ ὕδατος.",
-              "literal_english": "The spirit of God was carried along over the water.",
-              "smooth_english": "The spirit of God was carried along over the water."
+              "literal_english": "The spirit of God was moving over the water.",
+              "smooth_english": "The spirit of God was moving over the water."
             },
             {
               "sentence_id": "73",
@@ -33265,564 +33829,6 @@
           ]
         },
         {
-          "group_id": "1_creation_vocabulary",
-          "group_title": "1. Creation (vocabulary)",
-          "sentences": [
-            {
-              "sentence_id": "1",
-              "greek": "ὁ θεός",
-              "literal_english": "God",
-              "smooth_english": "God"
-            },
-            {
-              "sentence_id": "2",
-              "greek": "τὸ πνεῦμα",
-              "literal_english": "spirit",
-              "smooth_english": "spirit"
-            },
-            {
-              "sentence_id": "3",
-              "greek": "ὁ ἄνθρωπος",
-              "literal_english": "man",
-              "smooth_english": "man"
-            },
-            {
-              "sentence_id": "4",
-              "greek": "τὸ τέκνον",
-              "literal_english": "child",
-              "smooth_english": "child"
-            },
-            {
-              "sentence_id": "5",
-              "greek": "ἡ εἰκών",
-              "literal_english": "image",
-              "smooth_english": "image"
-            },
-            {
-              "sentence_id": "6",
-              "greek": "ὁ κόσμος",
-              "literal_english": "world",
-              "smooth_english": "world"
-            },
-            {
-              "sentence_id": "7",
-              "greek": "ὁ οὐρανός",
-              "literal_english": "sky",
-              "smooth_english": "sky"
-            },
-            {
-              "sentence_id": "8",
-              "greek": "ἡ γῆ",
-              "literal_english": "land",
-              "smooth_english": "land"
-            },
-            {
-              "sentence_id": "9",
-              "greek": "ἡ θάλασσα",
-              "literal_english": "sea",
-              "smooth_english": "sea"
-            },
-            {
-              "sentence_id": "10",
-              "greek": "τὸ ὕδωρ",
-              "literal_english": "water",
-              "smooth_english": "water"
-            },
-            {
-              "sentence_id": "11",
-              "greek": "τὸ φῶς",
-              "literal_english": "light",
-              "smooth_english": "light"
-            },
-            {
-              "sentence_id": "12",
-              "greek": "τὸ σκότος",
-              "literal_english": "darkness",
-              "smooth_english": "darkness"
-            },
-            {
-              "sentence_id": "13",
-              "greek": "ὁ ἥλιος",
-              "literal_english": "sun",
-              "smooth_english": "sun"
-            },
-            {
-              "sentence_id": "14",
-              "greek": "ἡ σελήνη",
-              "literal_english": "moon",
-              "smooth_english": "moon"
-            },
-            {
-              "sentence_id": "15",
-              "greek": "ὁ ἀστήρ",
-              "literal_english": "star",
-              "smooth_english": "star"
-            },
-            {
-              "sentence_id": "16",
-              "greek": "τὸ στερέωμα",
-              "literal_english": "firmament",
-              "smooth_english": "firmament"
-            },
-            {
-              "sentence_id": "17",
-              "greek": "ὁ ἀήρ",
-              "literal_english": "air",
-              "smooth_english": "air"
-            },
-            {
-              "sentence_id": "18",
-              "greek": "ὁ τόπος",
-              "literal_english": "place",
-              "smooth_english": "place"
-            },
-            {
-              "sentence_id": "19",
-              "greek": "τὸ φυτόν",
-              "literal_english": "plant",
-              "smooth_english": "plant"
-            },
-            {
-              "sentence_id": "20",
-              "greek": "τὸ δένδρον",
-              "literal_english": "tree",
-              "smooth_english": "tree"
-            },
-            {
-              "sentence_id": "21",
-              "greek": "ὁ χόρτος",
-              "literal_english": "grass",
-              "smooth_english": "grass"
-            },
-            {
-              "sentence_id": "22",
-              "greek": "τὸ σπέρμα",
-              "literal_english": "seed",
-              "smooth_english": "seed"
-            },
-            {
-              "sentence_id": "23",
-              "greek": "ὁ καρπός",
-              "literal_english": "fruit",
-              "smooth_english": "fruit"
-            },
-            {
-              "sentence_id": "24",
-              "greek": "ἡ τροφή",
-              "literal_english": "food",
-              "smooth_english": "food"
-            },
-            {
-              "sentence_id": "25",
-              "greek": "ὁ σῖτος",
-              "literal_english": "grain",
-              "smooth_english": "grain"
-            },
-            {
-              "sentence_id": "26",
-              "greek": "τὸ ζῷον",
-              "literal_english": "animal",
-              "smooth_english": "animal"
-            },
-            {
-              "sentence_id": "27",
-              "greek": "τὸ πετεινόν",
-              "literal_english": "bird",
-              "smooth_english": "bird"
-            },
-            {
-              "sentence_id": "28",
-              "greek": "ὁ ἰχθύς",
-              "literal_english": "fish",
-              "smooth_english": "fish"
-            },
-            {
-              "sentence_id": "29",
-              "greek": "τὸ κτῆνος",
-              "literal_english": "livestock",
-              "smooth_english": "livestock"
-            },
-            {
-              "sentence_id": "30",
-              "greek": "τὸ θηρίον",
-              "literal_english": "wild animal",
-              "smooth_english": "wild animal"
-            },
-            {
-              "sentence_id": "31",
-              "greek": "ἡ ἀρχή",
-              "literal_english": "beginning",
-              "smooth_english": "beginning"
-            },
-            {
-              "sentence_id": "32",
-              "greek": "ἡ ἡμέρα",
-              "literal_english": "day",
-              "smooth_english": "day"
-            },
-            {
-              "sentence_id": "33",
-              "greek": "ἡ νύξ",
-              "literal_english": "night",
-              "smooth_english": "night"
-            },
-            {
-              "sentence_id": "34",
-              "greek": "τὸ πρωί",
-              "literal_english": "morning",
-              "smooth_english": "morning"
-            },
-            {
-              "sentence_id": "35",
-              "greek": "ἡ ἑσπέρα",
-              "literal_english": "evening",
-              "smooth_english": "evening"
-            },
-            {
-              "sentence_id": "36",
-              "greek": "ὁ μήν",
-              "literal_english": "month",
-              "smooth_english": "month"
-            },
-            {
-              "sentence_id": "37",
-              "greek": "τὸ ἔτος",
-              "literal_english": "year",
-              "smooth_english": "year"
-            },
-            {
-              "sentence_id": "38",
-              "greek": "ποιέω",
-              "literal_english": "make",
-              "smooth_english": "make"
-            },
-            {
-              "sentence_id": "39",
-              "greek": "λέγω",
-              "literal_english": "say",
-              "smooth_english": "say"
-            },
-            {
-              "sentence_id": "40",
-              "greek": "ὁράω",
-              "literal_english": "see",
-              "smooth_english": "see"
-            },
-            {
-              "sentence_id": "41",
-              "greek": "καλέω",
-              "literal_english": "call",
-              "smooth_english": "call"
-            },
-            {
-              "sentence_id": "42",
-              "greek": "διαχωρίζω",
-              "literal_english": "separate",
-              "smooth_english": "separate"
-            },
-            {
-              "sentence_id": "43",
-              "greek": "συνάγω",
-              "literal_english": "gather",
-              "smooth_english": "gather"
-            },
-            {
-              "sentence_id": "44",
-              "greek": "ἐξάγω",
-              "literal_english": "bring forth",
-              "smooth_english": "bring forth"
-            },
-            {
-              "sentence_id": "45",
-              "greek": "καλύπτω",
-              "literal_english": "cover",
-              "smooth_english": "cover"
-            },
-            {
-              "sentence_id": "46",
-              "greek": "ἐπιφέρομαι",
-              "literal_english": "to be carried along",
-              "smooth_english": "to be carried along"
-            },
-            {
-              "sentence_id": "47",
-              "greek": "νήχομαι",
-              "literal_english": "swim",
-              "smooth_english": "swim"
-            },
-            {
-              "sentence_id": "48",
-              "greek": "πέτομαι",
-              "literal_english": "fly",
-              "smooth_english": "fly"
-            },
-            {
-              "sentence_id": "49",
-              "greek": "πληρόω",
-              "literal_english": "fill",
-              "smooth_english": "fill"
-            },
-            {
-              "sentence_id": "50",
-              "greek": "εὐλογέω",
-              "literal_english": "bless",
-              "smooth_english": "bless"
-            },
-            {
-              "sentence_id": "51",
-              "greek": "γεννάω",
-              "literal_english": "beget",
-              "smooth_english": "beget"
-            },
-            {
-              "sentence_id": "52",
-              "greek": "κρατέω",
-              "literal_english": "control",
-              "smooth_english": "control"
-            },
-            {
-              "sentence_id": "53",
-              "greek": "ἄρχω",
-              "literal_english": "rule",
-              "smooth_english": "rule"
-            },
-            {
-              "sentence_id": "54",
-              "greek": "δείκνυμι",
-              "literal_english": "show",
-              "smooth_english": "show"
-            },
-            {
-              "sentence_id": "55",
-              "greek": "δίδωμι",
-              "literal_english": "give",
-              "smooth_english": "give"
-            },
-            {
-              "sentence_id": "56",
-              "greek": "ἐσθίω",
-              "literal_english": "eat",
-              "smooth_english": "eat"
-            },
-            {
-              "sentence_id": "57",
-              "greek": "ἀναπαύομαι",
-              "literal_english": "rest",
-              "smooth_english": "rest"
-            },
-            {
-              "sentence_id": "58",
-              "greek": "τελέω",
-              "literal_english": "finish",
-              "smooth_english": "finish"
-            },
-            {
-              "sentence_id": "59",
-              "greek": "φαίνομαι",
-              "literal_english": "appear",
-              "smooth_english": "appear"
-            },
-            {
-              "sentence_id": "60",
-              "greek": "γίνομαι",
-              "literal_english": "become",
-              "smooth_english": "become"
-            },
-            {
-              "sentence_id": "61",
-              "greek": "εἰμί",
-              "literal_english": "be",
-              "smooth_english": "be"
-            },
-            {
-              "sentence_id": "62",
-              "greek": "καλός",
-              "literal_english": "good",
-              "smooth_english": "good"
-            },
-            {
-              "sentence_id": "63",
-              "greek": "ἄμορφος",
-              "literal_english": "shapeless",
-              "smooth_english": "shapeless"
-            },
-            {
-              "sentence_id": "64",
-              "greek": "κενός",
-              "literal_english": "empty",
-              "smooth_english": "empty"
-            },
-            {
-              "sentence_id": "65",
-              "greek": "ξηρός",
-              "literal_english": "dry",
-              "smooth_english": "dry"
-            },
-            {
-              "sentence_id": "66",
-              "greek": "μικρός",
-              "literal_english": "small",
-              "smooth_english": "small"
-            },
-            {
-              "sentence_id": "67",
-              "greek": "μέγας",
-              "literal_english": "large",
-              "smooth_english": "large"
-            },
-            {
-              "sentence_id": "68",
-              "greek": "ἄρσην",
-              "literal_english": "male",
-              "smooth_english": "male"
-            },
-            {
-              "sentence_id": "69",
-              "greek": "θῆλυς",
-              "literal_english": "female",
-              "smooth_english": "female"
-            },
-            {
-              "sentence_id": "70",
-              "greek": "πᾶς",
-              "literal_english": "all",
-              "smooth_english": "all"
-            },
-            {
-              "sentence_id": "71",
-              "greek": "πολύς",
-              "literal_english": "many",
-              "smooth_english": "many"
-            },
-            {
-              "sentence_id": "72",
-              "greek": "πλείων",
-              "literal_english": "more",
-              "smooth_english": "more"
-            },
-            {
-              "sentence_id": "73",
-              "greek": "ἅγιος",
-              "literal_english": "holy",
-              "smooth_english": "holy"
-            },
-            {
-              "sentence_id": "74",
-              "greek": "εἷς",
-              "literal_english": "one",
-              "smooth_english": "one"
-            },
-            {
-              "sentence_id": "75",
-              "greek": "πρῶτος",
-              "literal_english": "first",
-              "smooth_english": "first"
-            },
-            {
-              "sentence_id": "76",
-              "greek": "δεύτερος",
-              "literal_english": "second",
-              "smooth_english": "second"
-            },
-            {
-              "sentence_id": "77",
-              "greek": "τρίτος",
-              "literal_english": "third",
-              "smooth_english": "third"
-            },
-            {
-              "sentence_id": "78",
-              "greek": "τέταρτος",
-              "literal_english": "fourth",
-              "smooth_english": "fourth"
-            },
-            {
-              "sentence_id": "79",
-              "greek": "πέμπτος",
-              "literal_english": "fifth",
-              "smooth_english": "fifth"
-            },
-            {
-              "sentence_id": "80",
-              "greek": "ἕκτος",
-              "literal_english": "sixth",
-              "smooth_english": "sixth"
-            },
-            {
-              "sentence_id": "81",
-              "greek": "ἕβδομος",
-              "literal_english": "seventh",
-              "smooth_english": "seventh"
-            },
-            {
-              "sentence_id": "82",
-              "greek": "ἐν",
-              "literal_english": "in",
-              "smooth_english": "in"
-            },
-            {
-              "sentence_id": "83",
-              "greek": "ἀπό",
-              "literal_english": "from",
-              "smooth_english": "from"
-            },
-            {
-              "sentence_id": "84",
-              "greek": "ἐπάνω",
-              "literal_english": "above",
-              "smooth_english": "above"
-            },
-            {
-              "sentence_id": "85",
-              "greek": "ὑποκάτω",
-              "literal_english": "under",
-              "smooth_english": "under"
-            },
-            {
-              "sentence_id": "86",
-              "greek": "κατά",
-              "literal_english": "according to",
-              "smooth_english": "according to"
-            },
-            {
-              "sentence_id": "87",
-              "greek": "καί",
-              "literal_english": "and",
-              "smooth_english": "and"
-            },
-            {
-              "sentence_id": "88",
-              "greek": "σφόδρα",
-              "literal_english": "very",
-              "smooth_english": "very"
-            },
-            {
-              "sentence_id": "89",
-              "greek": "αὐτός",
-              "literal_english": "it, them",
-              "smooth_english": "it, them"
-            },
-            {
-              "sentence_id": "90",
-              "greek": "ἑαυτοῦ",
-              "literal_english": "of himself",
-              "smooth_english": "of himself"
-            },
-            {
-              "sentence_id": "91",
-              "greek": "ἡμεῖς",
-              "literal_english": "us",
-              "smooth_english": "us"
-            },
-            {
-              "sentence_id": "92",
-              "greek": "ὅς",
-              "literal_english": "which",
-              "smooth_english": "which"
-            }
-          ]
-        },
-        {
           "group_id": "1_creation_story",
           "group_title": "1. Creation (story)",
           "sentences": [
@@ -33925,8 +33931,8 @@
             {
               "sentence_id": "17",
               "greek": "τὸ πνεῦμα τοῦ θεοῦ ἐπεφέρετο ἐπάνω τοῦ ὕδατος.",
-              "literal_english": "The spirit of God moved above the water.",
-              "smooth_english": "The spirit of God moved above the water."
+              "literal_english": "The spirit of God was moving above the water.",
+              "smooth_english": "The spirit of God was moving above the water."
             },
             {
               "sentence_id": "18",
