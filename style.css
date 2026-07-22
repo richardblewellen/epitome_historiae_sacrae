@@ -219,7 +219,7 @@ body.hide-smooth .smooth-text { display: none; }
 .sentence-id {
     color: #888; /* A nice subdued gray */
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: normal;
     min-width: 45px; /* Keeps the text aligned perfectly even if numbers reach 10 or 100 */
     text-align: right; /* Pushes the periods to line up neatly */
     user-select: none; /* Prevents students from accidentally highlighting the numbers */
