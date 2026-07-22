@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-07-20T19:13:13.595Z",
+  "generated_at": "2026-07-22T13:20:27.919Z",
   "sets": [
     {
       "set_id": "elementary_greek_exercises",
@@ -32349,12 +32349,12 @@
       ]
     },
     {
-      "set_id": "ot_stories",
-      "set_title": "OT Stories",
+      "set_id": "picture_dictionary",
+      "set_title": "Picture Dictionary",
       "groups": [
         {
-          "group_id": "1_creation_vocabulary",
-          "group_title": "1. Creation (vocabulary)",
+          "group_id": "1_creation",
+          "group_title": "1. Creation",
           "sentences": [
             {
               "sentence_id": "1",
@@ -32916,6 +32916,36 @@
             }
           ]
         },
+        {
+          "group_id": "2_the_man_and_the_woman",
+          "group_title": "2. The Man and the Woman",
+          "sentences": [
+            {
+              "sentence_id": "94",
+              "greek": "αὕτη",
+              "literal_english": "this",
+              "smooth_english": "this"
+            },
+            {
+              "sentence_id": "95",
+              "greek": "διήγησις",
+              "literal_english": "story",
+              "smooth_english": "story"
+            },
+            {
+              "sentence_id": "96",
+              "greek": "κτίσις",
+              "literal_english": "creation",
+              "smooth_english": "creation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "set_id": "builds",
+      "set_title": "Builds",
+      "groups": [
         {
           "group_id": "1_creation_build",
           "group_title": "1. Creation (build)",
@@ -33827,10 +33857,16 @@
               "smooth_english": "It was good."
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "set_id": "ot_stories",
+      "set_title": "OT Stories",
+      "groups": [
         {
-          "group_id": "1_creation_story",
-          "group_title": "1. Creation (story)",
+          "group_id": "1_creation",
+          "group_title": "1. Creation",
           "sentences": [
             {
               "sentence_id": "1",
@@ -34449,6 +34485,72 @@
               "greek": "ἡ ἑβδόμη ἡμέρα ἁγία ἐστίν.",
               "literal_english": "The seventh day is holy.",
               "smooth_english": "The seventh day is holy."
+            }
+          ]
+        },
+        {
+          "group_id": "2_the_man_and_the_woman",
+          "group_title": "2. The Man and the Woman",
+          "sentences": [
+            {
+              "sentence_id": "104",
+              "greek": "Αὕτη ἐστὶν ἡ διήγησις τῆς κτίσεως τοῦ οὐρανοῦ καὶ τῆς γῆς.",
+              "literal_english": "This is the story of the creation of the sky and land.",
+              "smooth_english": "This is the story of the creation of the sky and land."
+            },
+            {
+              "sentence_id": "105",
+              "greek": "Ὁ Κύριος ἐποίησε τὸν οὐρανὸν καὶ τὴν γῆν.",
+              "literal_english": "The Lord made the sky and the land.",
+              "smooth_english": "The Lord made the sky and the land."
+            },
+            {
+              "sentence_id": "106",
+              "greek": "Οὐκ ἦν φυτά.",
+              "literal_english": "There were no plants.",
+              "smooth_english": "There were no plants."
+            },
+            {
+              "sentence_id": "107",
+              "greek": "Οὐδέν ηὔξανεν.",
+              "literal_english": "Nothing grew.",
+              "smooth_english": "Nothing grew."
+            },
+            {
+              "sentence_id": "108",
+              "greek": "Οὐκ ἦν ὑετός.",
+              "literal_english": "There was no rain.",
+              "smooth_english": "There was no rain."
+            },
+            {
+              "sentence_id": "109",
+              "greek": "Οὐκ ἦν ἄνθρωπος.",
+              "literal_english": "There was no man.",
+              "smooth_english": "There was no man."
+            },
+            {
+              "sentence_id": "110",
+              "greek": "Ὁ Κύριος ἔλαβε χοῦν ἐκ τῆς γῆς.",
+              "literal_english": "The Lord took dust from the ground.",
+              "smooth_english": "The Lord took dust from the ground."
+            },
+            {
+              "sentence_id": "111",
+              "greek": "Ἔπλασεν ἄνθρωπον ἐκ τοῦ χοός.",
+              "literal_english": "He formed a man from the dust.",
+              "smooth_english": "He formed a man from the dust."
+            },
+            {
+              "sentence_id": "112",
+              "greek": "Ἐνεφύσησε πνοὴν εἰς τὴν ῥῖνα τοῦ ἀνθρώπου.",
+              "literal_english": "He breathed breath into the man's nose.",
+              "smooth_english": "He breathed breath into the man's nose."
+            },
+            {
+              "sentence_id": "113",
+              "greek": "Ὁ ἄνθρωπος ἐγένετο ζῶν.",
+              "literal_english": "The man became alive.",
+              "smooth_english": "The man became alive."
             }
           ]
         }
