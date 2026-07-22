@@ -149,7 +149,7 @@ body {
 
 .greek-text {
     font-size: 1.4em;
-    font-weight: 600;
+    font-weight: normal;
     margin-bottom: 15px;
 }
 
@@ -235,14 +235,14 @@ body {
 
 .study-number {
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: normal;
     color: #888;
     text-align: right; /* Keeps the periods perfectly aligned down the page */
 }
 
 .study-greek {
     font-size: 1.4em;
-    font-weight: 600;
+    font-weight: normal;
 }
 
 .study-english {
