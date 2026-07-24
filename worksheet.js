@@ -186,10 +186,16 @@ function generateWorksheet() {
     } else if (documentType === "quiz") {
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
+            // Force a page break only every 2nd quiz. Otherwise, add a cut line.
             if (index > 0 && !isDefaultContinuous) {
-                htmlString += `<div class="page-break"></div>`;
+                if (index % 2 === 0) {
+                    htmlString += `<div class="page-break"></div>`;
+                } else {
+                    // Adds a dashed line between the two quizzes on the same page
+                    htmlString += `<div style="margin-top: 30px; margin-bottom: 30px; border-top: 2px dashed #999; width: 100%;"></div>`; 
+                }
             } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; 
+                htmlString += `<div style="margin-top: 20px;"></div>`; 
             }
 
             // Wrap the entire group
@@ -209,7 +215,7 @@ function generateWorksheet() {
                 htmlString += `
                     <div class="quiz-item">
                         <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <div class="blank-line"></div>
+                        <!-- Removed the second blank line so there is only one per question -->
                         <div class="blank-line"></div>
                     </div>
                 `;
@@ -223,10 +229,15 @@ function generateWorksheet() {
         htmlString += `<div class="page-break"></div>`; 
 
         selectedGroups.forEach((group, index) => {
+            // Apply the same 2-per-page logic to the answer keys
             if (index > 0 && !isDefaultContinuous) {
-                htmlString += `<div class="page-break"></div>`;
+                if (index % 2 === 0) {
+                    htmlString += `<div class="page-break"></div>`;
+                } else {
+                    htmlString += `<div style="margin-top: 30px; margin-bottom: 30px; border-top: 2px dashed #999; width: 100%;"></div>`; 
+                }
             } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; 
+                htmlString += `<div style="margin-top: 20px;"></div>`; 
             }
 
             // Wrap the entire group
