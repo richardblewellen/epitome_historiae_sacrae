@@ -111,7 +111,7 @@ body {
 
 /* --- NEW QUIZ HEADER STYLES --- */
 .quiz-header {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #000;
     padding-bottom: 10px;
     page-break-after: avoid;
@@ -145,7 +145,7 @@ body {
 }
 
 .quiz-item {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     page-break-inside: avoid; /* Prevents an item from splitting across pages */
 }
 
@@ -158,8 +158,8 @@ body {
 /* Creates the blank lines to write on */
 .blank-line {
     border-bottom: 1px solid #999;
-    height: 25px; 
-    margin-top: 10px;
+    height: 20px; 
+    margin-top: 5px;
     width: 100%;
 }
 
@@ -232,7 +232,6 @@ body {
 
 .half-sheet-quiz {
     flex: 1;
-    overflow: hidden;
     padding-right: 15px;
 }
 
