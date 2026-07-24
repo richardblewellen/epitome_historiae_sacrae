@@ -254,6 +254,7 @@ function generateWorksheet() {
 
             htmlString += `</div>`; // Close quiz-half-page
         });
-
+    }
+    
     worksheetContainer.innerHTML = htmlString;
 }
