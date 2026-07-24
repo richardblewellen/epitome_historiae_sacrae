@@ -258,3 +258,18 @@ body {
     background-position: right 12px center;
     padding-right: 32px; 
 }
+
+/* --- EXACT HALF-PAGE SPLIT FOR PRINTING --- */
+@media print {
+    .quiz-half-page {
+        height: 50vh; /* Forces the container to be exactly half the printed page */
+        box-sizing: border-box; /* Keeps padding and borders from adding extra height */
+        padding-top: 0.25in;
+        padding-bottom: 0.25in;
+        page-break-inside: avoid;
+    }
+
+    .top-quiz {
+        border-bottom: 1px dashed #999; /* The exact middle guillotine line */
+    }
+}
