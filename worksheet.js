@@ -213,21 +213,16 @@ function generateWorksheet() {
                         <div class="quiz-item">
                             <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
                             <div class="blank-line"></div>
-                            <div class="blank-line"></div>
                         </div>
                     `;
                 });
 
                 htmlString += `</div>`; // Close half-sheet-quiz
-
-                // Add the dashed cut line after the top quiz
-                if (i === 0) {
-                    htmlString += `<div class="cut-line"></div>`;
-                }
             }
 
             htmlString += `</div>`; // Close half-sheet-container
         });
+
         // --- ANSWER KEYS ---
         htmlString += `<div class="page-break"></div>`; 
 
