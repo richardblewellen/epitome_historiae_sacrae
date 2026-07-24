@@ -234,6 +234,7 @@ function generateWorksheet() {
                 <div class="quiz-header">
                     <div class="quiz-top-row">
                         <h2 class="quiz-main-title">ANSWER KEY</h2>
+                        <div class="quiz-name-line">Name: __________________________________________________________</div>
                     </div>
                     <h3 class="quiz-subtitle">${group.group_title}</h3>
                 </div>
@@ -243,15 +244,16 @@ function generateWorksheet() {
                 htmlString += `
                     <div class="quiz-item">
                         <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
-                        <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
+                        <!-- Injects the answer directly onto the same blank line -->
+                        <div class="blank-line" style="font-size: 0.95em; color: #333; line-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            ${sentence.smooth_english}
+                        </div>
                     </div>
                 `;
             });
 
             htmlString += `</div>`; // Close quiz-half-page
         });
-    }
 
     worksheetContainer.innerHTML = htmlString;
 }
