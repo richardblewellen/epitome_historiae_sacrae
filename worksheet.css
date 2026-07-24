@@ -1,99 +1,99 @@
 body {
-    font-family: 'Alegreya', serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.5;
-    color: #333;
+    font-family: 'Alegreya', serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    color: #333;
 }
 
 /* --- SCREEN UI CONTROLS --- */
 .controls-wrapper {
-    font-family: system-ui, sans-serif; /* Matches the reader's modern UI font */
-    position: sticky; /* Makes it stay at the top when you scroll */
-    top: 0;
-    z-index: 1000; /* Keeps it above the worksheet content */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adds the subtle drop shadow */
-    background: #f8f9fa;
-    padding: 20px;
-    border-bottom: 2px solid #ccc;
-    text-align: center;
+    font-family: system-ui, sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background: #f8f9fa;
+    padding: 20px;
+    border-bottom: 2px solid #ccc;
+    text-align: center;
 }
 
 .dropdown-wrapper {
-    position: relative;
-    display: inline-flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    flex-wrap: wrap;
+    position: relative;
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
 }
 
 #select-master-set, #btn-dropdown-toggle, #btn-clear-selection {
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.95em;
-    font-family: inherit;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-family: inherit;
 }
 
 #select-master-set:hover, #btn-dropdown-toggle:hover, #btn-clear-selection:hover {
-    background-color: #e9ecef;
+    background-color: #e9ecef;
 }
 
 /* Primary Print Button */
 #btn-print {
-    padding: 8px 15px;
-    border-radius: 4px;
-    background: #0d6efd;
-    color: white;
-    font-size: 0.95em;
-    border: 1px solid #0d6efd;
-    transition: background-color 0.2s;
-    cursor: pointer;
-    font-family: inherit;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background: #0d6efd;
+    color: white;
+    font-size: 0.95em;
+    border: 1px solid #0d6efd;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    font-family: inherit;
 }
 
 #btn-print:hover {
-    background: #0b5ed7;
+    background: #0b5ed7;
 }
 
 /* Back to Reader Button */
 #btn-to-reader {
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    background: #6c757d;
-    color: white;
-    font-size: 0.95em;
-    border: 1px solid #6c757d;
-    transition: background-color 0.2s;
-    display: flex;
-    align-items: center;
-    font-family: inherit;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background: #6c757d;
+    color: white;
+    font-size: 0.95em;
+    border: 1px solid #6c757d;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
 }
 
 #btn-to-reader:hover {
-    background: #5c636a;
+    background: #5c636a;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: white;
-    min-width: 300px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1001;
-    max-height: 300px;
-    overflow-y: auto;
-    text-align: left;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 300px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1001;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
 }
 
 .dropdown-content.show { display: block; }
@@ -101,164 +101,160 @@ body {
 .story-item:hover { background: #f1f1f1; }
 .story-item.selected { background: #d1e7dd; font-weight: bold; color: #0f5132; }
 
-
 /* --- WORKSHEET STYLES --- */
 #worksheet-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 /* --- NEW QUIZ HEADER STYLES --- */
 .quiz-header {
-    margin-bottom: 30px;
-    border-bottom: 2px solid #000;
-    padding-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
     page-break-after: avoid;
     break-after: avoid;
 }
 
 .quiz-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline; /* Aligns the bottom text baseline of QUIZ and the Name line */
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .quiz-main-title {
-    font-size: 2.2em;
-    margin: 0;
-    line-height: 1;
-    color: #000;
+    font-size: 2.2em;
+    margin: 0;
+    line-height: 1;
+    color: #000;
 }
 
 .quiz-name-line {
-    font-size: 1.1em;
-    white-space: nowrap; 
+    font-size: 1.1em;
+    white-space: nowrap; 
 }
 
 .quiz-subtitle {
-    font-size: 1.2em;
-    margin: 5px 0 0 0; /* Only 5px of space between QUIZ and the subtitle */
-    font-weight: normal;
-    color: #555;
-    text-align: left;
+    font-size: 1.2em;
+    margin: 5px 0 0 0;
+    font-weight: normal;
+    color: #555;
+    text-align: left;
 }
 
 .quiz-item {
-    margin-bottom: 40px;
-    page-break-inside: avoid; /* Prevents an item from splitting across pages */
+    margin-bottom: 40px;
+    page-break-inside: avoid;
 }
 
 .greek-text {
-    font-size: 1.4em;
-    font-weight: normal;
-    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: normal;
+    margin-bottom: 15px;
 }
 
 /* Creates the blank lines to write on */
 .blank-line {
-    border-bottom: 1px solid #999;
-    height: 35px; 
-    margin-top: 10px;
-    width: 100%;
+    border-bottom: 1px solid #999;
+    height: 35px; 
+    margin-top: 10px;
+    width: 100%;
 }
 
 .answer-text {
-    font-size: 1.1em;
-    color: #555;
-    margin-top: 5px;
+    font-size: 1.1em;
+    color: #555;
+    margin-top: 5px;
 }
 
 /* Forces the Answer Key to a new page */
 .page-break {
-    page-break-before: always;
-    margin-top: 60px;
-    padding-top: 20px;
-    border-top: 2px dashed #ccc; /* Visible on screen to show separation */
+    page-break-before: always;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
 }
 
 /* --- MOBILE SCREEN MAGIC --- */
 @media screen and (max-width: 768px) {
-    /* Collapse the 3-column grid into 2 columns */
-    .study-sheet-grid {
-        grid-template-columns: 35px 1fr; /* Number | Greek */
-        row-gap: 5px; /* Adds a little space before the English drops down */
-    }
-    
-    /* Force the English text to drop to the next row, but stay aligned with the Greek */
-    .study-english {
-        grid-column: 2; 
-        font-size: 1.1em;
-    }
+    .study-sheet-grid {
+        grid-template-columns: 35px 1fr;
+        row-gap: 5px;
+    }
+    
+    .study-english {
+        grid-column: 2; 
+        font-size: 1.1em;
+    }
 
-    /* Stack the Quiz Header so the Name line doesn't crash into the word QUIZ */
-    .quiz-top-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .quiz-name-line {
-        margin-top: 15px;
-        white-space: normal;
-    }
+    .quiz-top-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .quiz-name-line {
+        margin-top: 15px;
+        white-space: normal;
+    }
 }
 
 /* --- THE PRINT MAGIC --- */
 @media print {
-    body { background: white; }
-    
-    #no-print-controls { display: none !important; }
-    
-    #worksheet-container {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* This removes the dashed line AND fixes the pages shifting down! */
-    .page-break { 
-        border-top: none; 
-        margin-top: 0;
-        padding-top: 0;
-    } 
+    body { background: white; }
+    
+    #no-print-controls { display: none !important; }
+    
+    #worksheet-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .page-break { 
+        border-top: none; 
+        margin-top: 0;
+        padding-top: 0;
+    } 
 }
 
 /* --- TWO-COLUMN STUDY SHEET STYLES --- */
 .study-sheet-grid {
-    display: grid;
-    grid-template-columns: 45px 1fr 1fr; /* 3 Columns: 45px for numbers, then two equal halves */
-    column-gap: 20px; 
-    margin-bottom: 15px;
-    align-items: start; /* Forces all text to sit flush at the top of the row */
-    border-bottom: 1px solid #999; /* Darkened from a dashed #eee to a solid gray */
-    padding-bottom: 15px;
-    page-break-inside: avoid;
+    display: grid;
+    grid-template-columns: 45px 1fr 1fr;
+    column-gap: 20px; 
+    margin-bottom: 15px;
+    align-items: start;
+    border-bottom: 1px solid #999;
+    padding-bottom: 15px;
+    page-break-inside: avoid;
 }
 
 .study-number {
-    font-size: 1.1em;
-    font-weight: normal;
-    color: #888;
-    text-align: right; /* Keeps the periods perfectly aligned down the page */
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #888;
+    text-align: right;
 }
 
 .study-greek {
-    font-size: 1.4em;
-    font-weight: normal;
+    font-size: 1.4em;
+    font-weight: normal;
 }
 
 .study-english {
-    font-size: 1.2em;
-    color: #444;
-}
-/* Standardize Dropdown Arrows */
-#select-master-set, #btn-dropdown-toggle {
-    appearance: none; 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px; 
+    font-size: 1.2em;
+    color: #444;
 }
 
+/* Standardize Dropdown Arrows */
+#select-master-set, #btn-dropdown-toggle {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Properly encoded SVG to prevent cross-browser rendering bugs */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px; 
+}
