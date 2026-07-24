@@ -186,75 +186,80 @@ function generateWorksheet() {
    } else if (documentType === "quiz") {
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
-            // Force a page break before every 3rd quiz (index 2, 4, 6...)
-            if (index > 0 && index % 2 === 0) {
+            // Every new group gets a fresh piece of paper
+            if (index > 0) {
                 htmlString += `<div class="page-break"></div>`;
             }
 
-            // Determine if this quiz sits on the top or bottom of the page
-            const isTopQuiz = (index % 2 === 0);
+            // Print the exact same quiz twice: once for the top half, once for the bottom
+            for (let i = 0; i < 2; i++) {
+                const positionClass = (i === 0) ? 'top-quiz' : 'bottom-quiz';
 
-            htmlString += `<div class="quiz-half-page ${isTopQuiz ? 'top-quiz' : 'bottom-quiz'}">`;
+                htmlString += `<div class="quiz-half-page ${positionClass}">`;
 
-            htmlString += `
-                <div class="quiz-header">
-                    <div class="quiz-top-row">
-                        <h2 class="quiz-main-title">QUIZ</h2>
-                        <div class="quiz-name-line">Name: __________________________________________________________</div>
-                    </div>
-                    <h3 class="quiz-subtitle">${group.group_title}</h3>
-                </div>
-            `;
-            
-            group.sentences.forEach(sentence => {
                 htmlString += `
-                    <div class="quiz-item">
-                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <div class="blank-line"></div>
+                    <div class="quiz-header">
+                        <div class="quiz-top-row">
+                            <h2 class="quiz-main-title">QUIZ</h2>
+                            <div class="quiz-name-line">Name: __________________________________________________________</div>
+                        </div>
+                        <h3 class="quiz-subtitle">${group.group_title}</h3>
                     </div>
                 `;
-            });
+                
+                group.sentences.forEach(sentence => {
+                    htmlString += `
+                        <div class="quiz-item">
+                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                            <div class="blank-line"></div>
+                        </div>
+                    `;
+                });
 
-            htmlString += `</div>`; // Close quiz-half-page
+                htmlString += `</div>`; // Close quiz-half-page
+            }
         });
 
         // --- ANSWER KEYS ---
         htmlString += `<div class="page-break"></div>`; 
 
         selectedGroups.forEach((group, index) => {
-            if (index > 0 && index % 2 === 0) {
+            // Every new group's answer key gets a fresh piece of paper
+            if (index > 0) {
                 htmlString += `<div class="page-break"></div>`;
             }
 
-            const isTopQuiz = (index % 2 === 0);
+            // Print the exact same answer key twice: once for the top, once for the bottom
+            for (let i = 0; i < 2; i++) {
+                const positionClass = (i === 0) ? 'top-quiz' : 'bottom-quiz';
 
-            htmlString += `<div class="quiz-half-page ${isTopQuiz ? 'top-quiz' : 'bottom-quiz'}">`;
+                htmlString += `<div class="quiz-half-page ${positionClass}">`;
 
-            htmlString += `
-                <div class="quiz-header">
-                    <div class="quiz-top-row">
-                        <h2 class="quiz-main-title">ANSWER KEY</h2>
-                        <div class="quiz-name-line">Name: __________________________________________________________</div>
-                    </div>
-                    <h3 class="quiz-subtitle">${group.group_title}</h3>
-                </div>
-            `;
-            
-            group.sentences.forEach(sentence => {
                 htmlString += `
-                    <div class="quiz-item">
-                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <!-- Injects the answer directly onto the same blank line -->
-                        <div class="blank-line" style="font-size: 0.95em; color: #333; line-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            ${sentence.smooth_english}
+                    <div class="quiz-header">
+                        <div class="quiz-top-row">
+                            <h2 class="quiz-main-title">ANSWER KEY</h2>
+                            <div class="quiz-name-line">Name: __________________________________________________________</div>
                         </div>
+                        <h3 class="quiz-subtitle">${group.group_title}</h3>
                     </div>
                 `;
-            });
+                
+                group.sentences.forEach(sentence => {
+                    htmlString += `
+                        <div class="quiz-item">
+                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                            <div class="blank-line" style="font-size: 0.95em; color: #333; line-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                ${sentence.smooth_english}
+                            </div>
+                        </div>
+                    `;
+                });
 
-            htmlString += `</div>`; // Close quiz-half-page
+                htmlString += `</div>`; // Close quiz-half-page
+            }
         });
     }
-    
+
     worksheetContainer.innerHTML = htmlString;
 }
