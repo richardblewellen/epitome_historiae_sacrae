@@ -262,14 +262,19 @@ body {
 /* --- EXACT HALF-PAGE SPLIT FOR PRINTING --- */
 @media print {
     .quiz-half-page {
-        height: 50vh; /* Forces the container to be exactly half the printed page */
-        box-sizing: border-box; /* Keeps padding and borders from adding extra height */
-        padding-top: 0.25in;
-        padding-bottom: 0.25in;
+        height: 50vh;
+        box-sizing: border-box;
         page-break-inside: avoid;
     }
 
     .top-quiz {
-        border-bottom: 1px dashed #999; /* The exact middle guillotine line */
+        border-bottom: 1px dashed #999;
+        padding-top: 0; /* The @page margin handles the gap at the top of the paper */
+        padding-bottom: 0.4in; /* Keeps the bottom questions from crowding the cut line */
+    }
+
+    .bottom-quiz {
+        padding-top: 0.4in; /* Perfectly matches the @page top margin! */
+        padding-bottom: 0;
     }
 }
