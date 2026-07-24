@@ -163,21 +163,6 @@ body {
     width: 100%;
 }
 
-.cut-line {
-    border-top: 1px dashed #999;
-    margin: 40px 0;
-    position: relative;
-}
-
-.cut-line::after {
-    content: "✂️";
-    position: absolute;
-    top: -12px;
-    left: -25px;
-    font-size: 1.2em;
-}
-
-
 .answer-text {
     font-size: 1.1em;
     color: #555;
@@ -249,10 +234,6 @@ body {
     flex: 1;
     overflow: hidden;
     padding-right: 15px;
-}
-
-.cut-line {
-    margin: 0;
 }
 
 
