@@ -186,39 +186,48 @@ function generateWorksheet() {
     } else if (documentType === "quiz") {
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
-            if (index > 0 && !isDefaultContinuous) {
+            // We always want a page break between different stories when making half-sheets
+            if (index > 0) {
                 htmlString += `<div class="page-break"></div>`;
-            } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; 
             }
 
-            // Wrap the entire group
-            htmlString += `<div class="group-wrapper">`;
+            // Wrap the entire page
+            htmlString += `<div class="half-sheet-container">`;
 
-            htmlString += `
-                <div class="quiz-header">
-                    <div class="quiz-top-row">
-                        <h2 class="quiz-main-title">QUIZ</h2>
-                        <div class="quiz-name-line">Name: __________________________________________________________</div>
-                    </div>
-                    <h3 class="quiz-subtitle">${group.group_title}</h3>
-                </div>
-            `;
-            
-            group.sentences.forEach(sentence => {
+            // Render the exact same quiz twice (top half, bottom half)
+            for (let i = 0; i < 2; i++) {
+                htmlString += `<div class="half-sheet-quiz">`;
+                
                 htmlString += `
-                    <div class="quiz-item">
-                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <div class="blank-line"></div>
-                        <div class="blank-line"></div>
+                    <div class="quiz-header">
+                        <div class="quiz-top-row">
+                            <h2 class="quiz-main-title">QUIZ</h2>
+                            <div class="quiz-name-line">Name: _____________________________________</div>
+                        </div>
+                        <h3 class="quiz-subtitle">${group.group_title}</h3>
                     </div>
                 `;
-            });
+                
+                group.sentences.forEach(sentence => {
+                    htmlString += `
+                        <div class="quiz-item">
+                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                            <div class="blank-line"></div>
+                            <div class="blank-line"></div>
+                        </div>
+                    `;
+                });
 
-            // Close the group wrapper
-            htmlString += `</div>`;
+                htmlString += `</div>`; // Close half-sheet-quiz
+
+                // Add the dashed cut line after the top quiz
+                if (i === 0) {
+                    htmlString += `<div class="cut-line"></div>`;
+                }
+            }
+
+            htmlString += `</div>`; // Close half-sheet-container
         });
-
         // --- ANSWER KEYS ---
         htmlString += `<div class="page-break"></div>`; 
 
