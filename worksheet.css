@@ -145,7 +145,7 @@ body {
 }
 
 .quiz-item {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     page-break-inside: avoid; /* Prevents an item from splitting across pages */
 }
 
@@ -158,10 +158,25 @@ body {
 /* Creates the blank lines to write on */
 .blank-line {
     border-bottom: 1px solid #999;
-    height: 35px; 
+    height: 25px; 
     margin-top: 10px;
     width: 100%;
 }
+
+.cut-line {
+    border-top: 1px dashed #999;
+    margin: 40px 0;
+    position: relative;
+}
+
+.cut-line::after {
+    content: "✂️";
+    position: absolute;
+    top: -12px;
+    left: -25px;
+    font-size: 1.2em;
+}
+
 
 .answer-text {
     font-size: 1.1em;
@@ -222,6 +237,24 @@ body {
         padding-top: 0;
     } 
 }
+
+.half-sheet-container {
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+}
+
+.half-sheet-quiz {
+    flex: 1;
+    overflow: hidden;
+    padding-right: 15px;
+}
+
+.cut-line {
+    margin: 0;
+}
+
 
 /* --- TWO-COLUMN STUDY SHEET STYLES --- */
 .study-sheet-grid {
