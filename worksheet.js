@@ -183,23 +183,18 @@ function generateWorksheet() {
             htmlString += `</div>`;
         });
 
-    } else if (documentType === "quiz") {
+   } else if (documentType === "quiz") {
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
-            // Force a page break only every 2nd quiz. Otherwise, add a cut line.
-            if (index > 0 && !isDefaultContinuous) {
-                if (index % 2 === 0) {
-                    htmlString += `<div class="page-break"></div>`;
-                } else {
-                    // Adds a dashed line between the two quizzes on the same page
-                    htmlString += `<div style="margin-top: 30px; margin-bottom: 30px; border-top: 2px dashed #999; width: 100%;"></div>`; 
-                }
-            } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 20px;"></div>`; 
+            // Force a page break before every 3rd quiz (index 2, 4, 6...)
+            if (index > 0 && index % 2 === 0) {
+                htmlString += `<div class="page-break"></div>`;
             }
 
-            // Wrap the entire group
-            htmlString += `<div class="group-wrapper">`;
+            // Determine if this quiz sits on the top or bottom of the page
+            const isTopQuiz = (index % 2 === 0);
+
+            htmlString += `<div class="quiz-half-page ${isTopQuiz ? 'top-quiz' : 'bottom-quiz'}">`;
 
             htmlString += `
                 <div class="quiz-header">
@@ -215,33 +210,25 @@ function generateWorksheet() {
                 htmlString += `
                     <div class="quiz-item">
                         <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <!-- Removed the second blank line so there is only one per question -->
                         <div class="blank-line"></div>
                     </div>
                 `;
             });
 
-            // Close the group wrapper
-            htmlString += `</div>`;
+            htmlString += `</div>`; // Close quiz-half-page
         });
 
         // --- ANSWER KEYS ---
         htmlString += `<div class="page-break"></div>`; 
 
         selectedGroups.forEach((group, index) => {
-            // Apply the same 2-per-page logic to the answer keys
-            if (index > 0 && !isDefaultContinuous) {
-                if (index % 2 === 0) {
-                    htmlString += `<div class="page-break"></div>`;
-                } else {
-                    htmlString += `<div style="margin-top: 30px; margin-bottom: 30px; border-top: 2px dashed #999; width: 100%;"></div>`; 
-                }
-            } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 20px;"></div>`; 
+            if (index > 0 && index % 2 === 0) {
+                htmlString += `<div class="page-break"></div>`;
             }
 
-            // Wrap the entire group
-            htmlString += `<div class="group-wrapper">`;
+            const isTopQuiz = (index % 2 === 0);
+
+            htmlString += `<div class="quiz-half-page ${isTopQuiz ? 'top-quiz' : 'bottom-quiz'}">`;
 
             htmlString += `
                 <div class="quiz-header">
@@ -262,8 +249,7 @@ function generateWorksheet() {
                 `;
             });
 
-            // Close the group wrapper
-            htmlString += `</div>`;
+            htmlString += `</div>`; // Close quiz-half-page
         });
     }
 
