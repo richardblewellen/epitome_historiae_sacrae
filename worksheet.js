@@ -17,112 +17,112 @@ let selectedGroupIds = [];
 
 // Fetch the data from the JSON API
 async function fetchReaderData() {
-    try {
-        const response = await fetch(API_URL);
-        const jsonData = await response.json();
-        
-        masterSetData = jsonData.sets;
-        
-        if(loadingMessage) loadingMessage.style.display = 'none';
-        if(controlsGroup) controlsGroup.style.display = 'flex';
-        initMasterSets();
-        
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        if(loadingMessage) {
-            loadingMessage.innerText = "Error loading database. Please check your connection.";
-            loadingMessage.style.color = "red";
-        }
-    }
+    try {
+        const response = await fetch(API_URL);
+        const jsonData = await response.json();
+        
+        masterSetData = jsonData.sets;
+        
+        if(loadingMessage) loadingMessage.style.display = 'none';
+        if(controlsGroup) controlsGroup.style.display = 'flex';
+        initMasterSets();
+        
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        if(loadingMessage) {
+            loadingMessage.innerText = "Error loading database. Please check your connection.";
+            loadingMessage.style.color = "red";
+        }
+    }
 }
 
 // Populate the top-level Dropdown (Sets/Books)
 function initMasterSets() {
-    masterSetSelect.innerHTML = '';
+    masterSetSelect.innerHTML = '';
 
-    const defaultOption = document.createElement('option');
-    defaultOption.value = "";
-    defaultOption.innerText = "Pick your set...";
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    masterSetSelect.appendChild(defaultOption);
-    
-    masterSetData.forEach(set => {
-        const option = document.createElement('option');
-        option.value = set.set_id;
-        option.innerText = set.set_title;
-        masterSetSelect.appendChild(option);
-    });
+    const defaultOption = document.createElement('option');
+    defaultOption.value = "";
+    defaultOption.innerText = "Pick your set...";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    masterSetSelect.appendChild(defaultOption);
+    
+    masterSetData.forEach(set => {
+        const option = document.createElement('option');
+        option.value = set.set_id;
+        option.innerText = set.set_title;
+        masterSetSelect.appendChild(option);
+    });
 
-    currentSetId = "";
-    listContainer.innerHTML = '';
+    currentSetId = "";
+    listContainer.innerHTML = '';
 }
 
 // When the user changes the Set/Book, update the secondary Dropdown
 masterSetSelect.addEventListener('change', (e) => {
-    currentSetId = e.target.value;
-    populateGroupDropdown();
-    listContainer.classList.add('show');
+    currentSetId = e.target.value;
+    populateGroupDropdown();
+    listContainer.classList.add('show');
 });
 
 // Populate the secondary Dropdown (Stories/Chapters)
 function populateGroupDropdown() {
-    listContainer.innerHTML = '';
-    selectedGroupIds = []; 
-    generateWorksheet();
+    listContainer.innerHTML = '';
+    selectedGroupIds = []; 
+    generateWorksheet();
 
-    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
-    if (!activeSet) return;
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
 
-    activeSet.groups.forEach(group => {
-        const item = document.createElement('div');
-        item.className = 'story-item';
-        item.dataset.id = group.group_id;
-        item.innerText = `${group.group_title}`;
+    activeSet.groups.forEach(group => {
+        const item = document.createElement('div');
+        item.className = 'story-item';
+        item.dataset.id = group.group_id;
+        item.innerText = `${group.group_title}`;
 
-        item.addEventListener('click', () => {
-            const id = group.group_id;
-            if (selectedGroupIds.includes(id)) {
-                selectedGroupIds = selectedGroupIds.filter(selectedId => selectedId !== id);
-                item.classList.remove('selected');
-            } else {
-                selectedGroupIds.push(id);
-                item.classList.add('selected');
-            }
-            generateWorksheet();
-        });
+        item.addEventListener('click', () => {
+            const id = group.group_id;
+            if (selectedGroupIds.includes(id)) {
+                selectedGroupIds = selectedGroupIds.filter(selectedId => selectedId !== id);
+                item.classList.remove('selected');
+            } else {
+                selectedGroupIds.push(id);
+                item.classList.add('selected');
+            }
+            generateWorksheet();
+        });
 
-        listContainer.appendChild(item);
-    });
+        listContainer.appendChild(item);
+    });
 }
 
 // UI Listeners
 btnDropdownToggle.addEventListener('click', () => listContainer.classList.toggle('show'));
 
 document.addEventListener('click', (event) => {
-    if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
-        listContainer.classList.remove('show');
-    }
+    if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
+        listContainer.classList.remove('show');
+    }
 });
 
 btnClearSelection.addEventListener('click', () => {
-    selectedGroupIds = [];
-    document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
-    listContainer.classList.remove('show');
-    generateWorksheet();
+    selectedGroupIds = [];
+    document.querySelectorAll('.story-item').forEach(el => el.classList.remove('selected'));
+    listContainer.classList.remove('show');
+    generateWorksheet();
 });
 
 // Redraw whenever the user clicks Study Sheet or Quiz
 typeRadios.forEach(radio => {
-    radio.addEventListener('change', generateWorksheet);
+    radio.addEventListener('change', generateWorksheet);
 });
 
 btnPrint.addEventListener('click', () => {
-    if (!currentSetId) {
-        alert("Please select a set from the top menu first!");
-        return;
-    }
-    window.print(); 
+    if (!currentSetId) {
+        alert("Please select a set from the top menu first!");
+        return;
+    }
+    window.print(); 
 });
 
 // Start the fetch process
@@ -131,134 +131,130 @@ fetchReaderData();
 
 // --- 2. Generate Worksheet Layout ---
 function generateWorksheet() {
-    worksheetContainer.innerHTML = '';
-    
-    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
-    if (!activeSet) return;
+    worksheetContainer.innerHTML = '';
+    
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    if (!activeSet) return;
 
-    let selectedGroups = [];
-    let isDefaultContinuous = false;
+    let selectedGroups = [];
+    let isDefaultContinuous = false;
 
-    if (selectedGroupIds.length === 0) {
-        selectedGroups = activeSet.groups; 
-        isDefaultContinuous = true; 
-    } else {
-        selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
-    }
+    if (selectedGroupIds.length === 0) {
+        selectedGroups = activeSet.groups; 
+        isDefaultContinuous = true; 
+    } else {
+        selectedGroups = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
+    }
 
-    if (selectedGroups.length === 0) return;
+    if (selectedGroups.length === 0) return;
 
-    const documentType = document.querySelector('input[name="worksheet-type"]:checked').value;
-    let htmlString = ``;
+    const documentType = document.querySelector('input[name="worksheet-type"]:checked').value;
+    let htmlString = ``;
 
-    if (documentType === "study-sheet") {
-        // --- TWO-COLUMN STUDY SHEET ---
-        selectedGroups.forEach((group, index) => {
-            if (index > 0 && !isDefaultContinuous) {
-                htmlString += `<div class="page-break"></div>`;
-            } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; 
-            }
+    if (documentType === "study-sheet") {
+        // --- TWO-COLUMN STUDY SHEET ---
+        selectedGroups.forEach((group, index) => {
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
+            }
 
-            // Wrap the entire group
-            htmlString += `<div class="group-wrapper">`;
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
-            htmlString += `
-                <div class="quiz-header" style="margin-bottom: 15px;">
-                    <h2 class="quiz-main-title" style="font-size: 1.8em;">${group.group_title}</h2>
-                </div>
-            `;
-            
-            group.sentences.forEach(sentence => {
-                htmlString += `
-                    <div class="study-sheet-grid">
-                        <div class="study-number">${sentence.sentence_id}.</div>
-                        <div class="study-greek">${sentence.greek}</div>
-                        <div class="study-english">${sentence.smooth_english}</div>
-                    </div>
-                `;
-            });
+            htmlString += `
+                <div class="quiz-header" style="margin-bottom: 15px;">
+                    <h2 class="quiz-main-title" style="font-size: 1.8em;">${group.group_title}</h2>
+                </div>
+            `;
+            
+            group.sentences.forEach(sentence => {
+                htmlString += `
+                    <div class="study-sheet-grid">
+                        <div class="study-number">${sentence.sentence_id}.</div>
+                        <div class="study-greek">${sentence.greek}</div>
+                        <div class="study-english">${sentence.smooth_english}</div>
+                    </div>
+                `;
+            });
 
-            // Close the group wrapper
-            htmlString += `</div>`;
-        });
+            // Close the group wrapper
+            htmlString += `</div>`;
+        });
 
-    } else if (documentType === "quiz") {
-        // --- QUIZZES ---
-        selectedGroups.forEach((group, index) => {
-            // We always want a page break between different stories when making half-sheets
-            if (index > 0) {
-                htmlString += `<div class="page-break"></div>`;
-            }
+    } else if (documentType === "quiz") {
+        // --- QUIZZES ---
+        selectedGroups.forEach((group, index) => {
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
+            }
 
-            // Wrap the entire page
-            htmlString += `<div class="half-sheet-container">`;
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
-            // Render the exact same quiz twice (top half, bottom half)
-            for (let i = 0; i < 2; i++) {
-                htmlString += `<div class="half-sheet-quiz">`;
-                
-                htmlString += `
-                    <div class="quiz-header">
-                        <div class="quiz-top-row">
-                            <h2 class="quiz-main-title">QUIZ</h2>
-                            <div class="quiz-name-line">Name: _____________________________________</div>
-                        </div>
-                        <h3 class="quiz-subtitle">${group.group_title}</h3>
-                    </div>
-                `;
-                
-                group.sentences.forEach(sentence => {
-                    htmlString += `
-                        <div class="quiz-item">
-                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                            <div class="blank-line"></div>
-                        </div>
-                    `;
-                });
+            htmlString += `
+                <div class="quiz-header">
+                    <div class="quiz-top-row">
+                        <h2 class="quiz-main-title">QUIZ</h2>
+                        <div class="quiz-name-line">Name: __________________________________________________________</div>
+                    </div>
+                    <h3 class="quiz-subtitle">${group.group_title}</h3>
+                </div>
+            `;
+            
+            group.sentences.forEach(sentence => {
+                htmlString += `
+                    <div class="quiz-item">
+                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="blank-line"></div>
+                        <div class="blank-line"></div>
+                    </div>
+                `;
+            });
 
-                htmlString += `</div>`; // Close half-sheet-quiz
-            }
+            // Close the group wrapper
+            htmlString += `</div>`;
+        });
 
-            htmlString += `</div>`; // Close half-sheet-container
-        });
+        // --- ANSWER KEYS ---
+        htmlString += `<div class="page-break"></div>`; 
 
-        // --- ANSWER KEYS ---
-        htmlString += `<div class="page-break"></div>`; 
+        selectedGroups.forEach((group, index) => {
+            if (index > 0 && !isDefaultContinuous) {
+                htmlString += `<div class="page-break"></div>`;
+            } else if (index > 0 && isDefaultContinuous) {
+                htmlString += `<div style="margin-top: 40px;"></div>`; 
+            }
 
-        selectedGroups.forEach((group, index) => {
-            if (index > 0 && !isDefaultContinuous) {
-                htmlString += `<div class="page-break"></div>`;
-            } else if (index > 0 && isDefaultContinuous) {
-                htmlString += `<div style="margin-top: 40px;"></div>`; 
-            }
+            // Wrap the entire group
+            htmlString += `<div class="group-wrapper">`;
 
-            // Wrap the entire group
-            htmlString += `<div class="group-wrapper">`;
+            htmlString += `
+                <div class="quiz-header">
+                    <div class="quiz-top-row">
+                        <h2 class="quiz-main-title">ANSWER KEY</h2>
+                    </div>
+                    <h3 class="quiz-subtitle">${group.group_title}</h3>
+                </div>
+            `;
+            
+            group.sentences.forEach(sentence => {
+                htmlString += `
+                    <div class="quiz-item">
+                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                        <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
+                        <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
+                    </div>
+                `;
+            });
 
-            htmlString += `
-                <div class="quiz-header">
-                    <div class="quiz-top-row">
-                        <h2 class="quiz-main-title">ANSWER KEY</h2>
-                    </div>
-                    <h3 class="quiz-subtitle">${group.group_title}</h3>
-                </div>
-            `;
-            
-            group.sentences.forEach(sentence => {
-                htmlString += `
-                    <div class="quiz-item">
-                        <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
-                        <div class="answer-text"><strong>Literal:</strong> ${sentence.literal_english}</div>
-                        <div class="answer-text"><strong>Smooth:</strong> ${sentence.smooth_english}</div>
-                    </div>
-                `;
-            });
+            // Close the group wrapper
+            htmlString += `</div>`;
+        });
+    }
 
-            // Close the group wrapper
-            htmlString += `</div>`;
-        });
-    }
-
-    worksheetContainer.innerHTML = htmlString;
+    worksheetContainer.innerHTML = htmlString;
 }
