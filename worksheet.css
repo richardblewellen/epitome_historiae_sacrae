@@ -110,9 +110,9 @@ body {
 
 /* --- NEW QUIZ HEADER STYLES --- */
 .quiz-header {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #000;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     page-break-after: avoid;
     break-after: avoid;
 }
@@ -124,48 +124,48 @@ body {
 }
 
 .quiz-main-title {
-    font-size: 2.2em;
+    font-size: 1.5em;
     margin: 0;
     line-height: 1;
     color: #000;
 }
 
 .quiz-name-line {
-    font-size: 1.1em;
+    font-size: .95em;
     white-space: nowrap; 
 }
 
 .quiz-subtitle {
-    font-size: 1.2em;
-    margin: 5px 0 0 0;
+    font-size: 1em;
+    margin: 2px 0 0 0;
     font-weight: normal;
     color: #555;
     text-align: left;
 }
 
 .quiz-item {
-    margin-bottom: 40px;
+    margin-bottom: 15px;
     page-break-inside: avoid;
 }
 
 .greek-text {
-    font-size: 1.4em;
+    font-size: 1.1em;
     font-weight: normal;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 /* Creates the blank lines to write on */
 .blank-line {
     border-bottom: 1px solid #999;
-    height: 35px; 
-    margin-top: 10px;
+    height: 25px; 
+    margin-top: 5px;
     width: 100%;
 }
 
 .answer-text {
-    font-size: 1.1em;
+    font-size: .95em;
     color: #555;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 /* Forces the Answer Key to a new page */
