@@ -346,7 +346,7 @@ btnRecord.addEventListener('click', async () => {
 
         // 4. When recording stops, package it into a file and force a download
         mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm';codecs=opus' });
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm;codecs=opus' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const a = document.createElement('a');
             a.href = audioUrl;
