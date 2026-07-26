@@ -259,9 +259,3 @@ body.hide-smooth .smooth-text { display: none; }
     50% { background-color: #ff6b6b; }
     100% { background-color: #dc3545; }
 }
-
-@keyframes pulse-red {
-    0% { background-color: #dc3545; }
-    50% { background-color: #ff6b6b; }
-    100% { background-color: #dc3545; }
-}
