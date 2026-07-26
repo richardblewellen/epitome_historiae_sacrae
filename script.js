@@ -363,7 +363,7 @@ btnRecord.addEventListener('click', async () => {
 
         // 5. Start the engine and update the UI
         mediaRecorder.start();
-        btnRecord.innerText = ""■ Stop Recording"";
+        btnRecord.innerText = ""◼ Stop Recording"";
         btnRecord.classList.add('recording-active');
 
         // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
@@ -382,6 +382,6 @@ function stopRecording() {
         // Shut off the browser's "Sharing" indicator
         mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
     }
-    btnRecord.innerText = "● Record Audio";
+    btnRecord.innerText = "⬤ Record Audio";
     btnRecord.classList.remove('recording-active');
 }
