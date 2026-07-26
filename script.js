@@ -313,6 +313,10 @@ let mediaRecorder;
 let audioChunks = [];
 const btnRecord = document.getElementById('btn-record');
 
+const svgRecord = `<svg viewBox="0 0 24 24" class="btn-icon"><circle cx="12" cy="12" r="7"/></svg>`;
+const svgStop = `<svg viewBox="0 0 24 24" class="btn-icon"><path d="M6 6h12v12H6z"/></svg>`;
+
+
 btnRecord.addEventListener('click', async () => {
     // If we are already recording, this button acts as the Stop button
     if (mediaRecorder && mediaRecorder.state === "recording") {
@@ -363,7 +367,7 @@ btnRecord.addEventListener('click', async () => {
 
         // 5. Start the engine and update the UI
         mediaRecorder.start();
-        btnRecord.innerText = "◼ Stop Recording";
+        btnRecord.innerHTML = svgStop;
         btnRecord.classList.add('recording-active');
 
         // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
@@ -382,6 +386,6 @@ function stopRecording() {
         // Shut off the browser's "Sharing" indicator
         mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
     }
-    btnRecord.innerText = "⬤ Record Audio";
+    btnRecord.innerHTML = svgRecord;
     btnRecord.classList.remove('recording-active');
 }
