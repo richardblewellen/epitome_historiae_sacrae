@@ -231,16 +231,31 @@ body.hide-smooth .smooth-text { display: none; }
 }
 
 /* --- Record Button Styling --- */
-#btn-record {
+/* --- Media Buttons --- */
+#btn-play, #btn-stop, #btn-record {
     background-color: #fff;
-    color: #333;
+    color: #000; /* This makes the SVG icons black */
     border: 1px solid #ccc;
-    padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.95em;
-    font-family: inherit;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;  
+    height: 42px; 
+    padding: 0; /* Removes default padding so flexbox centers perfectly */
     transition: background-color 0.2s, color 0.2s;
+}
+
+#btn-play:hover, #btn-stop:hover, #btn-record:hover {
+    background-color: #e9ecef;
+}
+
+/* --- SVG Icon Sizing --- */
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor; /* Inherits the black color, or white when recording */
 }
 
 #btn-record:hover {
