@@ -14,23 +14,26 @@ let currentSetId = "";
 let selectedGroupIds = [];
 let isPlaying = false;
 
-// Fetch the data from the Google Apps Script API
+// Fetch the data from the JSON file or API endpoint
 async function fetchReaderData() {
     try {
         const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const jsonData = await response.json();
         
         masterSetData = jsonData.sets;
         
         // Hide loading message, show controls, and build UI
-        if(loadingMessage) loadingMessage.style.display = 'none';
-        if(controlsGroup) controlsGroup.style.display = 'flex';
+        if (loadingMessage) loadingMessage.style.display = 'none';
+        if (controlsGroup) controlsGroup.style.display = 'flex';
         initMasterSets();
         
     } catch (error) {
         console.error("Error fetching data:", error);
-        if(loadingMessage) {
-            loadingMessage.innerText = "Error loading stories. Please check your Web App URL and ensure it is deployed to 'Anyone'.";
+        if (loadingMessage) {
+            loadingMessage.innerText = "Error loading stories. Please check your data source.";
             loadingMessage.style.color = "red";
         }
     }
@@ -54,7 +57,6 @@ function initMasterSets() {
         masterSetSelect.appendChild(option);
     });
 
-    // Ensure the second menu starts empty
     currentSetId = "";
     listContainer.innerHTML = '';
 }
@@ -68,7 +70,7 @@ masterSetSelect.addEventListener('change', (e) => {
 // Populate the secondary Dropdown (Stories/Chapters)
 function populateGroupDropdown() {
     listContainer.innerHTML = '';
-    selectedGroupIds = []; // Clear selections when changing sets
+    selectedGroupIds = []; 
     renderContent();
 
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
@@ -96,14 +98,14 @@ function populateGroupDropdown() {
     });
 }
 
-// Toggle the dropdown visibility
+// Toggle dropdown visibility
 btnDropdownToggle.addEventListener('click', () => {
     listContainer.classList.toggle('show');
 });
 
-// Close the dropdown if the user clicks outside of it
+// Close dropdown if user clicks outside container or toggle button
 document.addEventListener('click', (event) => {
-    if (!listContainer.contains(event.target) && event.target !== btnDropdownToggle) {
+    if (!listContainer.contains(event.target) && !btnDropdownToggle.contains(event.target)) {
         listContainer.classList.remove('show');
     }
 });
@@ -118,23 +120,17 @@ btnClearSelection.addEventListener('click', () => {
 
 // Render the selected content to the screen
 function renderContent() {
-    const contentContainer = document.getElementById('content-container'); // Or whatever your container ID is
     contentContainer.innerHTML = '';
 
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
     if (!activeSet) return;
 
-    // NEW LOGIC: Default to showing the entire book if nothing specific is selected
-    let groupsToRender = [];
-    if (selectedGroupIds.length === 0) {
-        groupsToRender = activeSet.groups; 
-    } else {
-        groupsToRender = activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
-    }
+    let groupsToRender = selectedGroupIds.length === 0 
+        ? activeSet.groups 
+        : activeSet.groups.filter(group => selectedGroupIds.includes(group.group_id));
 
     if (groupsToRender.length === 0) return;
 
-    // Now loop through groupsToRender instead of a filtered list
     groupsToRender.forEach(group => {
         const block = document.createElement('div');
         block.className = 'story-block';
@@ -149,15 +145,14 @@ function renderContent() {
             const row = document.createElement('div');
             row.className = 'sentence-row';
             
-            // We wrap the ID and Greek text in a flex container
             row.innerHTML = `
-            <div class="greek-wrapper">
-                <span class="sentence-id">${sentence.sentence_id}.</span>
-                <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
-            </div>
-            <span class="literal-text">${sentence.literal_english}</span>
-            <span class="smooth-text">${sentence.smooth_english}</span>
-        `;
+                <div class="greek-wrapper">
+                    <span class="sentence-id">${sentence.sentence_id}.</span>
+                    <span class="greek-text" onclick="speakSingleSentence(this)">${sentence.greek}</span>
+                </div>
+                <span class="literal-text">${sentence.literal_english}</span>
+                <span class="smooth-text">${sentence.smooth_english}</span>
+            `;
             block.appendChild(row);
         });
 
@@ -165,7 +160,7 @@ function renderContent() {
     });
 }
 
-// Boot up the app by initiating the fetch request
+// Boot app
 fetchReaderData();
 
 
@@ -182,23 +177,20 @@ document.getElementById('toggle-smooth').addEventListener('change', e => {
 
 
 // --- 3. Slider Labels & Defaults ---
-const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 };
+const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 }; // Intentional step mapping (1x, 2x, 3x, 5x)
 
 const sliderSpeed = document.getElementById('slider-speed');
 const sliderPause = document.getElementById('slider-pause');
 const sliderRepeat = document.getElementById('slider-repeat');
 
-// 1. Force the physical slider thumbs to the correct default positions
 sliderSpeed.value = 0.7;
 sliderPause.value = 0.5;
 sliderRepeat.value = 1;
 
-// 2. Force the printed text labels to match those defaults
 document.getElementById('speed-val').innerText = sliderSpeed.value;
 document.getElementById('pause-val').innerText = sliderPause.value;
 document.getElementById('repeat-val').innerText = repeatValues[parseInt(sliderRepeat.value)];
 
-// 3. Listeners to update the text when you drag the sliders
 sliderSpeed.addEventListener('input', e => {
     document.getElementById('speed-val').innerText = e.target.value;
 });
@@ -210,7 +202,12 @@ sliderRepeat.addEventListener('input', e => {
 });
 
 
-// --- 4. Greek Diacritic Normalization for TTS ---
+// --- 4. Greek Diacritic Normalization & TTS Corrections ---
+const TTS_REPLACEMENTS = {
+    'έπαυον': 'έπαβον'
+    // Add future TTS pronunciation fixes here as key-value pairs
+};
+
 function cleanForTTS(text) {
     let cleaned = text.normalize("NFD")
         .replace(/[\u0300\u0302\u0303\u0342]/g, '\u0301') 
@@ -220,8 +217,13 @@ function cleanForTTS(text) {
             return prefix + letter.normalize("NFD").replace(/\u0301/g, '').normalize("NFC");
         });
     
-    cleaned = cleaned.replace(/(^|[\s,;:'"(\[·-])[ωώ](?=[\s,;:.!?"'\)\]·-]|$)/g, '$1ο');
-    cleaned = cleaned.replace(/έπαυον/g, 'έπαβον'); 
+    // Convert standalone omega particles/interjections to omicron for accurate TTS voicing
+    cleaned = cleaned.replace(/(^|[\s,;:'"(\[·-])[ωώΩΏ](?=[\s,;:.!?"'\)\]·-]|$)/g, '$1ο');
+
+    // Apply specific word overrides
+    for (const [target, replacement] of Object.entries(TTS_REPLACEMENTS)) {
+        cleaned = cleaned.replace(new RegExp(target, 'g'), replacement);
+    }
 
     return cleaned;
 }
@@ -257,7 +259,10 @@ function scrollRowIntoView(row) {
 }
 
 function speakSingleSentence(element) {
+    // Stop any active auto-play loop before speaking single sentence
+    isPlaying = false;
     window.speechSynthesis.cancel();
+    
     const speed = parseFloat(document.getElementById('slider-speed').value);
     speakText(element.textContent.trim(), speed);
 }
@@ -294,11 +299,12 @@ document.getElementById('btn-play').addEventListener('click', async () => {
 
             if (isPlaying) {
                 const pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
-                await sleep(pauseMs);
+                if (r < repeats - 1 && isPlaying) await sleep(pauseMs);
             }
         }
     } finally {
         isPlaying = false;
+        document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
     }
 });
 
@@ -307,6 +313,7 @@ document.getElementById('btn-stop').addEventListener('click', () => {
     window.speechSynthesis.cancel();
     document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
 });
+
 
 // --- 6. Audio Recording (Tab Capture API) ---
 let mediaRecorder;
@@ -317,22 +324,18 @@ const btnRecord = document.getElementById('btn-record');
 const svgRecord = `<svg viewBox="0 0 24 24" class="btn-icon"><circle cx="12" cy="12" r="7"/></svg>`;
 const svgStop = `<svg viewBox="0 0 24 24" class="btn-icon"><path d="M6 6h12v12H6z"/></svg>`;
 
-
 btnRecord.addEventListener('click', async () => {
-    // If we are already recording, this button acts as the Stop button
-    if (mediaRecorder && mediaRecorder.state === "recording") {
+    if (btnRecord.classList.contains('recording-active')) {
         stopRecording();
         return;
     }
 
     try {
-        // 1. Ask the browser to capture the screen to get OS-level audio
         originalStream = await navigator.mediaDevices.getDisplayMedia({
             video: true,
             audio: true,
         });
 
-        // 2. Strip out the video and only keep the audio track
         const audioTracks = originalStream.getAudioTracks();
         if (audioTracks.length === 0) {
             alert("No audio track found. Make sure you toggle on 'Also share tab audio' in the popup!");
@@ -344,21 +347,28 @@ btnRecord.addEventListener('click', async () => {
         mediaRecorder = new MediaRecorder(audioStream);
         audioChunks = [];
 
-        // 3. Catch the audio data as it flows in
         mediaRecorder.ondataavailable = e => {
             if (e.data.size > 0) audioChunks.push(e.data);
         };
 
-        // 4. When recording stops, package it into a file and force a download
         mediaRecorder.onstop = () => {
             const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const a = document.createElement('a');
             a.href = audioUrl;
             
-            // Name the file based on the selected chapter if one exists
-            const activeStory = document.querySelector('.story-item.selected');
-            const fileName = activeStory ? activeStory.innerText.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'greek_audio';
+            // Build a clean, descriptive filename
+            const selectedItems = Array.from(document.querySelectorAll('.story-item.selected'));
+            let fileName = 'greek_audio';
+
+            if (selectedItems.length === 1) {
+                fileName = selectedItems[0].innerText.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            } else if (selectedItems.length > 1) {
+                fileName = `${currentSetId}_selected_chapters`;
+            } else if (currentSetId) {
+                fileName = `${currentSetId}_full_set`;
+            }
+
             a.download = `${fileName}.webm`; 
             
             document.body.appendChild(a);
@@ -366,12 +376,10 @@ btnRecord.addEventListener('click', async () => {
             document.body.removeChild(a);
         };
 
-        // 5. Start the engine and update the UI
         mediaRecorder.start();
         btnRecord.innerHTML = svgStop;
         btnRecord.classList.add('recording-active');
 
-        // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
         originalStream.getVideoTracks()[0].onended = () => {
             stopRecording();
         };
@@ -386,7 +394,10 @@ function stopRecording() {
         mediaRecorder.stop();
     }
     
-    // Shut off the browser's "Sharing" indicator completely
+    if (mediaRecorder && mediaRecorder.stream) {
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+    
     if (originalStream) {
         originalStream.getTracks().forEach(track => track.stop()); 
     }
