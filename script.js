@@ -307,3 +307,81 @@ document.getElementById('btn-stop').addEventListener('click', () => {
     window.speechSynthesis.cancel();
     document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
 });
+
+// --- 6. Audio Recording (Tab Capture API) ---
+let mediaRecorder;
+let audioChunks = [];
+const btnRecord = document.getElementById('btn-record');
+
+btnRecord.addEventListener('click', async () => {
+    // If we are already recording, this button acts as the Stop button
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        stopRecording();
+        return;
+    }
+
+    try {
+        // 1. Ask the browser to capture the current tab
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+            video: { displaySurface: "browser" }, 
+            audio: true 
+        });
+
+        // 2. Strip out the video and only keep the audio track
+        const audioTracks = stream.getAudioTracks();
+        if (audioTracks.length === 0) {
+            alert("No audio track found. Make sure you toggle on 'Also share tab audio' in the popup!");
+            stream.getTracks().forEach(track => track.stop());
+            return;
+        }
+
+        const audioStream = new MediaStream(audioTracks);
+        mediaRecorder = new MediaRecorder(audioStream);
+        audioChunks = [];
+
+        // 3. Catch the audio data as it flows in
+        mediaRecorder.ondataavailable = e => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+        };
+
+        // 4. When recording stops, package it into a file and force a download
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const a = document.createElement('a');
+            a.href = audioUrl;
+            
+            // Name the file based on the selected chapter if one exists
+            const activeStory = document.querySelector('.story-item.selected');
+            const fileName = activeStory ? activeStory.innerText.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'greek_audio';
+            a.download = `${fileName}.webm`; 
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+
+        // 5. Start the engine and update the UI
+        mediaRecorder.start();
+        btnRecord.innerText = "⏹️ Stop Recording";
+        btnRecord.classList.add('recording-active');
+
+        // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
+        stream.getVideoTracks()[0].onended = () => {
+            stopRecording();
+        };
+
+    } catch (err) {
+        console.error("Recording canceled or failed:", err);
+    }
+});
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        // Shut off the browser's "Sharing" indicator
+        mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
+    }
+    btnRecord.innerText = "⏺️ Record Audio";
+    btnRecord.classList.remove('recording-active');
+}
