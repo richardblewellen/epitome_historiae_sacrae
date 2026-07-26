@@ -346,7 +346,7 @@ btnRecord.addEventListener('click', async () => {
 
         // 4. When recording stops, package it into a file and force a download
         mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm';codecs=opus' });
             const audioUrl = URL.createObjectURL(audioBlob);
             const a = document.createElement('a');
             a.href = audioUrl;
@@ -354,7 +354,7 @@ btnRecord.addEventListener('click', async () => {
             // Name the file based on the selected chapter if one exists
             const activeStory = document.querySelector('.story-item.selected');
             const fileName = activeStory ? activeStory.innerText.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'greek_audio';
-            a.download = `${fileName}.webm`; 
+            a.download = `${fileName}.weba`; 
             
             document.body.appendChild(a);
             a.click();
@@ -363,7 +363,7 @@ btnRecord.addEventListener('click', async () => {
 
         // 5. Start the engine and update the UI
         mediaRecorder.start();
-        btnRecord.innerText = ""◼ Stop Recording"";
+        btnRecord.innerText = "◼ Stop Recording";
         btnRecord.classList.add('recording-active');
 
         // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
