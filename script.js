@@ -297,9 +297,10 @@ document.getElementById('btn-play').addEventListener('click', async () => {
 
             row.classList.remove('highlight');
 
+            // Pause before moving to the next sentence
             if (isPlaying) {
                 const pauseMs = parseFloat(document.getElementById('slider-pause').value) * 1000;
-                if (r < repeats - 1 && isPlaying) await sleep(pauseMs);
+                await sleep(pauseMs);
             }
         }
     } finally {
