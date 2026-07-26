@@ -372,7 +372,7 @@ btnRecord.addEventListener('click', async () => {
         btnRecord.classList.add('recording-active');
 
         // Failsafe: If the user clicks "Stop Sharing" on the browser's floating banner instead of our button
-        stream.getVideoTracks()[0].onended = () => {
+        originalStream.getVideoTracks()[0].onended = () => {
             stopRecording();
         };
 
