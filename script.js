@@ -324,7 +324,7 @@ btnRecord.addEventListener('click', async () => {
         // 1. Ask the browser to capture the current tab
         const stream = await navigator.mediaDevices.getDisplayMedia({
             video: { displaySurface: "browser" }, 
-            audio: true
+            audio: true,
             preferCurrentTab: true // Forces Chrome to suggest the active tab first
         });
 
