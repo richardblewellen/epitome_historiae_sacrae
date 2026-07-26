@@ -246,8 +246,8 @@ body.hide-smooth .smooth-text { display: none; }
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 42px;  
-    height: 42px; 
+    width: 32px;  
+    height: 32px; 
     padding: 0; /* Removes default padding so flexbox centers perfectly */
     transition: background-color 0.2s, color 0.2s;
 }
@@ -258,8 +258,8 @@ body.hide-smooth .smooth-text { display: none; }
 
 /* --- SVG Icon Sizing --- */
 .btn-icon {
-    width: 18px;
-    height: 18px;
+    width: 75%;
+    height: 75%;
     fill: currentColor; /* Inherits the black color, or white when recording */
 }
 
