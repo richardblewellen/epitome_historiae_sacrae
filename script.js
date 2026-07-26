@@ -310,6 +310,7 @@ document.getElementById('btn-stop').addEventListener('click', () => {
 
 // --- 6. Audio Recording (Tab Capture API) ---
 let mediaRecorder;
+let originalStream;
 let audioChunks = [];
 const btnRecord = document.getElementById('btn-record');
 
@@ -326,16 +327,16 @@ btnRecord.addEventListener('click', async () => {
 
     try {
         // 1. Ask the browser to capture the screen to get OS-level audio
-        const stream = await navigator.mediaDevices.getDisplayMedia({
+        originalStream = await navigator.mediaDevices.getDisplayMedia({
             video: true,
             audio: true,
         });
 
         // 2. Strip out the video and only keep the audio track
-        const audioTracks = stream.getAudioTracks();
+        const audioTracks = originalStream.getAudioTracks();
         if (audioTracks.length === 0) {
             alert("No audio track found. Make sure you toggle on 'Also share tab audio' in the popup!");
-            stream.getTracks().forEach(track => track.stop());
+            originalStream.getTracks().forEach(track => track.stop());
             return;
         }
 
@@ -383,9 +384,13 @@ btnRecord.addEventListener('click', async () => {
 function stopRecording() {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
         mediaRecorder.stop();
-        // Shut off the browser's "Sharing" indicator
-        mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
     }
+    
+    // Shut off the browser's "Sharing" indicator completely
+    if (originalStream) {
+        originalStream.getTracks().forEach(track => track.stop()); 
+    }
+    
     btnRecord.innerHTML = svgRecord;
     btnRecord.classList.remove('recording-active');
 }
