@@ -361,13 +361,16 @@ btnRecord.addEventListener('click', async () => {
             // Build a clean, descriptive filename
             const selectedItems = Array.from(document.querySelectorAll('.story-item.selected'));
             let fileName = 'greek_audio';
+            
+            // Scrub the Set ID just in case it contains spaces or special characters
+            const safeSetId = currentSetId ? currentSetId.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'set';
 
             if (selectedItems.length === 1) {
                 fileName = selectedItems[0].innerText.replace(/[^a-z0-9]/gi, '_').toLowerCase();
             } else if (selectedItems.length > 1) {
-                fileName = `${currentSetId}_selected_chapters`;
+                fileName = `${safeSetId}_selected_chapters`;
             } else if (currentSetId) {
-                fileName = `${currentSetId}_full_set`;
+                fileName = `${safeSetId}_full_set`;
             }
 
             a.download = `${fileName}.webm`; 
