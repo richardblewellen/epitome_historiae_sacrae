@@ -258,9 +258,6 @@ body.hide-smooth .smooth-text { display: none; }
     fill: currentColor; /* Inherits the black color, or white when recording */
 }
 
-#btn-record:hover {
-    background-color: #e9ecef;
-}
 
 /* Added dynamically by JavaScript when recording starts */
 .recording-active {
@@ -271,6 +268,6 @@ body.hide-smooth .smooth-text { display: none; }
 
 @keyframes pulse-red {
     0% { background-color: #dc3545; }
-    50% { background-color: #ff6b6b; }
+    50% { background-color: #a71d2a; }
     100% { background-color: #dc3545; }
 }
