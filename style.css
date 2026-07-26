@@ -230,25 +230,34 @@ body.hide-smooth .smooth-text { display: none; }
     margin-left: 57px;
 }
 
-/* ---Record Button Styling---Add some effects so the record button flashes while working. */
+/* --- Record Button Styling --- */
 #btn-record {
-    background: #dc3545;
-    color: white;
-    border: none;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
     padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
+    font-size: 0.95em;
+    font-family: inherit;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 #btn-record:hover {
-    background: #c82333;
+    background-color: #e9ecef;
 }
 
 /* Added dynamically by JavaScript when recording starts */
 .recording-active {
+    color: white !important;
+    border-color: #dc3545 !important;
     animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% { background-color: #dc3545; }
+    50% { background-color: #ff6b6b; }
+    100% { background-color: #dc3545; }
 }
 
 @keyframes pulse-red {
