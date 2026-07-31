@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-07-31T18:32:00.533Z",
+  "generated_at": "2026-07-31T18:33:50.022Z",
   "sets": [
     {
       "set_id": "elementary_greek_exercises",
@@ -25,8 +25,8 @@
       "set_title": "Greek Practice Words",
       "groups": [
         {
-          "group_id": "sat_jan_03_2026_00_00_00_gmt_0600_central_standard_time",
-          "group_title": "2026-01-03T06:00:00.000Z",
+          "group_id": "1_3",
+          "group_title": "1-3",
           "sentences": [
             {
               "sentence_id": "1",
@@ -49,8 +49,8 @@
           ]
         },
         {
-          "group_id": "mon_apr_06_2026_01_00_00_gmt_0500_central_daylight_time",
-          "group_title": "2026-04-06T06:00:00.000Z",
+          "group_id": "4_6",
+          "group_title": "4-6",
           "sentences": [
             {
               "sentence_id": "4",
@@ -73,8 +73,8 @@
           ]
         },
         {
-          "group_id": "thu_jul_09_2026_01_00_00_gmt_0500_central_daylight_time",
-          "group_title": "2026-07-09T06:00:00.000Z",
+          "group_id": "7_9",
+          "group_title": "7-9",
           "sentences": [
             {
               "sentence_id": "7",
@@ -97,8 +97,8 @@
           ]
         },
         {
-          "group_id": "mon_oct_12_2026_01_00_00_gmt_0500_central_daylight_time",
-          "group_title": "2026-10-12T06:00:00.000Z",
+          "group_id": "10_12",
+          "group_title": "10-12",
           "sentences": [
             {
               "sentence_id": "10",
