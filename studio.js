@@ -280,9 +280,8 @@ btnExportAudio.addEventListener('click', async () => {
     audioStatus.innerText = `Preparing ${sentencesToProcess.length} sentences...`;
     btnExportAudio.disabled = true;
 
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const sampleRate = audioContext.sampleRate;
+   try {
+        const sampleRate = 16000; // Piper's 'low' models specifically output at 16kHz
         let finalPcmData = []; // This will hold our raw audio floats
 
         for (let i = 0; i < sentencesToProcess.length; i++) {
