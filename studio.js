@@ -353,9 +353,43 @@ btnExportAudio.addEventListener('click', async () => {
     }
 });
 
-// Placeholder for the Piper WASM function
-async function synthesizeWithPiper(text, speed) {
-    // We will build this out in the next step!
-    // For now, it returns 0.1 seconds of silence so the MP3 encoder doesn't break while testing
-    return new Float32Array(44100 * 0.1); 
+// Start the background worker
+const ttsWorker = new Worker('piper-worker.js');
+let isPiperReady = false;
+
+// Tell it to load the heavy models as soon as the page loads
+ttsWorker.postMessage({ type: 'INIT' });
+
+ttsWorker.onmessage = (e) => {
+    if (e.data.type === 'READY') {
+        console.log("Piper TTS is ready!");
+        isPiperReady = true;
+    } else if (e.data.type === 'ERROR') {
+        console.error("Piper TTS Error:", e.data.error);
+    }
+};
+
+// The function that the MP3 exporter calls
+function synthesizeWithPiper(text, speed) {
+    return new Promise((resolve, reject) => {
+        if (!isPiperReady) {
+            return reject(new Error("Voice model is still loading. Please wait a few seconds."));
+        }
+
+        // Listen for the specific audio response
+        const handleMessage = (e) => {
+            if (e.data.type === 'AUDIO') {
+                ttsWorker.removeEventListener('message', handleMessage);
+                resolve(e.data.audio);
+            } else if (e.data.type === 'ERROR') {
+                ttsWorker.removeEventListener('message', handleMessage);
+                reject(new Error(e.data.error));
+            }
+        };
+        
+        ttsWorker.addEventListener('message', handleMessage);
+        
+        // Ask the worker to generate the audio
+        ttsWorker.postMessage({ type: 'SPEAK', text: text, speed: speed });
+    });
 }
