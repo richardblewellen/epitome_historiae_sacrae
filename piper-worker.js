@@ -1,6 +1,6 @@
 // piper-worker.js
 importScripts("https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js");
-importScripts("https://cdn.jsdelivr.net/npm/piper-wasm@latest/piper.js");
+importScripts("https://cdn.jsdelivr.net/npm/@mintplex-labs/piper-tts-web/dist/piper.js");
 
 let piperTTS = null;
 
