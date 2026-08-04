@@ -9,10 +9,10 @@ self.onmessage = async (e) => {
 
     if (type === 'INIT') {
         try {
-            // Initialize Piper and load the local Greek model files
+            // Load the models directly from the Hugging Face CDN instead of GitHub
             piperTTS = await Piper.create({
-                modelUrl: './el_GR-rapaport-medium.onnx',
-                modelConfigUrl: './el_GR-rapaport-medium.onnx.json'
+                modelUrl: 'https://huggingface.co/rhasspy/piper-voices/resolve/main/el/el_GR/rapunzelina/low/el_GR-rapunzelina-low.onnx',
+                modelConfigUrl: 'https://huggingface.co/rhasspy/piper-voices/resolve/main/el/el_GR/rapunzelina/low/el_GR-rapunzelina-low.onnx.json'
             });
             self.postMessage({ type: 'READY' });
         } catch (err) {
