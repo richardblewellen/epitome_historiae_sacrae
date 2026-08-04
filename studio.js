@@ -280,26 +280,35 @@ btnExportAudio.addEventListener('click', async () => {
     audioStatus.innerText = `Preparing ${sentencesToProcess.length} sentences...`;
     btnExportAudio.disabled = true;
 
-   try {
+  try {
         const sampleRate = 16000; // Piper's 'low' models specifically output at 16kHz
-        let finalPcmData = []; // This will hold our raw audio floats
+        let finalPcmData = []; 
+        
+        // We use the browser's native AudioContext to crack open the WAV file and extract the raw float data
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         for (let i = 0; i < sentencesToProcess.length; i++) {
             audioStatus.innerText = `Synthesizing sentence ${i + 1} of ${sentencesToProcess.length}...`;
             
             for (let r = 0; r < repeats; r++) {
-                // --- PIPER TTS INTEGRATION POINT ---
-                // We will call the Piper Web Worker here. 
-                // For this step, we await the Float32Array audio buffer from Piper.
-                const sentenceAudioData = await synthesizeWithPiper(sentencesToProcess[i], speed);
+                // 1. Get the raw WAV ArrayBuffer from the Web Worker
+                const wavBuffer = await synthesizeWithPiper(sentencesToProcess[i], speed);
                 
-                // Append the sentence audio to our master track
-                finalPcmData.push(...sentenceAudioData);
+                // 2. Decode the WAV into raw Float32 audio samples
+                const decodedAudio = await audioCtx.decodeAudioData(wavBuffer);
+                const sentenceAudioData = decodedAudio.getChannelData(0); // Extract the mono channel
+                
+                // 3. Append the sentence audio to our master track safely
+                for (let j = 0; j < sentenceAudioData.length; j++) {
+                    finalPcmData.push(sentenceAudioData[j]);
+                }
 
-                // Add pause (silence) between repeats and sentences
+                // 4. Add pause (silence) between repeats and sentences
                 if (pauseSeconds > 0) {
                     const silenceSamples = sampleRate * pauseSeconds;
-                    finalPcmData.push(...new Float32Array(silenceSamples)); 
+                    for (let j = 0; j < silenceSamples; j++) {
+                        finalPcmData.push(0); 
+                    }
                 }
             }
         }
@@ -350,8 +359,6 @@ btnExportAudio.addEventListener('click', async () => {
         btnExportAudio.disabled = false;
         setTimeout(() => audioStatus.innerText = "", 4000);
     }
-});
-
 // Start the background worker
 const ttsWorker = new Worker('piper-worker.js');
 let isPiperReady = false;
