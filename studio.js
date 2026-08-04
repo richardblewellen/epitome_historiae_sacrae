@@ -359,6 +359,8 @@ btnExportAudio.addEventListener('click', async () => {
         btnExportAudio.disabled = false;
         setTimeout(() => audioStatus.innerText = "", 4000);
     }
+  });
+
 // Start the background worker
 const ttsWorker = new Worker('piper-worker.js');
 let isPiperReady = false;
