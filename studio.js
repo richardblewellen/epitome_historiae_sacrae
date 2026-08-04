@@ -242,3 +242,67 @@ btnPrint.addEventListener('click', () => {
 
 // Boot App
 fetchReaderData();
+
+// --- 5. AUDIO EXPORT LOGIC ---
+const repeatValues = { 1: 1, 2: 2, 3: 3, 4: 5 }; // Same 1x, 2x, 3x, 5x mapping
+
+const sliderExportSpeed = document.getElementById('export-slider-speed');
+const sliderExportPause = document.getElementById('export-slider-pause');
+const sliderExportRepeat = document.getElementById('export-slider-repeat');
+const btnExportAudio = document.getElementById('btn-export-audio');
+const audioStatus = document.getElementById('audio-status');
+
+// Update Slider Labels
+sliderExportSpeed.addEventListener('input', e => document.getElementById('export-speed-val').innerText = e.target.value);
+sliderExportPause.addEventListener('input', e => document.getElementById('export-pause-val').innerText = e.target.value);
+sliderExportRepeat.addEventListener('input', e => document.getElementById('export-repeat-val').innerText = repeatValues[parseInt(e.target.value)]);
+
+btnExportAudio.addEventListener('click', async () => {
+    if (selectedGroupIds.length === 0) {
+        alert("Please select at least one story to generate audio.");
+        return;
+    }
+
+    const speed = parseFloat(sliderExportSpeed.value);
+    const pauseSeconds = parseFloat(sliderExportPause.value);
+    const repeats = repeatValues[parseInt(sliderExportRepeat.value)];
+
+    // 1. Gather all the Greek text from the selected groups
+    const activeSet = masterSetData.find(set => set.set_id === currentSetId);
+    const selectedGroups = activeSet.groups.filter(g => selectedGroupIds.includes(g.group_id));
+    
+    let sentencesToProcess = [];
+    selectedGroups.forEach(group => {
+        group.sentences.forEach(s => sentencesToProcess.push(s.greek));
+    });
+
+    audioStatus.innerText = `Processing ${sentencesToProcess.length} sentences...`;
+    btnExportAudio.disabled = true;
+
+    try {
+        // --- THIS IS WHERE THE MAGIC WILL HAPPEN ---
+        // We will loop through sentencesToProcess
+        // Multiply by 'repeats'
+        // Insert 'pauseSeconds' of silence
+        // Ask the WASM engine for the audio
+        // Stitch it together and trigger download
+        
+        console.log("Ready to send to TTS Engine:", {
+            totalSentences: sentencesToProcess.length,
+            speed: speed,
+            pause: pauseSeconds,
+            repeats: repeats
+        });
+
+        // Simulate processing time for now
+        await new Promise(r => setTimeout(r, 1000));
+        audioStatus.innerText = "Audio generation complete! (Simulation)";
+
+    } catch (error) {
+        console.error("Audio export failed:", error);
+        audioStatus.innerText = "Error generating audio.";
+    } finally {
+        btnExportAudio.disabled = false;
+        setTimeout(() => audioStatus.innerText = "", 3000); // Clear message
+    }
+});
