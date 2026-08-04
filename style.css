@@ -179,10 +179,6 @@ body.hide-smooth .smooth-text { display: none; }
         width: 130px; /* slightly wider on mobile for easier thumb dragging */
     }
 
-    /* Hide the record button on mobile since it doesn't work anyway */
-    #btn-record {
-        display: none !important;
-    }
 }
 
 /* Standardize Dropdown Arrows */
