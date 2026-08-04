@@ -1,30 +1,33 @@
 // piper-worker.js
-importScripts("https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js");
-importScripts("https://cdn.jsdelivr.net/npm/@mintplex-labs/piper-tts-web/dist/piper.js");
-
-let piperTTS = null;
+let tts = null;
 
 self.onmessage = async (e) => {
-    const { type, text, speed } = e.data;
+    const { type, text } = e.data;
 
     if (type === 'INIT') {
         try {
-            // Load the models directly from the Hugging Face CDN instead of GitHub
-            piperTTS = await Piper.create({
-                modelUrl: 'https://huggingface.co/rhasspy/piper-voices/resolve/main/el/el_GR/rapunzelina/low/el_GR-rapunzelina-low.onnx',
-                modelConfigUrl: 'https://huggingface.co/rhasspy/piper-voices/resolve/main/el/el_GR/rapunzelina/low/el_GR-rapunzelina-low.onnx.json'
-            });
+            // Dynamically import the stable VITS web library
+            tts = await import('https://cdn.jsdelivr.net/npm/@diffusionstudio/vits-web@1.0.3/+esm');
+            
+            // Download the Greek voice model into the browser's hidden file system (OPFS)
+            await tts.download('el_GR-rapunzelina-low');
+            
             self.postMessage({ type: 'READY' });
         } catch (err) {
             self.postMessage({ type: 'ERROR', error: err.message });
         }
     } 
     
-    if (type === 'SPEAK' && piperTTS) {
+    if (type === 'SPEAK' && tts) {
         try {
-            // Generate the raw audio floats
-            const audioBuffer = await piperTTS.synthesize(text, { lengthScale: speed });
-            self.postMessage({ type: 'AUDIO', audio: audioBuffer });
+            // Predict returns an ArrayBuffer containing a standard WAV file
+            const wavArrayBuffer = await tts.predict({
+                text: text,
+                voiceId: 'el_GR-rapunzelina-low'
+            });
+            
+            // Transfer the buffer back to the main thread for processing
+            self.postMessage({ type: 'AUDIO', audio: wavArrayBuffer }, [wavArrayBuffer]);
         } catch (err) {
             self.postMessage({ type: 'ERROR', error: err.message });
         }
