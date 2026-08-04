@@ -267,7 +267,7 @@ btnExportAudio.addEventListener('click', async () => {
     const pauseSeconds = parseFloat(sliderExportPause.value);
     const repeats = repeatValues[parseInt(sliderExportRepeat.value)];
 
-    // 1. Gather all the Greek text from the selected groups
+    // 1. Gather all Greek text
     const activeSet = masterSetData.find(set => set.set_id === currentSetId);
     const selectedGroups = activeSet.groups.filter(g => selectedGroupIds.includes(g.group_id));
     
@@ -276,33 +276,86 @@ btnExportAudio.addEventListener('click', async () => {
         group.sentences.forEach(s => sentencesToProcess.push(s.greek));
     });
 
-    audioStatus.innerText = `Processing ${sentencesToProcess.length} sentences...`;
+    audioStatus.style.color = "#0d6efd";
+    audioStatus.innerText = `Preparing ${sentencesToProcess.length} sentences...`;
     btnExportAudio.disabled = true;
 
     try {
-        // --- THIS IS WHERE THE MAGIC WILL HAPPEN ---
-        // We will loop through sentencesToProcess
-        // Multiply by 'repeats'
-        // Insert 'pauseSeconds' of silence
-        // Ask the WASM engine for the audio
-        // Stitch it together and trigger download
-        
-        console.log("Ready to send to TTS Engine:", {
-            totalSentences: sentencesToProcess.length,
-            speed: speed,
-            pause: pauseSeconds,
-            repeats: repeats
-        });
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const sampleRate = audioContext.sampleRate;
+        let finalPcmData = []; // This will hold our raw audio floats
 
-        // Simulate processing time for now
-        await new Promise(r => setTimeout(r, 1000));
-        audioStatus.innerText = "Audio generation complete! (Simulation)";
+        for (let i = 0; i < sentencesToProcess.length; i++) {
+            audioStatus.innerText = `Synthesizing sentence ${i + 1} of ${sentencesToProcess.length}...`;
+            
+            for (let r = 0; r < repeats; r++) {
+                // --- PIPER TTS INTEGRATION POINT ---
+                // We will call the Piper Web Worker here. 
+                // For this step, we await the Float32Array audio buffer from Piper.
+                const sentenceAudioData = await synthesizeWithPiper(sentencesToProcess[i], speed);
+                
+                // Append the sentence audio to our master track
+                finalPcmData.push(...sentenceAudioData);
+
+                // Add pause (silence) between repeats and sentences
+                if (pauseSeconds > 0) {
+                    const silenceSamples = sampleRate * pauseSeconds;
+                    finalPcmData.push(...new Float32Array(silenceSamples)); 
+                }
+            }
+        }
+
+        audioStatus.innerText = `Encoding to MP3...`;
+        
+        // --- 2. ENCODE TO MP3 USING LAMEJS ---
+        // Lamejs requires Int16Array data, but Web Audio uses Float32Array
+        // We must convert the floats (-1.0 to 1.0) to 16-bit integers (-32768 to 32767)
+        const mp3encoder = new lamejs.Mp3Encoder(1, sampleRate, 128); // Mono, Sample Rate, 128kbps
+        const samples = new Int16Array(finalPcmData.length);
+        for (let i = 0; i < finalPcmData.length; i++) {
+            let s = Math.max(-1, Math.min(1, finalPcmData[i])); // clamp
+            samples[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+        }
+
+        // Encode the chunks
+        const sampleBlockSize = 1152; 
+        const mp3Data = [];
+        for (let i = 0; i < samples.length; i += sampleBlockSize) {
+            const sampleChunk = samples.subarray(i, i + sampleBlockSize);
+            const mp3buf = mp3encoder.encodeBuffer(sampleChunk);
+            if (mp3buf.length > 0) mp3Data.push(mp3buf);
+        }
+        const mp3buf = mp3encoder.flush(); 
+        if (mp3buf.length > 0) mp3Data.push(mp3buf);
+
+        // --- 3. DOWNLOAD THE MP3 ---
+        const blob = new Blob(mp3Data, { type: 'audio/mp3' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        
+        const safeSetId = currentSetId.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        a.download = `${safeSetId}_worksheet_audio.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        audioStatus.style.color = "#198754";
+        audioStatus.innerText = "MP3 Downloaded Successfully!";
 
     } catch (error) {
         console.error("Audio export failed:", error);
+        audioStatus.style.color = "red";
         audioStatus.innerText = "Error generating audio.";
     } finally {
         btnExportAudio.disabled = false;
-        setTimeout(() => audioStatus.innerText = "", 3000); // Clear message
+        setTimeout(() => audioStatus.innerText = "", 4000);
     }
 });
+
+// Placeholder for the Piper WASM function
+async function synthesizeWithPiper(text, speed) {
+    // We will build this out in the next step!
+    // For now, it returns 0.1 seconds of silence so the MP3 encoder doesn't break while testing
+    return new Float32Array(44100 * 0.1); 
+}
