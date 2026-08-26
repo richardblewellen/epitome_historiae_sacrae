@@ -116,6 +116,7 @@ btnClearSelection.addEventListener('click', () => {
 typeRadios.forEach(radio => {
     radio.addEventListener('change', generateWorksheet);
 });
+document.getElementById('toggle-scramble').addEventListener('change', generateWorksheet);
 
 btnPrint.addEventListener('click', () => {
     if (!currentSetId) {
@@ -184,19 +185,28 @@ function generateWorksheet() {
         });
 
    } else if (documentType === "quiz") {
+        const isScrambled = document.getElementById('toggle-scramble').checked;
+
         // --- QUIZZES ---
         selectedGroups.forEach((group, index) => {
-            // Every new group gets a fresh piece of paper
             if (index > 0) {
                 htmlString += `<div class="page-break"></div>`;
             }
 
-            // Print the exact same quiz twice: once for the top half, once for the bottom
+            // Create a copy of the sentences and shuffle it if checked
+            let displaySentences = [...group.sentences];
+            if (isScrambled) {
+                for (let i = displaySentences.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [displaySentences[i], displaySentences[j]] = [displaySentences[j], displaySentences[i]];
+                }
+            }
+
+            // Print the top and bottom quiz halves
             for (let i = 0; i < 2; i++) {
                 const positionClass = (i === 0) ? 'top-quiz' : 'bottom-quiz';
 
                 htmlString += `<div class="quiz-half-page ${positionClass}">`;
-
                 htmlString += `
                     <div class="quiz-header">
                         <div class="quiz-top-row">
@@ -207,34 +217,37 @@ function generateWorksheet() {
                     </div>
                 `;
                 
-                group.sentences.forEach(sentence => {
+                displaySentences.forEach((sentence, idx) => {
                     htmlString += `
                         <div class="quiz-item">
-                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                            <div class="greek-text">${idx + 1}. ${sentence.greek}</div>
                             <div class="blank-line"></div>
                         </div>
                     `;
                 });
 
-                htmlString += `</div>`; // Close quiz-half-page
+                htmlString += `</div>`; 
             }
+            
+            // Store the scrambled order so the answer key block below can use it
+            group.scrambledSentences = displaySentences; 
         });
 
         // --- ANSWER KEYS ---
         htmlString += `<div class="page-break"></div>`; 
 
         selectedGroups.forEach((group, index) => {
-            // Every new group's answer key gets a fresh piece of paper
             if (index > 0) {
                 htmlString += `<div class="page-break"></div>`;
             }
 
-            // Print the exact same answer key twice: once for the top, once for the bottom
+            // Retrieve the exact same scrambled order used for the quizzes
+            const answerSentences = group.scrambledSentences || group.sentences;
+
             for (let i = 0; i < 2; i++) {
                 const positionClass = (i === 0) ? 'top-quiz' : 'bottom-quiz';
 
                 htmlString += `<div class="quiz-half-page ${positionClass}">`;
-
                 htmlString += `
                     <div class="quiz-header">
                         <div class="quiz-top-row">
@@ -245,10 +258,10 @@ function generateWorksheet() {
                     </div>
                 `;
                 
-                group.sentences.forEach(sentence => {
+                answerSentences.forEach((sentence, idx) => {
                     htmlString += `
                         <div class="quiz-item">
-                            <div class="greek-text">${sentence.sentence_id}. ${sentence.greek}</div>
+                            <div class="greek-text">${idx + 1}. ${sentence.greek}</div>
                             <div class="blank-line" style="font-size: 0.95em; color: #333; line-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 ${sentence.smooth_english}
                             </div>
@@ -256,7 +269,7 @@ function generateWorksheet() {
                     `;
                 });
 
-                htmlString += `</div>`; // Close quiz-half-page
+                htmlString += `</div>`; 
             }
         });
     }
