@@ -22,15 +22,18 @@
 
         <div id="controls-selection-group" style="display: none; flex-direction: column; align-items: center; gap: 15px;">
             
-            <div class="type-selector" style="font-size: 1.1em;">
-                <label style="margin-right: 20px; cursor: pointer;">
-                    <input type="radio" name="worksheet-type" value="study-sheet" checked> Two-Column Study Sheet
-                </label>
-                <label style="cursor: pointer;">
-                    <input type="radio" name="worksheet-type" value="quiz"> Quiz & Answer Key
-                </label>
-            </div>
-
+           <div class="type-selector" style="font-size: 1.1em; display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+    <label style="margin-right: 20px; cursor: pointer;">
+        <input type="radio" name="worksheet-type" value="study-sheet" checked> Two-Column Study Sheet
+    </label>
+    <label style="margin-right: 20px; cursor: pointer;">
+        <input type="radio" name="worksheet-type" value="quiz"> Quiz & Answer Key
+    </label>
+    <label style="cursor: pointer; font-size: 0.9em; color: #555; border-left: 2px solid #ccc; padding-left: 20px;">
+        <input type="checkbox" id="toggle-scramble"> Scramble Order
+    </label>
+          </div>
+        
             <div class="dropdown-wrapper">
                 
                 <select id="select-master-set"></select>
